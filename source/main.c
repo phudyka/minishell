@@ -6,17 +6,20 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:38:49 by phudyka           #+#    #+#             */
-/*   Updated: 2023/03/28 15:54:10 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/14 15:34:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    if (argc == 1)
+	if (argc == 1)
     {
-         
-    }
-    return (0);   
+		while (1)
+		{
+
+		}
+	}
+	return (0);   
 }
