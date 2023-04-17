@@ -6,7 +6,7 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/12 12:01:27 by phudyka           #+#    #+#              #
-#    Updated: 2023/03/28 16:01:39 by phudyka          ###   ########.fr        #
+#    Updated: 2023/04/17 11:48:15 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,27 +14,32 @@ NAME = minishell
 
 CC = gcc
 CFLAGS = -g -Wall -Werror -Wextra
-SRC  =  source/main.c source/lexer.c 	\
+SRC =	source/main.c source/lexer.c 	\
 		source/parser.c source/exec.c 	\
-		source/utils.c 					\
-		 
-OBJ = $(patsubst %.c,%.o,$(SRC))
-INCLUDES = minishell.h
+		source/utils.c source/error.c 	\
+
+INCLUDES =	include/main.h include/lexer.h 	\
+			include/parser.h include/exec.h \
+			include/utils.h include/error.h \
+
+OBJ_DIR = obj
+OBJ = $(addprefix $(OBJ_DIR)/, $(patsubst %.c,%.o,$(SRC)))
 
 all : $(NAME)
 
 $(NAME) : $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-%.o : %.c $(INCLUDES)
-	gcc $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o : %.c $(INCLUDES)
+@mkdir -p $(OBJ_DIR)
+@$(CC) $(CFLAGS) -c $< -o $@
 
 clean :
-	rm -f $(OBJ)
+rm -rf $(OBJ_DIR)
 
 fclean : clean
-	rm -f $(NAME)
-	
+rm -f $(NAME)
+
 re : fclean all
 
 .PHONY : all clean fclean re

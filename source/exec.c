@@ -6,8 +6,8 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:53:42 by phudyka           #+#    #+#             */
-/*   Updated: 2023/03/28 15:53:46 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:40:16 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../include/exec.h"

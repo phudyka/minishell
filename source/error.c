@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 15:53:17 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/17 11:39:49 by phudyka          ###   ########.fr       */
+/*   Created: 2023/04/17 11:42:49 by phudyka           #+#    #+#             */
+/*   Updated: 2023/04/17 11:45:14 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/utils.h"
+#include "../include/error.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -19,11 +19,6 @@ void	ft_putstr_fd(char *s, int fd)
 	i = -1;
 	while (s[++i])
 		write(fd, &s[i], 1);
-}
-
-int fatal_error(int code, int fd)
-{
-    return(1);
 }
 
 int parsing_error(int code)
@@ -38,4 +33,14 @@ int parsing_error(int code)
         printf("Error! : [Command Exec. Failure]\n");
     else if (code == E_KO)
         printf("Error! : [Exit Failure]\n");
+}
+
+int fatal_error(int code, int fd)
+{
+    return(1);
+}
+
+void    ft_free()
+{
+    
 }

@@ -6,11 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:52:53 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/17 09:18:09 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/17 11:39:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../include/parser.h"
 
 int parser(int argc, char **argv)
 {
