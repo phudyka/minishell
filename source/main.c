@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:38:49 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/17 13:37:26 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/17 14:53:20 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	main(int argc, char **argv)
 {
+	(void)argv;
+
 	if (argc == 1)
 	{
-		ssize_t	len;
+		size_t	len;
 		ssize_t	byte;
 		int		state;
 		char	*buff;
@@ -34,6 +36,7 @@ int	main(int argc, char **argv)
 				clearerr(stdin);
 			}
 		}
+		//system("leaks minishell");
 	}
 	return (0);   
 }
