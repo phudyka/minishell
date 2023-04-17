@@ -6,7 +6,7 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/12 12:01:27 by phudyka           #+#    #+#              #
-#    Updated: 2023/04/17 11:48:15 by phudyka          ###   ########.fr        #
+#    Updated: 2023/04/17 11:50:18 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = gcc
 CFLAGS = -g -Wall -Werror -Wextra
-SRC =	source/main.c source/lexer.c 	\
+SRC =	source/main.c source/lexer.c 	\mmit -m 
 		source/parser.c source/exec.c 	\
 		source/utils.c source/error.c 	\
 

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/28 15:38:49 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/17 11:40:03 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/17 13:37:26 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv)
 			state = 0;
 			if(byte <= 0 && errno == EINTR) // signal d'nterruption externe au programme
 			{
-				OK = 1;
+				state = 1;
 				clearerr(stdin);
 			}
 		}
