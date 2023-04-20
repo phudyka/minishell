@@ -5,38 +5,49 @@
 #                                                     +:+ +:+         +:+      #
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/12 12:01:27 by phudyka           #+#    #+#              #
-#    Updated: 2023/04/17 14:02:25 by phudyka          ###   ########.fr        #
+#    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
+#    Updated: 2023/04/20 14:26:03 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME		=	minishell
+SRCS		=	src/main/main.c src/main/prompt.c 	\
+				src/parsing/parse.c 				\
 
-CC = gcc
-CFLAGS = -g -Wall -Werror -Wextra
-SRC  =  source/main.c source/lexer.c 	\
-		source/parser.c source/exec.c 	\
-		source/utils.c 	source/error.c	\
-		 
-INCLUDES =	include/main.h include/lexer.h	\
-			include/parser.h include/exec.h \
-			include/utils.h include/error.h	\
+INCLUDE		=	include/main.h \
 
-OBJ = $(patsubst %.c,%.o,$(SRC))
-all : $(NAME)
+OBJS		=	$(SRCS:%.c=%.o)
 
-$(NAME) : $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+# /*------------LIBFT----------------*/
+LIBFT		=	libft/libft.a
 
-%.o : %.c $(INCLUDES)
-	gcc $(CFLAGS) -c $< -o $@
+# /*------------COMPIL---------------*/
+CFLAGS		=	-Wall -Werror -Wextra -lreadline
+CC			=	gcc
 
-clean :
-	rm -f $(OBJ)
+RM			=	rm -f
 
-fclean : clean
-	rm -f $(NAME)
-	
-re : fclean all
+all:		$(NAME)
 
-.PHONY : all clean fclean re
+$(NAME):	$(OBJS) $(GNL_OBJS)
+			make -C libft	
+			make clean -C libft
+			$(CC) $(SRCS) $(LIBFT) $(GNL_OBJS) $(CFLAGS) -o $(NAME)
+
+%o:			%.c $(INCLUDE)
+			$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+			$(RM) $(OBJS)
+			$(RM) $(GNL_OBJS)
+
+fclean:		clean
+			$(RM) $(NAME)
+			$(RM) *.out
+			make fclean -C libft/
+
+re:			fclean all
+
+.PHONY:		all clean fclean re
+
+

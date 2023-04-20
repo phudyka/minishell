@@ -1,30 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/28 15:52:53 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/17 16:02:11 by phudyka          ###   ########.fr       */
+/*   Created: 2022/03/22 13:54:55 by dtassel           #+#    #+#             */
+/*   Updated: 2022/04/12 11:20:34 by dtassel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/parser.h"
+#include "libft.h"
 
-int check_bracket(char **argv)
+int	ft_isalnum(int c)
 {
-    return (0);
-}
-
-void    wildcard(char **argv)
-{
-    
-}
-
-void    parser(char **argv)
-{   
-    if (!check_bracket(argv))
-        parsing_error();
-    wildcard(argv);
+	if (ft_isalpha(c) || (ft_isdigit(c)))
+	{
+		return (1);
+	}
+	return (0);
 }
