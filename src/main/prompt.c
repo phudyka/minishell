@@ -6,11 +6,12 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/20 16:17:33 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:27:20 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+#include "../../include/parse.h"
 
 char	*ft_access(char **path, char **cmd)
 {
@@ -77,7 +78,7 @@ void ft_prompt(t_data *data)
     // Boucle Prompt avec liberation de memoires
     while ((data->buffer = readline("$ > ")))
 	{
-		data->cmd = ft_split(data->buffer, ' ');
+		data->cmd = ft_parse(ft_split(data->buffer, ' '));
 		if (!data->cmd || !data->cmd[0])
 		{
     		free(data->buffer);
