@@ -6,18 +6,18 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/04/20 14:00:37 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:15:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../include/main.h"
 
-void    free_array(char **tab)
+void	free_array(char **tab)
 {
-		int	i;
+	int	i;
 
 	i = 0;
-	if (tab[i] == NULL)
+	if (!tab[i])
 		return ;
 	while (tab[i])
 		i++;
@@ -26,44 +26,40 @@ void    free_array(char **tab)
 	free (tab);
 }
 
-char    *ft_path(char **envp)
+char	*ft_path(char **envp)
 {
-		int             i;
-		int             j;
-		int             k;
-		char    *result;
-
-		i = 0;
-		k = 0;
-		while (envp[i])
+	int		i;
+	int		j;
+	int		k;
+	char	*result;
+	
+	i = 0;
+	k = 0;
+	while (envp[i])
+	{
+		j = 0;
+		if (ft_strnstr(envp[i], "PATH", 4) != 0)
 		{
-				j = 0;
-				if (ft_strnstr(envp[i], "PATH", 4) != 0)
-				{
-						result = malloc(sizeof(char) * ft_strlen(envp[i]) - 4);
-						if (!(result))
-								return (NULL);
-						j = 5;
-						while (envp[i][j])
-						{
-								result[k++] = envp[i][j++];
-						}
-						result[k] = '\0';
-				}
-				i++;
+			result = malloc(sizeof(char) * ft_strlen(envp[i]) - 4);
+			if (!result)
+				return (NULL);
+			j = 5;
+			while (envp[i][j])
+				result[k++] = envp[i][j++];
+			result[k] = '\0';
 		}
-		return (result);
+		i++;
+	}
+	return (result);
 }
 
 char    **get_path(char **envp)
 {
-	char    *path;
-	char    **final_path;
 	int		i;
+	char	*path;
+	char	**final_path;
 
 	i = 0;
-	path = NULL;
-	final_path = NULL;
 	path = ft_path(envp);
 	final_path = ft_split(path, ':');
 	free (path);
@@ -89,6 +85,6 @@ int main(int ac, char **av, char **envp)
 	// Lancement du Prompt
 	ft_prompt(data);
 	// Fin du Programme
-	printf("bye\n");
+	printf("exit\n");
 	return (0);
 }

@@ -6,18 +6,18 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/20 14:01:10 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/20 16:17:33 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/main.h"
+#include "../../include/main.h"
 
 char	*ft_access(char **path, char **cmd)
 {
+	int		i;
+	int		len;
     char	*executable_path;
     char	*current_path;
-    int		i;
-	int		len;
 
 	i = 0;
 	executable_path = NULL;
@@ -25,10 +25,8 @@ char	*ft_access(char **path, char **cmd)
 	{
 		len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
         current_path = malloc(sizeof(char) * len + 1);
-        if (current_path == NULL) 
-		{
+        if (!current_path) 
             return NULL;
-        }
         // Construire le chemin complet
         ft_strlcpy(current_path, path[i], ft_strlen(path[i]) + 1);
 		ft_strlcat(current_path, cmd[0], len + 1);
@@ -58,7 +56,7 @@ static void	exec_cmd(char *path, char **cmd)
 	else if (pid > 0)
 	{
 		// On block le processus parent jusqu'a ce que l'enfant termine puis
-		// on kill le processus enfant
+		// on kill le processus enfant :'(
 		waitpid(pid, &status, 0);
 		kill(pid, SIGTERM);
 	}
@@ -77,10 +75,10 @@ static void	exec_cmd(char *path, char **cmd)
 void ft_prompt(t_data *data)
 {
     // Boucle Prompt avec liberation de memoires
-    while ((data->buffer = readline("$ > ")) != NULL)
+    while ((data->buffer = readline("$ > ")))
 	{
 		data->cmd = ft_split(data->buffer, ' ');
-		if (data->cmd == NULL || data->cmd[0] == NULL)
+		if (!data->cmd || !data->cmd[0])
 		{
     		free(data->buffer);
     		continue;
