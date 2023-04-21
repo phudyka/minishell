@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 15:57:08 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/21 16:33:52 by phudyka          ###   ########.fr       */
+/*   Created: 2022/03/28 16:35:48 by dtassel           #+#    #+#             */
+/*   Updated: 2023/04/21 16:23:51 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#include "libft.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include "../libft/libft.h"
+char *ft_strndup(const char *src, size_t n)
+{
+    char *dst;
+    size_t i;
 
-int     is_char(char c);
-int     is_quote(char c);
-int     metachar(char c);
-int     ft_quotes(char *cmd);
-char    *ft_chardup(char c);
-char    **master_parser(char *buff);
-
-#endif
+    dst = (char*)malloc(sizeof(char) * (n + 1));
+    if (dst == NULL)
+        return (NULL);
+    i = 0;
+    while (i < n && src[i] != '\0')
+    {
+        dst[i] = src[i];
+        i++;
+    }
+    dst[i] = '\0';
+    return (dst);
+}

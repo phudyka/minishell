@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 13:41:06 by dtassel           #+#    #+#             */
-/*   Updated: 2022/05/16 11:54:27 by dtassel          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:24:04 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
 char			*ft_strnstr(const char *s1, const char *s2, size_t len);
 char			*ft_strdup(const char *s);
+char            *ft_strndup(const char *s, size_t i);
 char			*ft_substr(const char *s, unsigned int start, size_t len);
 char			*ft_strjoin(const char *s1,const char *s2);
 char			*ft_strtrim(const char *s1, const char *set);

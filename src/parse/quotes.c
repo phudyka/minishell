@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:57:14 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/21 15:55:11 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:34:06 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,31 @@
 
 int metachar(char c)
 {
-    return(c == '|' || c == '<' ||
+    return (c == '|' || c == '<' ||
         c == '>' || c == '&');
 }
 
 int is_quote(char c)
 {
-    return(c == '\'' || c == '\"');   
+    return (c == '\'' || c == '\"');   
 }
 
-int ft_quote(char *cmd)
+int is_char(char c)
+{
+    return (c >= 32 && c <= 126 && !metachar(c));
+}
+
+char *ft_chardup(char c)
+{
+    char *str = malloc(sizeof(char) * 2);
+    if (!str)
+        return (NULL);
+    str[0] = c;
+    str[1] = '\0';
+    return (str);
+}
+
+int ft_quotes(char *cmd)
 {
     int i;
     int j;

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/21 16:00:48 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:19:31 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void ft_prompt(t_data *data)
 	{
 		if (!data->buffer || !data->buffer[0])
 			continue;
-		data->cmd = ft_parse(data->buffer);
+		data->cmd = master_parser(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
     		free(data->buffer);
