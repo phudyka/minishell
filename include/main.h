@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/04/20 16:02:51 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:02:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ typedef struct  s_data
     char    *buffer;
 }   t_data;
 
+void    builtin_pwd(void);
+int     is_builtin(char *cmd);
+void    exec_builtin(char **cmd);
+void    builtin_cd(char *path);
 void    ft_prompt(t_data *data);
 void    free_array(char **tab);
 

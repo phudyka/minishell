@@ -6,24 +6,24 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:57:14 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/21 15:29:24 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 15:55:11 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-int metachar(char c) // gere les "meta-caracteres"
+int metachar(char c)
 {
     return(c == '|' || c == '<' ||
         c == '>' || c == '&');
 }
 
-int is_quote(char c) // gere single et double quotes
+int is_quote(char c)
 {
     return(c == '\'' || c == '\"');   
 }
 
-int ft_quote(char *cmd) //check if quotes are open or closed, if open -> return (1)
+int ft_quote(char *cmd)
 {
     int i;
     int j;

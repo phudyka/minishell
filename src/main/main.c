@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/04/20 16:15:37 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 15:55:27 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,9 @@ int main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	data = NULL;
-	// Allocation structure
 	data = malloc(sizeof(t_data) * 1);
-	// Recherche et stockage du PATH=
 	data->path = get_path(envp);
-	// Lancement du Prompt
 	ft_prompt(data);
-	// Fin du Programme
 	printf("exit\n");
 	return (0);
 }
