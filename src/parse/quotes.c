@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:57:14 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/21 11:31:55 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 11:55:06 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int metachar(char c) // gere les "meta-caracteres"
 {
     return(c == '|' || c == '<' ||
-        c == '>' || c == '&' || c == ';');
+        c == '>' || c == '&' || c == '<<');
 }
 
 int is_quote(char c) // gere single et double quotes
