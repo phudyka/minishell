@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/20 16:27:20 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 11:08:33 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ static void	exec_cmd(char *path, char **cmd)
 	else
 	{
 		// Le processus enfant execute la commande ou exit si execve echoue
-	if (execve(path, cmd, NULL) == -1)
-	{
-		printf("Command not found\n");
-		exit(EXIT_FAILURE);
-	}
-	exit(EXIT_SUCCESS);
+		if (execve(path, cmd, NULL) == -1)
+		{
+			printf("Command not found\n");
+			exit(EXIT_FAILURE);
+			}
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -78,7 +78,7 @@ void ft_prompt(t_data *data)
     // Boucle Prompt avec liberation de memoires
     while ((data->buffer = readline("$ > ")))
 	{
-		data->cmd = ft_parse(ft_split(data->buffer, ' '));
+		data->cmd = ft_parse(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
     		free(data->buffer);

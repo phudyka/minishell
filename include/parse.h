@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 15:57:08 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/20 16:08:42 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 11:21:26 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <unistd.h>
 # include "../libft/libft.h"
 
-char    **ft_parse(char **args);
+int     metachar(char c);
+int     is_quote(char c);
+int     ft_quote(char *cmd);
+char    **ft_parse(char *buff);
 
 #endif
