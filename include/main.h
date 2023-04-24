@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/04/24 11:23:47 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:02:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdio.h>
 # include <errno.h>
-# include <stddef.h>
 # include <curses.h>
 # include <unistd.h>
 # include <stdlib.h>
