@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/21 16:19:31 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/24 10:28:43by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char *ft_access(char **path, char **cmd)
 
 	i = 0;
 	executable_path = NULL;
-	while (path[i] != NULL)
+	while (path[i])
 	{
 		len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
 		current_path = malloc(sizeof(char) * len + 1);
@@ -59,7 +59,7 @@ static void exec_cmd(char *path, char **cmd)
 	{
 		if (execve(path, cmd, NULL) == -1)
 		{
-			printf("%s: Command not found\n", cmd[0]);
+			printf("%s: Command not found\n", *cmd);
 			exit(EXIT_FAILURE);
 		}
 		exit(EXIT_SUCCESS);
