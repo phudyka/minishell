@@ -5,63 +5,69 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 15:57:14 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/21 16:34:06 by phudyka          ###   ########.fr       */
+/*   Created: 2023/04/24 11:58:36 by phudyka           #+#    #+#             */
+/*   Updated: 2023/04/24 14:45:50 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-int metachar(char c)
+static int	skip_quotes(char **str, char quote)
 {
-    return (c == '|' || c == '<' ||
-        c == '>' || c == '&');
+	(*str)++;
+	while (**str && **str != quote)
+	{
+		if (**str == '\\' && is_quote(*(*str + 1)))
+			(*str)++;
+		(*str)++;
+	}
+	if (**str == quote)
+		(*str)++;
+	return (1);
 }
 
-int is_quote(char c)
+char	*parse_arg(char **str)
 {
-    return (c == '\'' || c == '\"');   
-}
+    char	*arg;
+    char	*start;
 
-int is_char(char c)
-{
-    return (c >= 32 && c <= 126 && !metachar(c));
-}
-
-char *ft_chardup(char c)
-{
-    char *str = malloc(sizeof(char) * 2);
-    if (!str)
+    while (**str == ' ')
+        (*str)++;
+    if (metachar(**str) || !**str)
         return (NULL);
-    str[0] = c;
-    str[1] = '\0';
-    return (str);
+    start = *str;
+    if (is_quote(**str))
+    {
+        (*str)++;
+        skip_quotes(str, *start);
+    }
+    else
+    {
+        while (**str && **str != ' ' && !metachar(**str))
+        {
+            if (**str == '\\' && is_quote(*(*str + 1)))
+                (*str)++;
+            (*str)++;
+        }
+    }
+    arg = ft_strndup(start, *str - start);
+    return (arg);
 }
 
-int ft_quotes(char *cmd)
+char	*parse_quotes(char **str)
 {
-    int i;
-    int j;
-    int q; 
+	char	*arg;
+	char	*start;
 
-    q = 0;
-    while(*cmd)
-    {
-        if (*cmd == '\\' && !q)
-        {
-            if ((*cmd + 1) && !metachar(*cmd + 1))
-                cmd++;
-        }
-        else if (is_quote(*cmd))
-        {
-            i = -1;
-            j = *cmd + 1;
-            while(cmd[++i] && cmd[i] != cmd [j])
-                j++;
-            if (cmd[j] == '\0')
-                return(1);
-        }
-        cmd++;   
-    }
-    return(0); 
+	start = ++(*str);
+	while (**str && **str != *start)
+	{
+		if (**str == '\\' && is_quote(*(*str + 1)))
+			(*str)++;
+		(*str)++;
+	}
+	arg = ft_strndup(start, *str - start);
+	if (**str == *start)
+		(*str)++;
+	return (arg);
 }
