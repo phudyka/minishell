@@ -6,14 +6,14 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/24 14:54:34 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/25 15:51:07 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parse.h"
 
-char *ft_access(char **path, char **cmd)
+char	*ft_access(char **path, char **cmd)
 {
 	int i;
 	int len;
@@ -72,7 +72,9 @@ void ft_prompt(t_data *data)
 	{
 		if (!data->buffer || !data->buffer[0])
 			continue;
+		//ft_signals(); -> probleme d'include
 		data->cmd = master_parser(data->buffer);
+		add_history(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
     		free(data->buffer);
@@ -95,6 +97,7 @@ void ft_prompt(t_data *data)
 			free_array (data->cmd);
 		}
 	}
+	clear_history();
 	free_array(data->path);
 	free(data->buffer);
 	free(data);
