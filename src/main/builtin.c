@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/04/24 14:58:10 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/25 10:49:10 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void    builtin_cd(char *path)
 
 void    exec_builtin(char **cmd)
 {
-    if ((strcmp(cmd[0], "cd")) == 0)
+    if ((ft_strcmp(cmd[0], "cd")) == 0)
         builtin_cd(cmd[1]);
-    else if ((strcmp(cmd[0], "pwd")) == 0)
+    else if ((ft_strcmp(cmd[0], "pwd")) == 0)
         builtin_pwd();
 }
 
@@ -52,7 +52,7 @@ int is_builtin(char *cmd)
     all_cmd[2] = NULL;
     while (all_cmd[i])
     {
-        if ((strcmp(all_cmd[i], cmd)) == 0)
+        if ((ft_strcmp(all_cmd[i], cmd)) == 0)
             res = 0;
         i++;
     }
