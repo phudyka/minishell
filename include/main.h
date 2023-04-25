@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/04/25 15:41:48 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/25 16:21:16 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "../libft/libft.h"
+
 
 typedef struct  s_data
 {

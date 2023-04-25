@@ -1,39 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/25 16:03:44 by phudyka          ###   ########.fr       */
+/*   Created: 2023/04/25 16:12:56 by phudyka           #+#    #+#             */
+/*   Updated: 2023/04/25 16:22:28 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parse.h"
 
-int metachar(char c)
+int ft_token(char *str)
 {
-    return (c == '|' || c == '<' ||
-        c == '>' || c == '&');
-}
-
-int is_quote(char c)
-{
-    return (c == '\'' || c == '\"');   
-}
-
-int is_char(char c)
-{
-    return (c >= 32 && c <= 126 && !metachar(c));
-}
-
-char *ft_chardup(char c)
-{
-    char *dup = malloc(sizeof(char) * 2);
-    if (!dup)
-        return (NULL);
-    dup[0] = c;
-    dup[1] = '\0';
-    return (dup);
+    if (is_command(str))
+        return(CMD);
+    else if (is_string(str))
+        return(STR);
+    else if (is_)
 }

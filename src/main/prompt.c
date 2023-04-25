@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/25 15:51:07 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/25 16:14:55 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void ft_prompt(t_data *data)
 			continue;
 		//ft_signals(); -> probleme d'include
 		data->cmd = master_parser(data->buffer);
+		//data->token = ft_token(data->cmd);
 		add_history(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
