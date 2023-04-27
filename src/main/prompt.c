@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/27 14:40:23 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/27 15:13:32 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void exec_cmd(char *path, char **cmd)
 
 void ft_prompt(t_data *data)
 {
-	while ((data->buffer = readline("$ > ")))
+	while ((data->buffer = readline("$ >")))
 	{
 		if (!data->buffer || !data->buffer[0])
 			continue;

@@ -6,13 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/04/27 14:40:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/27 15:28:13 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-void	free_array(char **tab)
+void	free_array(char **tab) // a corriger
 {
 	int	i;
 
@@ -27,49 +27,31 @@ void	free_array(char **tab)
 	tab = NULL;
 }
 
-char	*ft_path(char **envp)
+char *ft_path(char **envp)
 {
-	int		i;
-	int		j;
-	int		k;
-	char	*result;
-	
+    int i;
+
 	i = 0;
-	k = 0;
-	while (envp[i])
-	{
-		j = 0;
-		if (ft_strnstr(envp[i], "PATH", 4) != 0)
-		{
-			result = malloc(sizeof(char) * ft_strlen(envp[i]) - 4);
-			if (!result)
-				return (NULL);
-			j = 5;
-			while (envp[i][j])
-				result[k++] = envp[i][j++];
-			result[k] = '\0';
-		}
-		i++;
-	}
-	return (result);
+    while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+        i++;
+    if (!envp[i])
+        return NULL;
+    return (ft_strdup(envp[i] + 5));
 }
 
-char    **get_path(char **envp)
+char **get_path(char **envp)
 {
-	int		i;
-	char	*path;
-	char	**final_path;
+    int i;
+    char *path;
+    char **final_path;
 
-	i = 0;
+	i = -1;
 	path = ft_path(envp);
 	final_path = ft_split(path, ':');
-	free (path);
-	while (final_path[i])
-	{
-		final_path[i] = ft_strjoin(final_path[i], "/");
-		i++;
-	}
-	return (final_path); 
+    while (final_path[++i])
+        final_path[i] = ft_strjoin(final_path[i], "/");
+    free(path);
+    return final_path;
 }
 
 int main(int ac, char **av, char **envp)
