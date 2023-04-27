@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/20 14:23:31 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/25 11:39:55 by phudyka          ###   ########.fr       */
+/*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
+/*   Updated: 2023/04/27 14:21:41 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
+#include "../../include/parser.h"
 
 static char	*parse_arg_list(char **str)
 {
@@ -24,8 +24,8 @@ static char	*parse_arg_list(char **str)
 			return (NULL);
 		if (**str == '\'' || **str == '\"')
 			arg = parse_quotes(str);
-		if (**str == '\\' || **str == ';')
-			(*str)++;
+		//if (**str == '|')
+			//arg = parse_pipes(str);
 		if (!arg)
 			return (NULL);
 		(*str)++;
@@ -49,7 +49,7 @@ char    **master_parser(char *buff)
 		parse = parse_arg_list(&buff);
 		if (!parse)
 		{
-			free(args);
+			//free(args);
 			return (NULL);
 		}
 		args[i++] = parse;

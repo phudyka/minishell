@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 17:35:55 by phudyka           #+#    #+#             */
-/*   Updated: 2022/04/04 18:01:47 by phudyka          ###   ########.fr       */
+/*   Created: 2023/04/27 10:35:59 by phudyka           #+#    #+#             */
+/*   Updated: 2023/04/27 10:43:14 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef LEXER_H
+# define LEXER_H
 
-int	ft_isascii(int c)
-{
-	if (c >= 0 && c <= 127)
-		return (1);
-	return (0);
-}
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include "../libft/libft.h"
+
+int ft_token(char *str);
+
+#endif

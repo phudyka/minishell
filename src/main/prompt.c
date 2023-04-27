@@ -6,12 +6,12 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/25 16:14:55 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:31:51 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-#include "../../include/parse.h"
+#include "../../include/parser.h"
 
 char	*ft_access(char **path, char **cmd)
 {
@@ -22,7 +22,7 @@ char	*ft_access(char **path, char **cmd)
 
 	i = 0;
 	executable_path = NULL;
-	while (path[i] != NULL)
+	while (path[i])
 	{
 		len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
 		current_path = malloc(sizeof(char) * len + 1);
@@ -35,7 +35,6 @@ char	*ft_access(char **path, char **cmd)
 			executable_path = current_path;
 			break;
 		}
-		free(current_path);
 		i++;
 	}
 	return (executable_path);
@@ -57,6 +56,7 @@ static void exec_cmd(char *path, char **cmd)
 	}
 	else
 	{
+		printf("%s\n", path);
 		if (execve(path, cmd, NULL) == -1)
 		{
 			printf("%s: Command not found\n", cmd[0]);
@@ -73,33 +73,27 @@ void ft_prompt(t_data *data)
 		if (!data->buffer || !data->buffer[0])
 			continue;
 		//ft_signals(); -> probleme d'include
-		data->cmd = master_parser(data->buffer);
-		//data->token = ft_token(data->cmd);
 		add_history(data->buffer);
+		data->cmd = master_parser(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
-    		free(data->buffer);
-			free(data->cmd);
+    		//free(data->buffer);
     		continue ;
 		}
 		if ((is_builtin(data->cmd[0])) == 0)
 		{
 			exec_builtin(data->cmd);
-			free_array(data->cmd);
-			free (data->buffer);
+			//free_array(data->cmd);
+			//free (data->buffer);
 			continue ;
 		}
 		else
 		{
-			free (data->buffer);
 			data->buffer = ft_access(data->path, data->cmd);
 			exec_cmd(data->buffer, data->cmd);
-			free(data->buffer);
-			free_array (data->cmd);
+			//free_array (data->cmd);
 		}
 	}
 	clear_history();
-	free_array(data->path);
-	free(data->buffer);
-	free(data);
+	//free_array(data->path);
 }

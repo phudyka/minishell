@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptchar.c                                        :+:      :+:    :+:   */
+/*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 09:01:01 by dtassel           #+#    #+#             */
-/*   Updated: 2022/04/26 15:00:28 by dtassel          ###   ########.fr       */
+/*   Created: 2022/04/12 18:00:57 by phudyka           #+#    #+#             */
+/*   Updated: 2023/04/27 14:17:21 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
+#include "libft.h"
 
-int	ft_ptchar(int c)
+void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	write(1, &c, 1);
-	return (1);
+	if (lst && del)
+	{
+		del(lst->content);
+		free(lst);
+		lst = NULL;
+	}
 }

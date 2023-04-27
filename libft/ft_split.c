@@ -3,79 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/30 09:20:41 by dtassel           #+#    #+#             */
-/*   Updated: 2022/05/10 10:48:34 by dtassel          ###   ########.fr       */
+/*   Created: 2022/04/01 14:52:47 by phudyka           #+#    #+#             */
+/*   Updated: 2023/04/27 14:10:49 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-unsigned int	count_words(const char *str, char c)
+static int	ft_counter(char const *s, char c)
 {
-	int	i;
-	int	t;
-
-	i = 0;
-	t = 0;
-	while (*str)
-	{
-		if (*str != c && t == 0)
-		{
-			t = 1;
-			i++;
-		}
-		else if (*str == c)
-			t = 0;
-		str++;
-	}
-	return (i);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**strs;
 	size_t	i;
-	size_t	len;
+	size_t	count;
 
-	if (!s)
-		return (NULL);
 	i = 0;
-	strs = malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!strs)
-		return (NULL);
-	while (*s)
+	count = 0;
+	while (s[i])
 	{
-		if (*s == c)
-			s++;
-		while (*s && *s != c)
+		while (s[i] == c)
+			i++;
+		if (s[i] != '\0')
+			count++;
+		while (s[i] && (s[i] != c))
+			i++;
+	}
+	return (count);
+}
+
+char	**ft_split(const char *s, char c)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	**tab;
+
+	i = 0;
+	k = 0;
+	tab = (char **)malloc(sizeof(char *) * (ft_counter(s, c)) + 1);
+	if (!tab || !s)
+		return (NULL);
+	while (s[i])
+	{
+		while (s[i] == c)
+			i++;
+		j = i;
+		while (s[i] && s[i] != c)
+			i++;
+		if (i > j)
 		{
-			len = 0;
-			while (*s && *s != c && ++len)
-				s++;
-			strs[i++] = ft_substr(s - len, 0, len);
+			tab[k] = ft_strndup(s + j, i - j);
+			k++;
 		}
 	}
-	strs[i] = NULL;
-	return (strs);
+	tab[k] = NULL;
+	return (tab);
 }
-/*
-#include <stdio.h>
-
-int	main()
-{
-	char strs[] = " Tripouille  42";
-	char **tab;
-	char c;
-	
-	c = ' ';
-	tab = ft_split(strs, c);
-	while (*tab)
-	{
-		ft_putstr(*tab);
-		write (1, "\n", 1);
-		tab++;
-	}
-	return (0);
-}*/

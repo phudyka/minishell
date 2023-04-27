@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ptnbr.c                                         :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 09:04:29 by dtassel           #+#    #+#             */
-/*   Updated: 2022/04/26 15:18:31 by dtassel          ###   ########.fr       */
+/*   Created: 2022/04/12 18:01:46 by phudyka           #+#    #+#             */
+/*   Updated: 2022/04/14 14:41:54 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
+#include "libft.h"
 
-int	ft_ptnbr(int n)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	int		len;
-	char	*num;
+	t_list	*buf;
 
-	len = 0;
-	num = ft_itoa(n);
-	len = ft_ptstr(num);
-	free(num);
-	return (len);
+	if (*lst || del)
+	{
+		while (*lst)
+		{
+			buf = (*lst)->next;
+			ft_lstdelone(*lst, del);
+			*lst = buf;
+		}
+	}			
 }

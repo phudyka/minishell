@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/24 13:39:57 by dtassel           #+#    #+#             */
-/*   Updated: 2022/03/24 13:43:39 by dtassel          ###   ########.fr       */
+/*   Created: 2022/03/21 17:53:19 by phudyka           #+#    #+#             */
+/*   Updated: 2022/04/08 14:38:08 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 int	ft_tolower(int c)
 {
 	if (c >= 'A' && c <= 'Z')
-	{
 		c += 32;
-	}
 	return (c);
 }
-/*
-#include <stdio.h>
-
-int	main()
-{
-	int	c;
-
-	c = 'A';
-	printf("%c\n", ft_tolower(c));
-	return (0);
-}*/

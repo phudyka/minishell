@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/02 10:20:54 by dtassel           #+#    #+#             */
-/*   Updated: 2022/04/02 14:11:17 by dtassel          ###   ########.fr       */
+/*   Created: 2022/03/28 15:55:16 by phudyka           #+#    #+#             */
+/*   Updated: 2022/04/11 12:19:07 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,22 @@
 
 void	ft_putnbr_fd(int n, int fd)
 {
-	long int	nb;
-
-	nb = n;
-	if (nb < 0)
+	if (n == -2147483648)
 	{
 		ft_putchar_fd('-', fd);
-		nb = -nb;
+		ft_putchar_fd('2', fd);
+		n = 147483648;
 	}
-	if (nb > 9)
+	if (n >= 0 && n <= 9)
+		ft_putchar_fd(n + 48, fd);
+	else if (n < 0)
 	{
-		ft_putnbr_fd(nb / 10, fd);
-		ft_putchar_fd((nb % 10) + '0', fd);
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(n *(-1), fd);
 	}
 	else
-		ft_putchar_fd(nb + '0', fd);
+	{
+		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_fd(n % 10, fd);
+	}
 }
-/*
-int	main()
-{
-	int	n;
-
-	n = -2147483648;
-	ft_putnbr_fd(n, 2);
-	return (0);
-}*/

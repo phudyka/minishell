@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/02 10:07:32 by dtassel           #+#    #+#             */
-/*   Updated: 2022/04/02 10:14:20 by dtassel          ###   ########.fr       */
+/*   Created: 2022/03/28 15:45:31 by phudyka           #+#    #+#             */
+/*   Updated: 2022/04/18 15:44:20 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,15 @@
 
 void	ft_putstr_fd(char *s, int fd)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
-	while (s[i])
+	if (s && fd)
 	{
-		write (fd, &s[i], 1);
-		i++;
+		while (s[i] != '\0')
+		{
+			ft_putchar_fd(s[i], fd);
+			i++;
+		}
 	}
 }
-/*
-int	main(void)
-{
-	char	*str;
-
-	str = "Helloworld!";
-	ft_putstr_fd(str, 1);
-	return (0);
-}*/

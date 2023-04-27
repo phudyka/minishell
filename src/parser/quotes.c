@@ -6,11 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:36 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/24 14:45:50 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/27 11:12:31 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parse.h"
+#include "../../include/parser.h"
 
 static int	skip_quotes(char **str, char quote)
 {
@@ -24,6 +24,24 @@ static int	skip_quotes(char **str, char quote)
 	if (**str == quote)
 		(*str)++;
 	return (1);
+}
+
+char	*parse_quotes(char **str)
+{
+	char	*arg;
+	char	*start;
+
+	start = ++(*str);
+	while (**str && **str != *start)
+	{
+		if (**str == '\\' && is_quote(*(*str + 1)))
+			(*str)++;
+		(*str)++;
+	}
+	arg = ft_strndup(start, *str - start);
+	if (**str == *start)
+		(*str)++;
+	return (arg);
 }
 
 char	*parse_arg(char **str)
@@ -52,22 +70,4 @@ char	*parse_arg(char **str)
     }
     arg = ft_strndup(start, *str - start);
     return (arg);
-}
-
-char	*parse_quotes(char **str)
-{
-	char	*arg;
-	char	*start;
-
-	start = ++(*str);
-	while (**str && **str != *start)
-	{
-		if (**str == '\\' && is_quote(*(*str + 1)))
-			(*str)++;
-		(*str)++;
-	}
-	arg = ft_strndup(start, *str - start);
-	if (**str == *start)
-		(*str)++;
-	return (arg);
 }

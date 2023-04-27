@@ -3,44 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
+/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/25 10:44:52 by dtassel           #+#    #+#             */
-/*   Updated: 2022/04/03 13:50:27 by dtassel          ###   ########.fr       */
+/*   Created: 2022/03/22 18:05:50 by phudyka           #+#    #+#             */
+/*   Updated: 2022/04/08 14:15:54 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t size)
 {
-	const char	*a;
-	size_t		i;
+	size_t			i;
+	unsigned char	*str;
+	unsigned char	chr;
 
-	a = (const char *)s;
+	str = (unsigned char *)s;
+	chr = (unsigned char)c;
 	i = 0;
-	while (n > 0)
+	while (i < size)
 	{
-		if (a[i] == (char)c)
-		{
-			return ((void *)(s + i));
-		}
+		if (*str == chr)
+			return (str);
+		str++;
 		i++;
-		n--;
 	}
-	return (0);
+	return (NULL);
 }
-/*
-#include <stdio.h>
-#include <string.h>
-
-int	main()
-{
-	char s[] = "Hello";
-	int	c;
-
-	c = 'l';
-	printf("%p\n", ft_memchr(s, c, 5));
-	printf("%p\n", memchr(s, c, 5));
-	return (0);
-}*/

@@ -6,15 +6,16 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/04/25 15:29:33 by phudyka          ###   ########.fr        #
+#    Updated: 2023/04/27 11:00:51 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-SRCS		=	src/main/main.c src/main/prompt.c 	\
-				src/main/builtin.c 												\
-				src/parse/parser.c src/parse/quotes.c src/parse/parse_utils.c 	\
-
+SRCS		=	src/main/main.c src/main/prompt.c 													\
+				src/main/builtin.c 																	\
+																					\
+				src/parser/parse.c src/parser/quotes.c src/parser/parse_utils.c src/parser/pipes.c 	\
+				
 INCLUDE		=	include/main.h include/parse.h
 
 OBJS		=	$(SRCS:%.c=%.o)
