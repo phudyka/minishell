@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/27 14:31:51 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:40:23 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,14 @@ void ft_prompt(t_data *data)
 		data->cmd = master_parser(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
-    		//free(data->buffer);
+    		free(data->buffer);
     		continue ;
 		}
 		if ((is_builtin(data->cmd[0])) == 0)
 		{
 			exec_builtin(data->cmd);
 			//free_array(data->cmd);
-			//free (data->buffer);
+			free (data->buffer);
 			continue ;
 		}
 		else

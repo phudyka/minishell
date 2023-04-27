@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/04/27 14:21:04 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/27 14:41:07 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void    builtin_pwd(void)
         printf("%s\n", cwd);
     else
         perror("pwd");
-    /*if (cwd)
+    if (cwd)
     {
         free (cwd);
         cwd = NULL;
-    }*/
+    }
 }
 
 void    builtin_cd(char *path)
@@ -60,10 +60,10 @@ int is_builtin(char *cmd)
             res = 0;
         i++;
     }
-    /*if (all_cmd)
+    if (all_cmd)
     {
         free( all_cmd);
         all_cmd = NULL;
-    }*/
+    }
     return (res);
 }
