@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/04/28 11:10:19 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/28 12:01:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ int main(int ac, char **av, char **envp)
 	data->path = get_path(envp);
 	ft_prompt(data);
 	printf("exit\n");
-	system("leaks minishell");
 	return (0);
 }

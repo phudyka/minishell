@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:15:37 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/27 14:19:32 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/28 11:45:10 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ char    *parse_pipes(char **str)
     {
         if (is_builtin(cmd1))
         {
-            //free(cmd1);
+            free(cmd1);
+            cmd1 = NULL;
             return (NULL);
         }
         else

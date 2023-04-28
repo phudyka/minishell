@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/28 11:05:50 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/28 14:55:25 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static void exec_cmd(char *path, char **cmd)
 	}
 	else
 	{
-		printf("%s\n", path);
 		if (execve(path, cmd, environ) == -1)
 		{
 			printf("%s: Command not found\n", cmd[0]);
@@ -72,11 +71,11 @@ static void exec_cmd(char *path, char **cmd)
 
 void ft_prompt(t_data *data)
 {
+	ft_signals();
 	while ((data->buffer = readline("$ >")))
 	{
 		if (!data->buffer || !data->buffer[0])
 			continue;
-		//ft_signals();// -> probleme d'include
 		add_history(data->buffer);
 		data->cmd = master_parser(data->buffer);
 		if (!data->cmd || !data->cmd[0])
