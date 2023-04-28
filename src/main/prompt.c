@@ -6,14 +6,14 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/04/27 15:13:32 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/28 11:05:50 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-char	*ft_access(char **path, char **cmd)
+char *ft_access(char **path, char **cmd)
 {
 	int i;
 	int len;
@@ -22,13 +22,13 @@ char	*ft_access(char **path, char **cmd)
 
 	i = 0;
 	executable_path = NULL;
+	len = ft_strlen(cmd[0]);
+	current_path = malloc(sizeof(char) * (len + 1));
+	if (!current_path)
+		return (NULL);
 	while (path[i])
 	{
-		len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
-		current_path = malloc(sizeof(char) * len + 1);
-		if (!current_path)
-			return NULL;
-		ft_strlcpy(current_path, path[i], ft_strlen(path[i]) + 1);
+		ft_strlcpy(current_path, path[i], len + 1);
 		ft_strlcat(current_path, cmd[0], len + 1);
 		if (access(current_path, F_OK | X_OK) == 0)
 		{
@@ -37,13 +37,17 @@ char	*ft_access(char **path, char **cmd)
 		}
 		i++;
 	}
+	if (!executable_path)
+		free(current_path);
 	return (executable_path);
 }
 
+
 static void exec_cmd(char *path, char **cmd)
 {
-	pid_t pid;
-	int status;
+	pid_t		pid;
+	int			status;
+	extern char **environ;	
 
 	pid = fork();
 	status = 0;
@@ -57,7 +61,7 @@ static void exec_cmd(char *path, char **cmd)
 	else
 	{
 		printf("%s\n", path);
-		if (execve(path, cmd, NULL) == -1)
+		if (execve(path, cmd, environ) == -1)
 		{
 			printf("%s: Command not found\n", cmd[0]);
 			exit(EXIT_FAILURE);
@@ -72,12 +76,13 @@ void ft_prompt(t_data *data)
 	{
 		if (!data->buffer || !data->buffer[0])
 			continue;
-		//ft_signals(); -> probleme d'include
+		//ft_signals();// -> probleme d'include
 		add_history(data->buffer);
 		data->cmd = master_parser(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
     		free(data->buffer);
+			data->buffer = NULL;
     		continue ;
 		}
 		if ((is_builtin(data->cmd[0])) == 0)
@@ -85,6 +90,7 @@ void ft_prompt(t_data *data)
 			exec_builtin(data->cmd);
 			//free_array(data->cmd);
 			free (data->buffer);
+			data->buffer = NULL;
 			continue ;
 		}
 		else
