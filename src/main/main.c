@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/05/03 10:55:18 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:50:10 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int main(int ac, char **av, char **envp)
 	data = NULL;
 	data = malloc(sizeof(t_data) * 1);
 	data->path = get_path(envp);
+	ft_signals();
 	ft_prompt(data);
 	printf("exit\n");
 	return (0);

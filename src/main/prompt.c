@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/03 15:14:04 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/03 16:50:00 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static void exec_cmd(char *path, char **cmd)
 
 void ft_prompt(t_data *data)
 {
-	ft_signals();// -> probleme d'include
 	while ((data->buffer = readline("$ >")))
 	{
 		if (!data->buffer || !data->buffer[0])
