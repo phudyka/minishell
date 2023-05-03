@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/04/28 12:01:30 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/03 10:55:18 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char **get_path(char **envp)
 
 int main(int ac, char **av, char **envp)
 {
-	t_data	*data;
+	t_data *data;
 
 	(void)ac;
 	(void)av;
