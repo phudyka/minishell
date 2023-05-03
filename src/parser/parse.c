@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/03 14:17:23 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/03 14:50:47 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,24 @@
 
 static char	*parse_arg_list(char **str)
 {
-    char    *arg;
+	char	*arg;
 
-    while (**str == ' ')
-        (*str)++;
-    if (metachar(**str) || !**str)
-        return (NULL);
-    if (is_quote(**str))
-    {
-        arg = parse_quotes(str);
-        if (!arg)
-            return (NULL);
-    }
-    else
-    {
-        arg = ft_strndup(*str, strcspn(*str, " \t|<>"));
-            return (NULL);
-        *str += ft_strlen(arg);
-    }
-    return (arg);
+	arg = NULL;
+	while (**str)
+	{
+		arg = parse_arg(str);
+		if (!arg)
+			return (NULL);
+		if (**str == '\'' || **str == '\"')
+			arg = parse_quotes(str);
+		//if (**str == '|')
+			//arg = parse_pipes(str);
+		if (!arg)
+			return (NULL);
+		(*str)++;
+		return (arg);
+	}
+	return (arg);
 }
 
 char    **master_parser(char *buff)
