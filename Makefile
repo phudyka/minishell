@@ -6,12 +6,12 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/04/28 11:57:26 by phudyka          ###   ########.fr        #
+#    Updated: 2023/05/03 15:11:59 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
-SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c 		\
+SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c src/main/signals.c		\
 				src/parser/parse.c src/parser/quotes.c src/parser/parse_utils.c src/parser/pipes.c 	\
 				
 INCLUDE		=	include/main.h include/parse.h
