@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/04/25 16:21:16 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/04 09:27:47 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,6 @@ typedef struct  s_data
     char    *buffer;
 }   t_data;
 
-void    sigint(int sig);
-void    sigquit(int sig);
-void    ft_sigint(int sig);
-int     ft_ctrlc(int sig);
 void    ft_signals(void);
 void    builtin_pwd(void);
 int     is_builtin(char *cmd);

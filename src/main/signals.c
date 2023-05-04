@@ -6,25 +6,25 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/03 16:46:59 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/04 09:32:23 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../include/main.h"
 
-static void sigint_handler(int sig)
+static void ft_sigint(int sig)
 {
     (void)sig;
-    printf("\n"); 
-    fflush(stdout);
+    write(1, "\n$ >", 4);
 }
 
-static void sigquit_handler(int sig)
+static void ft_sigquit(int sig)
 {
     (void)sig;
+    signal(SIGQUIT, SIG_IGN);
 }
 
-static void sigterm_handler(int sig)
+static void ft_sigterm(int sig)
 {
     (void)sig;
     exit(0);
@@ -32,7 +32,7 @@ static void sigterm_handler(int sig)
 
 void ft_signals(void)
 {
-    signal(SIGINT, sigint_handler);
-    signal(SIGQUIT, sigquit_handler);
-    signal(SIGTERM, sigterm_handler);
+    signal(SIGINT, ft_sigint);
+    signal(SIGQUIT, ft_sigquit);
+    signal(SIGTERM, ft_sigterm);
 }
