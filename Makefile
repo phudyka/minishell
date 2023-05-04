@@ -6,7 +6,7 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/05/04 14:56:18 by phudyka          ###   ########.fr        #
+#    Updated: 2023/05/04 16:53:45 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ LIBFT		=	libft/libft.a
 
 CC			=	gcc
 ifeq ($(shell uname), Darwin)
-CFLAGS		=	-Wall -Werror -Wextra -I /usr/local/opt/readline/include
-LDFLAGS		=	-L /usr/local/opt/readline/lib -lreadline
+CFLAGS		=	-Wall -Werror -Wextra -I -L/usr/local/Cellar/readline/8.1.2/lib -lreadline
+LDFLAGS		=	-L /usr/local/Cellar/readline/8.1.2/lib -lreadline
 else
 CFLAGS		=	-Wall -Werror -Wextra
 LDFLAGS		=	-lreadline

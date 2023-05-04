@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/04 14:52:41 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/04 16:38:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void ft_prompt(t_data *data)
 		if ((is_builtin(data->cmd[0])) == 0)
 		{
 			exec_builtin(data->cmd);
-			free_ttab(data->cmd);
 			free (data->buffer);
 			data->buffer = NULL;
 			continue ;
@@ -95,9 +94,7 @@ void ft_prompt(t_data *data)
 		{
 			data->buffer = ft_access(data->path, data->cmd);
 			exec_cmd(data->buffer, data->cmd);
-			free_ttab (data->cmd);
 		}
 	}
 	clear_history();
-	free_ttab(data->path);
 }
