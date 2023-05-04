@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/04 09:32:23 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:59:28 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,36 @@
 static void ft_sigint(int sig)
 {
     (void)sig;
-    write(1, "\n$ >", 4);
+    ft_putstr_fd("\n$ >", 1);
+    //rl_replace_line("", 0); 
+    rl_on_new_line();
+    rl_redisplay();
 }
 
 static void ft_sigquit(int sig)
 {
     (void)sig;
-    signal(SIGQUIT, SIG_IGN);
+    exit(EXIT_SUCCESS);  
 }
 
 static void ft_sigterm(int sig)
 {
     (void)sig;
-    exit(0);
 }
 
 void ft_signals(void)
 {
-    signal(SIGINT, ft_sigint);
-    signal(SIGQUIT, ft_sigquit);
-    signal(SIGTERM, ft_sigterm);
+    struct sigaction sa;
+    
+    sa.sa_flags = SA_RESTART;
+    sa.sa_handler = &ft_sigint;
+    sigemptyset(&sa.sa_mask);
+    if (sigaction(SIGINT, &sa, NULL) == -1)
+        ft_putstr_fd("Error!: [sigaction(SIGINT)]\n", 2);
+    sa.sa_handler = &ft_sigquit;
+    if(sigaction(SIGQUIT, &sa, NULL) == -1)
+        ft_putstr_fd("Error!: [sigaction(SIGQUIT)]\n", 2);
+    sa.sa_handler = &ft_sigterm;
+    if (sigaction(SIGTERM, &sa, NULL) == -1)
+        ft_putstr_fd("Error!: [sigaction(SIGTERM)]\n", 2);
 }

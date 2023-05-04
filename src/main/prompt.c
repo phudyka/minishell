@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/03 16:50:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:52:41 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,29 @@ char *ft_access(char **path, char **cmd)
 {
 	int i;
 	int len;
-	char *executable_path;
-	char *current_path;
+	char *cur;
+	char *exec;
 
 	i = 0;
-	executable_path = NULL;
+	exec = NULL;
 	len = ft_strlen(cmd[0]);
-	current_path = malloc(sizeof(char) * (len + 1));
-	if (!current_path)
+	cur = malloc(sizeof(char) * (len + 1));
+	if (!cur)
 		return (NULL);
 	while (path[i])
 	{
-		ft_strlcpy(current_path, path[i], len + 1);
-		ft_strlcat(current_path, cmd[0], len + 1);
-		if (access(current_path, F_OK | X_OK) == 0)
+		ft_strlcpy(cur, path[i], len + 1);
+		ft_strlcat(cur, cmd[0], len + 1);
+		if (access(cur, F_OK | X_OK) == 0)
 		{
-			executable_path = current_path;
+			exec = cur;
 			break;
 		}
 		i++;
 	}
-	if (!executable_path)
-		free(current_path);
-	return (executable_path);
+	if (!exec)
+		free(cur);
+	return (exec);
 }
 
 
@@ -86,7 +86,7 @@ void ft_prompt(t_data *data)
 		if ((is_builtin(data->cmd[0])) == 0)
 		{
 			exec_builtin(data->cmd);
-			//free_array(data->cmd);
+			free_ttab(data->cmd);
 			free (data->buffer);
 			data->buffer = NULL;
 			continue ;
@@ -95,9 +95,9 @@ void ft_prompt(t_data *data)
 		{
 			data->buffer = ft_access(data->path, data->cmd);
 			exec_cmd(data->buffer, data->cmd);
-			//free_array (data->cmd);
+			free_ttab (data->cmd);
 		}
 	}
 	clear_history();
-	//free_array(data->path);
+	free_ttab(data->path);
 }

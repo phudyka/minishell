@@ -1,39 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/04 14:28:00 by phudyka          ###   ########.fr       */
+/*   Created: 2023/05/04 14:24:41 by phudyka           #+#    #+#             */
+/*   Updated: 2023/05/04 14:43:01 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parser.h"
+#include "../../include/main.h"
 
-int metachar(char c)
+void	free_tab(char *tab)
 {
-    return (c == '|' || c == '<' ||
-        c == '>' || c == '&');
+	if (!*tab)
+		return;
+	while(*tab)
+	{
+		free(tab);
+		tab++;
+	}
+	tab = NULL;
 }
 
-int is_quote(char c)
+void	free_ttab(char **tab)
 {
-    return (c == '\'' || c == '\"');   
+	if (!*tab)
+		return;
+	while(*tab)
+	{
+		free(*tab);
+		tab++;
+	}
+	*tab = NULL;		
 }
 
-int is_char(char c)
+void	free_data(t_data *data)
 {
-    return (c >= 32 && c <= 126 && !metachar(c));
-}
-
-char *ft_chardup(char c)
-{
-    char *dup = malloc(sizeof(char) * 2);
-    if (!dup)
-        return (NULL);
-    dup[0] = c;
-    dup[1] = '\0';
-    return (dup);
+	if (!data)
+		return ;
+	while(data->next)
+	{
+		free(data);
+		data++;
+	}
+	data = NULL;
 }

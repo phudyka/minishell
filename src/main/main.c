@@ -6,33 +6,18 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/05/03 16:50:10 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:55:12 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-
-/*void	free_array(char **tab) // a corriger
-{
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	tab = NULL;
-}*/
 
 char *ft_path(char **envp)
 {
     int i;
 
 	i = 0;
-    while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+    while (envp[i] && (ft_strncmp(envp[i], "PATH=", 5) != 0))
         i++;
     if (!envp[i])
         return NULL;
@@ -51,7 +36,16 @@ char **get_path(char **envp)
     while (final_path[++i])
         final_path[i] = ft_strjoin(final_path[i], "/");
     free(path);
-    return final_path;
+    return (final_path);
+}
+
+t_data	*ft_init_data(char **envp)
+{
+	t_data *data;
+
+	data = malloc(sizeof(t_data));
+	data->path = get_path(envp);
+	return(data);
 }
 
 int main(int ac, char **av, char **envp)
@@ -60,11 +54,10 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	data = NULL;
-	data = malloc(sizeof(t_data) * 1);
-	data->path = get_path(envp);
+	data = ft_init_data(envp);
 	ft_signals();
 	ft_prompt(data);
-	printf("exit\n");
+    ft_putstr_fd("exit\n", 1);
+	//system("leaks ./minishell");
 	return (0);
 }

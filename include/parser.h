@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:35:44 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/27 10:35:51 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/04 14:24:00 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include "../libft/libft.h"
+# include "../include/main.h"
 
 /*# define CMD 2
 # define STR 3
