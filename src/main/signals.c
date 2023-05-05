@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/04 15:44:33 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/05 11:18:16 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void ft_sigint(int sig)
 {
     (void)sig;
-    ft_putstr_fd("\n$ >", 1);
+    ft_putstr_fd("\n$ > ", 1);
     //rl_replace_line("", 0); 
     rl_on_new_line();
     rl_redisplay();

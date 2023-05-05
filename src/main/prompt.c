@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/04 16:38:30 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/05 11:17:58 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,17 @@ static void exec_cmd(char *path, char **cmd)
 	}
 }
 
+static void	ft_free(char *temp, char **cmd)
+{
+	if (cmd)
+		exec_builtin(cmd);
+	free(temp);
+	temp = NULL;
+}
+
 void ft_prompt(t_data *data)
 {
-	while ((data->buffer = readline("$ >")))
+	while ((data->buffer = readline("$ > ")))
 	{
 		if (!data->buffer || !data->buffer[0])
 			continue;
@@ -79,15 +87,12 @@ void ft_prompt(t_data *data)
 		data->cmd = master_parser(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
-    		free(data->buffer);
-			data->buffer = NULL;
-    		continue ;
+			ft_free(data->buffer, NULL);
+			continue ;
 		}
 		if ((is_builtin(data->cmd[0])) == 0)
 		{
-			exec_builtin(data->cmd);
-			free (data->buffer);
-			data->buffer = NULL;
+			ft_free(data->buffer, data->cmd);
 			continue ;
 		}
 		else
