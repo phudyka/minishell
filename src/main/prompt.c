@@ -6,42 +6,29 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/05 11:17:58 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/05 11:29:32 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-char *ft_access(char **path, char **cmd)
+char	*ft_access(char **path, char **cmd)
 {
-	int i;
-	int len;
-	char *cur;
-	char *exec;
+	int		i;
+	char	*exec;
 
-	i = 0;
-	exec = NULL;
-	len = ft_strlen(cmd[0]);
-	cur = malloc(sizeof(char) * (len + 1));
-	if (!cur)
+	if (!path || !*path || !cmd || !*cmd)
 		return (NULL);
-	while (path[i])
+	i = -1;
+	while (path[++i])
 	{
-		ft_strlcpy(cur, path[i], len + 1);
-		ft_strlcat(cur, cmd[0], len + 1);
-		if (access(cur, F_OK | X_OK) == 0)
-		{
-			exec = cur;
-			break;
-		}
-		i++;
+		if ((exec = ft_strjoin(ft_strjoin(path[i], "/"), cmd[0])) &&
+			!access(exec, F_OK | X_OK))
+			return (exec);
 	}
-	if (!exec)
-		free(cur);
-	return (exec);
+	return (NULL);
 }
-
 
 static void exec_cmd(char *path, char **cmd)
 {
