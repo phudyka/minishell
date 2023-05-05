@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/05/05 16:01:59 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:12:11 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int main(int ac, char **av, char **envp)
 	ft_signals();
 	ft_prompt(data);
 	ft_putstr_fd("exit\n", 1);
-	free_data(data);
+	free(data->buffer);
+	free(data);
 	return (0);
 }
