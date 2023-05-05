@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/05/04 14:55:12 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/05 16:01:59 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,15 @@ t_data	*ft_init_data(char **envp)
 	t_data *data;
 
 	data = malloc(sizeof(t_data));
+	if (!data)
+		return (NULL);
 	data->path = get_path(envp);
+	if (!data->path)
+	{
+		free(data);
+		data = NULL;
+		return (NULL);
+	}
 	return(data);
 }
 
@@ -57,7 +65,7 @@ int main(int ac, char **av, char **envp)
 	data = ft_init_data(envp);
 	ft_signals();
 	ft_prompt(data);
-    ft_putstr_fd("exit\n", 1);
-	//system("leaks ./minishell");
+	ft_putstr_fd("exit\n", 1);
+	free_data(data);
 	return (0);
 }

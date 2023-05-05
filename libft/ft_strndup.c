@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 14:04:05 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/27 14:07:16 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/05 15:40:55 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char *ft_strndup(const char *s1, size_t n)
 
 	i = 0;
 	len = 0;
+    if (!s1)
+        return (NULL);
     while (s1[len] && len < n)
         len++;
     result = (char *)malloc(sizeof(char) * (len + 1));

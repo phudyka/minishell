@@ -6,13 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/04 16:34:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/05 13:52:39 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static char	*parse_arg_list(char **str)
+static char	*master_lexer(char **str)
 {
 	char	*arg;
 
@@ -22,10 +22,11 @@ static char	*parse_arg_list(char **str)
 		arg = parse_arg(str);
 		if (!arg)
 			return (NULL);
-		if (**str == '\'' || **str == '\"')
+		if (is_quote(**str))
 			arg = parse_quotes(str);
 		if (**str == '|')
 			arg = parse_pipes(str);
+		//if (**str == '')
 		if (!arg)
 			return (NULL);
 		(*str)++;
@@ -46,7 +47,7 @@ char    **master_parser(char *buff)
         return (NULL);
     while (*buff)
 	{
-		parse = parse_arg_list(&buff);
+		parse = master_lexer(&buff);
 		if (!parse)
 		{
 			free_ttab(args);

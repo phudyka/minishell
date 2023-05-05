@@ -24,10 +24,10 @@ LIBFT		=	libft/libft.a
 
 CC			=	gcc
 ifeq ($(shell uname), Darwin)
-CFLAGS		=	-Wall -Werror -Wextra -I usr/local/opt/readline/include
-LDFLAGS		=	-L usr/local/opt/readline/lib -lreadline
+CFLAGS		=	-g -Wall -Werror -Wextra -I /Users/$(USER)/.brew/opt/readline/include
+LDFLAGS		=	-L /Users/$(USER)/.brew/opt/readline/lib -lreadline
 else
-CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	-g -Wall -Werror -Wextra
 LDFLAGS		=	-lreadline
 endif
 
