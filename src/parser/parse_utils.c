@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/04/27 10:39:06 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/09 11:15:03 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int is_char(char c)
 
 char *ft_chardup(char c)
 {
-    char *dup = malloc(sizeof(char) * 2);
+    char *dup = (char *)malloc(sizeof(char) * 2);
     if (!dup)
         return (NULL);
     dup[0] = c;
