@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 09:51:43 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/09 11:33:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,18 @@ static void ft_sigint(int sig)
     rl_redisplay();
 }
 
-static void ft_sigquit(int sig)
+static void ft_sigterm(int sig)
 {
     (void)sig;
     exit(EXIT_SUCCESS);  
 }
 
-static void ft_sigterm(int sig)
+static void ft_sigquit(int sig)
 {
     (void)sig;
+    rl_replace_line("", 0);
+    rl_on_new_line();
+    rl_redisplay();
 }
 
 void ft_signals(void)
