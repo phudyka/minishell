@@ -6,13 +6,13 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/05/0 by phudyka          ###   ########.fr        #
+#    Updated: 2023/05/09 10:00:02 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c	\
-				src/main/signals.c	src/main/free.c 					\
+				src/main/signals.c	src/main/list_utils.c				\
 				src/parser/parse.c src/parser/quotes.c					\
 				src/parser/parse_utils.c src/parser/pipes.c 			\
 				
@@ -27,7 +27,7 @@ ifeq ($(shell uname), Darwin)
 CFLAGS		=	-g -Wall -Werror -Wextra -I /Users/$(USER)/.brew/opt/readline/include
 LDFLAGS		=	-L /Users/$(USER)/.brew/opt/readline/lib -lreadline
 else
-CFLAGS		=	-g -Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra
 LDFLAGS		=	-lreadline
 endif
 

@@ -3,27 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 17:59:46 by phudyka           #+#    #+#             */
-/*   Updated: 2022/04/11 16:46:57 by phudyka          ###   ########.fr       */
+/*   Created: 2022/03/23 12:16:16 by dtassel           #+#    #+#             */
+/*   Updated: 2022/04/25 17:34:33 by dtassel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+unsigned int	ft_strlcpy(char *dest, const char *src, unsigned int size)
 {
-	size_t	i;
+	unsigned int	i;
 
 	i = 0;
-	if (dstsize == 0)
-		return (ft_strlen(src));
-	while (src[i] && i < (dstsize - 1))
+	if (size > 0)
 	{
-		dst[i] = src[i];
-		i++;
+		while (src[i] && i < size - 1)
+		{
+			dest[i] = src[i];
+			i++;
+		}
+		dest[i] = 0;
 	}
-	dst[i] = 0;
 	return (ft_strlen(src));
 }
+/*
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+	//char src[] = ((void *)0);
+	//char dest[10];
+
+	//printf("\nAvant ft_strlcpy : %s", dest);
+	printf("%d\n", ft_strlcpy(((void *)0), ((void *)0), 10));
+	//printf("\nApres ft_strlcpy : %s", dest);
+	
+	return (0);
+}*/

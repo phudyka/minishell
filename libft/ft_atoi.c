@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 17:57:05 by phudyka           #+#    #+#             */
-/*   Updated: 2022/04/12 14:43:35 by phudyka          ###   ########.fr       */
+/*   Created: 2022/03/28 15:17:21 by dtassel           #+#    #+#             */
+/*   Updated: 2022/04/02 13:01:51 by dtassel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,39 @@
 
 int	ft_atoi(const char *str)
 {
-	int	result;
-	int	sign;
+	long	atoi;
+	int		sign;
+	long	i;
 
-	result = 0;
+	atoi = 0;
 	sign = 1;
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		str++;
-	if (*str == 43 || *str == 45)
+	i = 0;
+	while ((str[i] && str[i] == ' ') || str[i] == '\t' || str[i] == '\n'
+		|| str[i] == '\r' || str[i] == '\v' || str[i] == '\f')
 	{
-		if (*str == 45)
-			sign = -sign;
-		str++;
+		i++;
 	}
-	while (*str >= 48 && *str <= 57)
+	if (str[i] && str[i] == '-')
 	{
-		result = result * 10 + *str - 48;
-		str++;
+		sign *= -1;
+		i++;
 	}
-	return (result * sign);
+	else if (str[i] == '+')
+		i++;
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		atoi = atoi * 10 + (str[i] - '0');
+		i++;
+	}
+	return (atoi * sign);
 }
+/*
+#include <stdio.h>
+
+int	main()
+{
+	char str[] = "     +547";
+
+	printf("%d\n", ft_atoi(str));
+	return (0);
+}*/

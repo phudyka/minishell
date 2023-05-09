@@ -6,11 +6,25 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/05/05 16:12:11 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/09 09:55:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+void    free_array(char **tab)
+{
+	int     i;
+
+	i = 0;
+	if (tab[i] == NULL)
+		return ;
+	while (tab[i])
+		i++;
+	while (i >= 0)
+		free(tab[i--]);
+	free (tab);
+}
 
 char *ft_path(char **envp)
 {
@@ -24,49 +38,43 @@ char *ft_path(char **envp)
     return (ft_strdup(envp[i] + 5));
 }
 
-char **get_path(char **envp)
+char    **get_path(char **envp)
 {
-    int i;
-    char *path;
-    char **final_path;
+		char	*path;
+		char	**final_path;
+		int		i;
 
-	i = -1;
-	path = ft_path(envp);
-	final_path = ft_split(path, ':');
-    while (final_path[++i])
-        final_path[i] = ft_strjoin(final_path[i], "/");
-    free(path);
-    return (final_path);
+		i = -1;
+		path = NULL;
+		final_path = NULL;
+		path = ft_path(envp);
+		final_path = ft_split(path, ':');
+		free (path);
+		while (final_path[++i])
+			final_path[i] = ft_strjoin(final_path[i], "/");
+		return (final_path); 
 }
 
-t_data	*ft_init_data(char **envp)
-{
-	t_data *data;
-
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (NULL);
-	data->path = get_path(envp);
-	if (!data->path)
-	{
-		free(data);
-		data = NULL;
-		return (NULL);
-	}
-	return(data);
-}
 
 int main(int ac, char **av, char **envp)
 {
-	t_data *data;
+        t_data  *data;
+		t_env	*env;
 
-	(void)ac;
-	(void)av;
-	data = ft_init_data(envp);
-	ft_signals();
-	ft_prompt(data);
-	ft_putstr_fd("exit\n", 1);
-	free(data->buffer);
-	free(data);
-	return (0);
+        (void)ac;
+        (void)av;
+        data = NULL;
+		env = NULL;
+		env = envp_to_list(envp);
+        // Allocation structure
+        data = malloc(sizeof(t_data));
+        // Recherche et stockage du PATH=
+        data->path = get_path(envp);
+        // Lancement du Prompt
+		ft_signals();
+        ft_prompt(data, env);
+        // Fin du Programme
+		free_list(env);
+		ft_putstr_fd("exit", 1);
+        return (0);
 }

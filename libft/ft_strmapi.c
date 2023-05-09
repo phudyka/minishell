@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/01 14:54:52 by phudyka           #+#    #+#             */
-/*   Updated: 2022/04/12 11:40:11 by phudyka          ###   ########.fr       */
+/*   Created: 2022/04/01 10:26:19 by dtassel           #+#    #+#             */
+/*   Updated: 2022/04/01 11:46:04 by dtassel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,30 @@
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
+	char			*str;
 	unsigned int	i;
-	char			*dst;
 
 	i = 0;
-	if (!s || !(f))
+	str = ft_strdup(s);
+	if (!str || !s || !f)
 		return (NULL);
-	dst = (char *)malloc(sizeof(char) * (ft_strlen(s)) + 1);
-	if (!dst)
-		return (NULL);
-	while (s[i])
+	while (str[i])
 	{
-		dst[i] = f(i, s[i]);
+		str[i] = f(i, str[i]);
 		i++;
 	}
-	dst[i] = '\0';
-	return (dst);
+	return (str);
 }
+/*
+#include <stdio.h>
+
+int main()
+{
+	char	*str;
+	char	(*f)(unsigned int, char);
+
+	str = "Hello";
+	f = ft_test;
+	printf("%s\n", ft_strmapi(str, (*f)));
+	return (0);
+}*/

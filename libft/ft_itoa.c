@@ -3,61 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/31 14:44:57 by phudyka           #+#    #+#             */
-/*   Updated: 2022/04/18 15:45:20 by phudyka          ###   ########.fr       */
+/*   Created: 2022/03/31 11:12:39 by dtassel           #+#    #+#             */
+/*   Updated: 2022/04/12 10:45:35 by dtassel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_nbrlen(int nb)
+static unsigned int	ft_nsize(int n)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
-	if (nb < 0)
+	if (n == 0)
+		return (1);
+	if (n < 0)
+		i = i + 1;
+	while (n)
 	{
-		nb *= -1;
-		i++;
-	}
-	else
-	{
-		nb /= 10;
+		n = n / 10;
 		i++;
 	}
 	return (i);
 }
 
-static void	ft_stocknb(long n, char *str, int *i)
-{
-	if (n > 9)
-	{
-		ft_stocknb(n / 10, str, i);
-		ft_stocknb(n % 10, str, i);
-	}
-	else
-		str[(*i)++] = n + '0';
-}
-
 char	*ft_itoa(int n)
 {
-	int		i;
-	long	nbr;
-	char	*itoa;
+	char			*str;
+	unsigned int	i;
+	unsigned int	nb;
 
-	nbr = n;
-	itoa = malloc(sizeof(char) * (ft_nbrlen(nbr) + 1));
-	if (!itoa)
-		return (NULL);
-	i = 0;
-	if (nbr < 0)
+	if (n == 0)
+		return (ft_strdup("0"));
+	i = ft_nsize(n);
+	str = malloc(sizeof(char) * i + 1);
+	if (!str)
+		return (0);
+	if (n < 0)
 	{
-		itoa[i++] = '-';
-		nbr *= -1;
+		str[0] = '-';
+		nb = -n;
 	}
-	ft_stocknb(nbr, itoa, &i);
-	itoa[i] = '\0';
-	return (itoa);
+	else
+		nb = n;
+	str[i] = '\0';
+	while (nb != 0)
+	{
+		str[i - 1] = (nb % 10) + '0';
+		nb = nb / 10;
+		i--;
+	}
+	return (str);
 }
+/*
+#include <stdio.h>
+
+int	main()
+{
+	int n;
+
+	n = 0;
+	printf("%s\n", ft_itoa(n));
+	return (0);
+}*/

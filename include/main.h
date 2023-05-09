@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/05/05 13:59:46 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/09 09:20:21 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,31 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "../libft/libft.h"
+
+
 typedef struct  s_data
 {
-    char            **path;
-    char            **cmd;
-    char            *buffer;
-    struct s_data   *next;
-}               t_data;
+    char    **path;
+    char    **cmd;
+    char    *buffer;
+}   t_data;
+
+typedef struct  s_env
+{
+    char            *var;
+    struct s_env   *next;
+}   t_env;
 
 void    ft_signals(void);
 void    builtin_pwd(void);
 int     is_builtin(char *cmd);
-void    exec_builtin(char **cmd);
-void    builtin_cd(char *path);
-void    ft_prompt(t_data *data);
-t_data  *ft_init_data(char **envp);
-void    free_tab(char *tab);
-void    free_ttab(char **tab);
-void    free_data(t_data *data);
+void    exec_builtin(char **cmd, t_env *env);
+void    builtin_cd(char **path);
+void    ft_prompt(t_data *data, t_env *env);
+void    free_array(char **tab);
+t_env   *envp_to_list(char **envp);
+void	afficher_liste(t_env *env);
+void    free_list(t_env *env);
+void	unset_list(t_env **env, char *var);
 
 #endif

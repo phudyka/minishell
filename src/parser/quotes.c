@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:36 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/03 14:49:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/04/28 12:01:41 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ static int	skip_quotes(char **str, char quote)
 	{
 		if (**str == '\\' && is_quote(*(*str + 1)))
 			(*str)++;
-        if (!**str)
-            break;
 		(*str)++;
 	}
 	if (**str == quote)

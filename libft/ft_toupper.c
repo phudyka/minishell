@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 17:52:21 by phudyka           #+#    #+#             */
-/*   Updated: 2022/04/08 14:38:38 by phudyka          ###   ########.fr       */
+/*   Created: 2022/03/24 13:23:20 by dtassel           #+#    #+#             */
+/*   Updated: 2022/03/24 13:39:34 by dtassel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,20 @@
 
 int	ft_toupper(int c)
 {
-	if (c >= 'a' && c <= 'z')
+	if (c >= 97 && c <= 122)
+	{
 		c -= 32;
+	}
 	return (c);
 }
+/*
+#include <stdio.h>
+
+int	main()
+{
+	int	c;
+
+	c = 'z';
+	printf("%c\n", ft_toupper(c));
+	return (0);
+}*/
