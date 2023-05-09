@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/05/06 09:12:30 by kali             ###   ########.fr       */
+/*   Updated: 2023/05/09 11:55:54 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,14 @@
 
 void    builtin_env(t_env *env)
 {
-    afficher_liste(env);
+    t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		ft_putstr_fd(tmp->var, 1);
+		tmp = tmp->next;
+	}
 }
 
 void    builtin_pwd(void)
@@ -43,7 +50,7 @@ void    builtin_cd(char **path)
         home = getenv("HOME");
         if (home == NULL)
         {
-            printf("cd: $HOME not set\n");
+            ft_putstr_fd("cd: $HOME not set\n", 1);
             return ;
         }
         chdir(home);

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/05/09 09:55:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/09 11:44:29 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char    **get_path(char **envp)
 			final_path[i] = ft_strjoin(final_path[i], "/");
 		return (final_path); 
 }
-
 
 int main(int ac, char **av, char **envp)
 {

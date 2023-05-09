@@ -6,21 +6,21 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 11:15:03 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/09 15:11:48 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
+int is_space(char c)
+{
+    return(c == ' ');
+}
+
 int metachar(char c)
 {
     return (c == '|' || c == '<' ||
         c == '>' || c == '&');
-}
-
-int is_quote(char c)
-{
-    return (c == '\'' || c == '\"');   
 }
 
 int is_char(char c)

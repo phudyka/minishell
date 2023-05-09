@@ -6,13 +6,18 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:36 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 10:56:28 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/09 15:31:07 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static int	skip_quotes(char **str, char quote)
+int is_quote(char c)
+{
+    return (c == '\'' || c == '\"');   
+}
+
+int	skip_quotes(char **str, char quote)
 {
 	(*str)++;
 	while (**str && **str != quote)
@@ -34,6 +39,7 @@ char	*parse_quotes(char **str)
 	start = ++(*str);
 	while (**str && **str != *start)
 	{
+        printf("%c\n", **str);
 		if (**str == '\\' && is_quote(*(*str + 1)))
 			(*str)++;
 		(*str)++;
@@ -42,32 +48,4 @@ char	*parse_quotes(char **str)
 	if (**str == *start)
 		(*str)++;
 	return (arg);
-}
-
-char	*parse_arg(char **str)
-{
-    char	*arg;
-    char	*start;
-
-    while (**str == ' ')
-        (*str)++;
-    if (metachar(**str) || !**str)
-        return (NULL);
-    start = *str;
-    if (is_quote(**str))
-    {
-        (*str)++;
-        skip_quotes(str, *start);
-    }
-    else
-    {
-        while (**str && **str != ' ' && !metachar(**str))
-        {
-            if (**str == '\\' && is_quote(*(*str + 1)))
-                (*str)++;
-            (*str)++;
-        }
-    }
-    arg = ft_strndup(start, *str - start);
-    return (arg);
 }

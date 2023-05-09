@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 03:59:51 by kali              #+#    #+#             */
-/*   Updated: 2023/05/06 08:41:29 by kali             ###   ########.fr       */
+/*   Updated: 2023/05/09 11:55:07 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    free_list(t_env *env)
 {
 	t_env   *tmp;
 	
-	while (env != NULL)
+	while (env)
 	{
 		tmp = env;
 		env = env->next;
@@ -28,38 +28,26 @@ void    free_list(t_env *env)
 
 void unset_list(t_env **env, char *var)
 {
-	t_env *current;
 	t_env *prev;
+	t_env *current;
 
-	current = *env;
 	prev = NULL;
-	while (current != NULL
+	current = *env;
+	while (current
 		&& ft_strncmp(current->var, var, ft_strlen(var)) != 0) 
 	{
 		prev = current;
 		current = current->next;
 	}
-	if (current == NULL)
+	if (!current)
 		return;
-	if (prev == NULL)
+	if (!prev)
 		*env = current->next;
 	else
 		prev->next = current->next;
 
 	free(current->var);
 	free(current);
-}
-
-void	afficher_liste(t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		printf("%s\n", tmp->var);
-		tmp = tmp->next;
-	}
 }
 
 t_env *create_node(char *var)
@@ -77,12 +65,12 @@ t_env *create_node(char *var)
 
 void add_node(t_env **head, t_env *node)
 {
-	if (*head == NULL) 
+	if (!*head) 
 		*head = node;
 	else 
 	{
 		t_env *current = *head;
-		while (current->next != NULL)
+		while (current->next)
 			current = current->next;
 		current->next = node;
 	}
@@ -90,11 +78,12 @@ void add_node(t_env **head, t_env *node)
 
 t_env *envp_to_list(char **envp)
 {
-	t_env *head = NULL;
-	int i = 0;
-	while (envp[i] != NULL) {
+	int		i;
+	t_env	*head;
+	
+	i = -1;
+	head = NULL;
+	while (envp[++i])
 		add_node(&head, create_node(envp[i]));
-		i++;
-	}
 	return (head);
 }
