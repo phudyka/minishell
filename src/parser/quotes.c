@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 11:58:36 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 15:31:07 by phudyka          ###   ########.fr       */
+/*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
+/*   Updated: 2023/05/09 16:18:15 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-int is_quote(char c)
+int	is_quote(char c)
 {
-    return (c == '\'' || c == '\"');   
+	return (c == '\'' || c == '\"');
 }
 
 int	skip_quotes(char **str, char quote)
@@ -39,7 +39,6 @@ char	*parse_quotes(char **str)
 	start = ++(*str);
 	while (**str && **str != *start)
 	{
-        printf("%c\n", **str);
 		if (**str == '\\' && is_quote(*(*str + 1)))
 			(*str)++;
 		(*str)++;
