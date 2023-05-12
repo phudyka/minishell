@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/27 10:35:44 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/12 09:17:31 by phudyka          ###   ########.fr       */
+/*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
+/*   Updated: 2023/05/12 09:17:08 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
+#ifndef LEXER_H
+# define LEXER_H
 
 # include <stdio.h>
-# include <stdlib.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+# include <stdlib.h>
+# include "parser.h"
 
-int     is_char(char c);
-int     is_space(char c);
-int     is_quote(char c);
-int     metachar(char c);
-char    *ft_chardup(char c);
-int     ft_quotes(char *cmd);
-void    free_array(char **tab);
-char	*parse_arg(char **str);
-char	*parse_pipes(char **str);
-char	*parse_quotes(char **str);
-char    *master_parser(char **str);
-int     skip_quotes(char **str, char quote);
+typedef enum token
+{
+    NUN, // none ""
+    IPT, // input '<'
+    TRC, // truncate '>'
+    PIP, // pipe '|'
+    END, // end ';'
+    CMD, // commande
+    STR, //string       
+}           token;
+
+char **master_lexer(char *buff);
 
 #endif

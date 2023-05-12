@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 15:30:05 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/12 09:14:59 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*parse_arg(char **str)
     return (arg);
 }
 
-char	*parse_arg_list(char **str)
+char	*master_parser(char **str)
 {
 	char	*arg;
 
@@ -60,35 +60,4 @@ char	*parse_arg_list(char **str)
 		return (arg);
 	}
 	return (arg);
-}
-
-char    **master_parser(char *buff)
-{
-	int     i;
-	int     j;
-	char    *parse;
-	char	**args;
-
-	i = 0;
-	j = 0;
-	args = (char **)malloc(sizeof(char *) * (ft_strlen(buff) + 1));
-	if (!args)
-		return (NULL);
-	while (buff[j])
-	{
-		parse = parse_arg_list(&buff);
-		if (!parse)
-		{
-			args[i] = NULL;
-			return (args);
-		}
-		args[i++] = parse;
-		while (buff[j] == ' ')
-			j++;
-		if (metachar(*buff))
-			args[i++] = ft_chardup(buff[j++]);
-		j++;
-	}
-	args[i] = NULL;
-	return (args);
 }

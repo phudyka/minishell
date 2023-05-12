@@ -6,12 +6,12 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/09 14:51:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/12 09:16:10 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-#include "../../include/parser.h"
+#include "../../include/lexer.h"
 
 char    *ft_access(char **path, char **cmd)
 {
@@ -81,7 +81,7 @@ void ft_prompt(t_data *data, t_env *env)
 	{
 		add_history(data->buffer);
 		//data->cmd = ft_split(data->buffer, ' ');
-		data->cmd = master_parser(data->buffer);
+		data->cmd = master_lexer(data->buffer);
 		if (!data->cmd || !data->cmd[0])
 		{
 			free(data->buffer);
