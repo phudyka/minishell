@@ -6,37 +6,37 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:15:37 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 10:12:39 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/12 11: by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-char    *parse_pipes(char **str)
+static char	*parse_pipes(t_token **tokens)
 {
-    char    *cmd1;
-    char    *cmd2;
-    char    *pipe;
+	char	*cmd1;
+	char	*cmd2;
 
-    cmd1 = ft_strtrim(*str, " ");
-    cmd2 = NULL;
-    pipe = ft_strchr(cmd1, '|');
-    if (!pipe)
-    {
-        if (is_builtin(cmd1))
-        {
-            //free(cmd1);
-            cmd1 = NULL;
-            return (NULL);
-        }
-        else
-            return (cmd1);
-    }
-    *pipe++ = '\0';
-    cmd2 = ft_strtrim(pipe, " ");
-    if (is_builtin(cmd1) || is_builtin(cmd2))
-        return (NULL);
-    *str = pipe;
-    return (cmd1);
+	cmd1 = NULL;
+	cmd2 = NULL;
+	while (*tokens)
+	{
+		if ((*tokens)->type == CMD && !cmd1)
+			cmd1 = ft_strdup((*tokens)->value);
+		else if ((*tokens)->type == PIP)
+			break ;
+		*tokens = (*tokens)->next;
+	}
+	if (*tokens)
+		*tokens = (*tokens)->next;
+	while (*tokens)
+	{
+		if ((*tokens)->type == CMD && !cmd2)
+			cmd2 = ft_strdup((*tokens)->value);
+		*tokens = (*tokens)->next;
+	}
+	if (cmd1 && cmd2)
+		return (ft_strjoin(ft_strjoin(cmd1, " | "), cmd2));
+	return (cmd1);
 }

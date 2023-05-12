@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:08:29 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/12 10:35:50 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/12 10:57:08 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ static t_token	*tokenizer(char **cmd)
 			add_token(&tokens, new_token(APP, NULL));
 		else if (ft_strcmp(*cmd, "|"))
 			add_token(&tokens, new_token(PIP, NULL));
-		else if (ft_strcmp(*cmd, ";"))
-			add_token(&tokens, new_token(END, NULL));
+		else if (ft_strcmp(*cmd, ";") || ft_strcmp(*cmd, "\\"))
+			cmd++;
 		else
 			add_token(&tokens, new_token(CMD, ft_strdup(*cmd)));
 		cmd++;
@@ -89,7 +89,8 @@ static t_token	*tokenizer(char **cmd)
 char **master_lexer(char *buff)
 {
     int		i;
-    char	**args;
+	char	*parse;
+	char	**args;
     t_token	*tokens;
     
     i = 0;
@@ -100,12 +101,13 @@ char **master_lexer(char *buff)
 	while (tokens)
 	{
 		if (tokens->type == CMD)
-            args[i++] = ft_strdup(tokens->value);
-        else if (tokens->type != END)
-            args[i++] = ft_chardup(tokens->type);
+			args[i++] = ft_strdup(tokens->value);
+        else
+			args[i++] = ft_chardup(tokens->type);
         tokens = tokens->next;
     }
     args[i] = NULL;
+	parse = master_parser(args, tokens);
     free_tokens(tokens);
     return (args);
 }

@@ -6,58 +6,52 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/12 09:14:59 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/12 11:39:14 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-char	*parse_arg(char **str)
-{
-    char	*arg;
-    char	*start;
-
-    while (**str == ' ')
-        (*str)++;
-    if (metachar(**str) || !**str)
-        return (NULL);
-    start = *str;
-    if (is_quote(**str))
-    {
-        (*str)++;
-        skip_quotes(str, *start);
-    }
-    else
-    {
-        while (**str && **str != ' ' && !metachar(**str))
-        {
-			//printf("%c\n", **str);
-            if (**str == '\\' && is_quote(*(*str + 1)))
-                (*str)++;
-            (*str)++;
-        }
-    }
-    arg = ft_strndup(start, *str - start);
-    return (arg);
-}
-
-char	*master_parser(char **str)
+static char	*parse_arg(t_token **tokens)
 {
 	char	*arg;
 
-	arg = NULL;
-	while (**str)
+	while (*tokens && (*tokens)->type != IPT && (*tokens)->type != TRC
+			&& (*tokens)->type != HDC && (*tokens)->type != APP
+			&& (*tokens)->type != PIP)
 	{
-		if (**str == '\'' || **str == '\"')
-			arg = parse_quotes(str);
-		else if (**str == '|')
-			arg = parse_pipes(str);
+		if ((*tokens)->type == CMD)
+		{
+			arg = ft_strdup((*tokens)->value);
+			*tokens = (*tokens)->next;
+			return (arg);
+		}
+		*tokens = (*tokens)->next;
+	}
+	return (NULL);
+}
+
+char	*master_parser(char **str, t_token *tokens)
+{
+	char	*arg;
+	char	*parse;
+
+	while (tokens)
+	{
+		if (tokens->type == CMD)
+			arg = ft_strdup(tokens->value);
+		else if (tokens->type == IPT || tokens->type == TRC
+				|| tokens->type == HDC || tokens->type == APP)
+			arg = NULL;
+		else if (tokens->type == PIP)
+			arg = parse_pipes(&tokens);
 		else
-			arg = parse_arg(str);
+			arg = parse_arg(&tokens);
 		if (!arg)
 			return (NULL);
-		(*str)++;
-		return (arg);
+		parse = ft_strjoin(arg, " ");
+		free(arg);
+		tokens = tokens->next;
 	}
-	return (arg);
+	return (parse);
 }

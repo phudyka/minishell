@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/12 10:10:05 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/12 10:56:31 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,12 @@
 # include <stdlib.h>
 # include "parser.h"
 
-typedef enum token
+typedef enum
 {
     NUN, // none ""
     IPT, // input '<'
     TRC, // truncate '>'
     PIP, // pipe '|'
-    END, // end ';'
 	HDC, // heredoc '<<'
 	APP, // append '>>'
     CMD, // commande
