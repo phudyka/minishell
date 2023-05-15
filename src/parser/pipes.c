@@ -11,9 +11,9 @@
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-#include "../../include/parser.h"
+#include "../../include/lexer.h"
 
-static char	*parse_pipes(t_token **tokens)
+char	*parse_pipes(t_token **tokens)
 {
 	char	*cmd1;
 	char	*cmd2;

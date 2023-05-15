@@ -6,39 +6,39 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/12 09:16:10 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/15 18:02:33 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-#include "../../include/lexer.h"
+#include "../../include/parser.h"
 
 char    *ft_access(char **path, char **cmd)
 {
-	int		i;
-	int		len;
-	char	*exec;
-	char	*current;
+        int     i;
+        int     len;
+        char    *exec;
+        char    *cur;
 
-	i = 0;
-	exec = NULL;
-	while (path[i] != NULL) 
-	{
-		len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
-		current = malloc(sizeof(char) * len + 1);
-		if (!current) 
-			return NULL;
-		// Construire le chemin complet
-		ft_strlcpy(current, path[i], ft_strlen(path[i]) + 1);
-		ft_strlcat(current, cmd[0], len + 1);
-		// Vérifier si le fichier existe et peut être exécuté
-        if (access(current, F_OK | X_OK) == 0)
-		{
-			exec = current;
-			break;
-		}
+        i = 0;
+        exec = NULL;
+        while (path[i] != NULL) 
+        {
+                len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
+                cur = malloc(sizeof(char) * len + 1);
+                if (!cur) 
+                        return NULL;
+                // Construire le chemin complet
+                ft_strlcpy(cur, path[i], ft_strlen(path[i]) + 1);
+                ft_strlcat(cur, cmd[0], len + 1);
+                // Vérifier si le fichier existe et peut être exécuté
+        if (access(cur, F_OK | X_OK) == 0)
+                {
+                        exec = cur;
+                        break;
+                }
         // Libérer la mémoire allouée pour la chaîne de caractères contenant le chemin actuel
-        free(current);
+        free(cur);
         i++;
     }
     return (exec);
@@ -46,66 +46,65 @@ char    *ft_access(char **path, char **cmd)
 
 static void     exec_cmd(char *path, char **cmd)
 {
-		pid_t   pid;
-		int		status = 0;
-		extern char **environ;
+                pid_t   pid;
+                int             status = 0;
 
-		// On fork
-		pid = fork();
-		if (pid == -1)
-			perror("fork");
-		// Si le fork a reussit, le processus pere attend l'enfant (process fork)
-		else if (pid > 0)
-		{
-			// On bloque le processus parent jusqu'a ce que l'enfant termine puis
-			// On kill le processus enfant
-			waitpid(pid, &status, 0);
-			kill(pid, SIGTERM);
-		}
-		else
-		{
-			// Le processus enfant execute la commande ou exit si execve echoue
-			if (execve(path, cmd, environ) == -1)
-			{
-				printf("%s: command not found\n", cmd[0]);
-				exit(EXIT_FAILURE);
-			}
-			exit(EXIT_SUCCESS);
-			}
+                // On fork
+                pid = fork();
+                if (pid == -1)
+                        perror("fork");
+                // Si le fork a reussit, le processus pere attend l'enfant (process fork)
+                else if (pid > 0)
+                {
+                        // On bloque le processus parent jusqu'a ce que l'enfant termine puis
+                        // On kill le processus enfant
+                        waitpid(pid, &status, 0);
+                        kill(pid, SIGTERM);
+                }
+                else
+                {
+                        // Le processus enfant execute la commande ou exit si execve echoue
+                        if (execve(path, cmd, NULL) == -1)
+                        {
+                                printf("%s: Command not found\n", cmd[0]);
+                                exit(EXIT_FAILURE);
+                        }
+                        exit(EXIT_SUCCESS);
+                }
 }
 
-void ft_prompt(t_data *data, t_env *env)
+void    ft_prompt(t_data *data, t_env *env)
 {
-	// Boucle Prompt avec liberation de memoires
-	while ((data->buffer = readline("$ > ")))
-	{
-		add_history(data->buffer);
-		//data->cmd = ft_split(data->buffer, ' ');
-		data->cmd = master_lexer(data->buffer);
-		if (!data->cmd || !data->cmd[0])
-		{
-			free(data->buffer);
-			free(data->cmd);
-			continue ;
-		}
-		if ((is_builtin(data->cmd[0])) == 0)
-		{
-			exec_builtin(data->cmd, env);
-			free_array(data->cmd);
-			free (data->buffer);
-			continue ;
-		}
-		else
-		{
-			free (data->buffer);
-			data->buffer = ft_access(data->path, data->cmd);
-			exec_cmd(data->buffer, data->cmd);
-			free(data->buffer);
-			free_array (data->cmd);
-		}
-	}
-	clear_history();
-	free_array (data->path);
-	free(data->buffer);
-	free(data);
-}                                
+        // Boucle Prompt avec liberation de memoires
+        while ((data->buffer = readline("$ > ")))
+        {
+                add_history(data->buffer);
+                data->cmd = ft_split(data->buffer, ' ');
+                //data->cmd = master_lexer(data->buffer);
+                if (!data->cmd || !data->cmd[0])
+                {
+                        free(data->buffer);
+                        free(data->cmd);
+                        continue ;
+                }
+                if ((is_builtin(data)) == 0)
+                {
+                        exec_builtin(data, env);
+                        free_array(data->cmd);
+                        free (data->buffer);
+                        continue ;
+                }
+                else
+                {
+                        free (data->buffer);
+                        data->buffer = ft_access(data->path, data->cmd);
+                        exec_cmd(data->buffer, data->cmd);
+                        free(data->buffer);
+                        free_array (data->cmd);
+                }
+        }
+        clear_history();
+        free_array (data->path);
+        free(data->buffer);
+        free(data);
+}

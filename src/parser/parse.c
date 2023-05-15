@@ -6,10 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/12 11:50:27 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/15 18:08:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/lexer.h"
 #include "../../include/parser.h"
 
 static char	*parse_arg(t_token **tokens)
@@ -31,7 +32,7 @@ static char	*parse_arg(t_token **tokens)
 	return (NULL);
 }
 
-char	*master_parser(char **str, t_token *tokens)
+char	*master_parser(t_token *tokens)
 {
 	char	*arg;
 	char	*parse;

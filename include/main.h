@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/05/09 09:20:21 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/15 18:06:31 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,27 @@ typedef struct  s_env
     struct s_env   *next;
 }   t_env;
 
+//---------SIGNALS------------//
 void    ft_signals(void);
+//--------BUILTINS------------//
+void    builtin_export(t_data *data, t_env *env);
+void    builtin_exit(t_data *data, t_env *env);
+void    builtin_env(t_env *env, char **cmd);
 void    builtin_pwd(void);
-int     is_builtin(char *cmd);
-void    exec_builtin(char **cmd, t_env *env);
-void    builtin_cd(char **path);
+int     is_builtin(t_data *data);
+void    exec_builtin(t_data *data, t_env *env);
+void    builtin_cd(char **path, t_env *env);
+//----------LIST--------------//
+t_env   *envp_to_list(char **envp);
+t_env   *create_node(char *var);
+void    print_list(t_env *env);
+void    free_list(t_env *env);
+void    unset_list(t_env **env, char *var);
+void    add_node(t_env **head, t_env *node);
+int     search_in_env(t_env *env, char *variable);
+char    *get_from_env(char *variable, t_env *env);
+//---------AUTRES------------//
 void    ft_prompt(t_data *data, t_env *env);
 void    free_array(char **tab);
-t_env   *envp_to_list(char **envp);
-void	afficher_liste(t_env *env);
-void    free_list(t_env *env);
-void	unset_list(t_env **env, char *var);
 
 #endif

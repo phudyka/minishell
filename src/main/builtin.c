@@ -6,22 +6,63 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/05/09 11:55:54 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/15 17:37:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-void    builtin_env(t_env *env)
+void    builtin_export(t_data *data, t_env *env)
 {
-    t_env	*tmp;
+    char    **variable;
+    t_env   *current;
+    t_env   *new_variable;
+    
+    variable = NULL;
+    // Vérification des arguments
+    if (data->cmd[1] == NULL)
+        return;
+    // Vérification si la variable existe déja
+    current = env;
+    variable = ft_split(data->cmd[1], '=');
+    while (current != NULL)
+    {
+        if (ft_strncmp(current->var, variable[0], ft_strlen(variable[0])) == 0)
+        {
+            // La variable existe déjà, mise à jour de sa valeur
+            free(current->var);
+            free_array(variable);
+            current->var = strdup(data->cmd[1]);
+            return;
+        }
+        current = current->next;
+    }
+    if (variable)
+        free_array(variable);
+    new_variable = create_node(data->cmd[1]);
+    add_node(&env, new_variable);
+}
 
-	tmp = env;
-	while (tmp)
-	{
-		ft_putstr_fd(tmp->var, 1);
-		tmp = tmp->next;
-	}
+void    builtin_exit(t_data *data, t_env *env)
+{
+    if (data)
+    {
+        free_array(data->cmd);
+        free_array(data->path);
+        free (data->buffer);
+        free (data);
+    }
+    if (env)
+        free_list(env);
+    exit(EXIT_SUCCESS);
+}
+
+void    builtin_env(t_env *env, char **cmd)
+{
+    if (!cmd[1])
+        print_list(env);
+    else
+        printf("env: invalid option -- '%s'\n", cmd[1]);
 }
 
 void    builtin_pwd(void)
@@ -40,20 +81,21 @@ void    builtin_pwd(void)
     }
 }
 
-void    builtin_cd(char **path)
+void    builtin_cd(char **path, t_env *env)
 {
     char    *home;
 
     home = NULL;
-    if (path[1] == NULL)
+    if (!path[1])
     {
-        home = getenv("HOME");
-        if (home == NULL)
+        home = get_from_env("HOME", env);
+        if (!home)
         {
-            ft_putstr_fd("cd: $HOME not set\n", 1);
+            printf("cd: $HOME not set\n");
             return ;
         }
         chdir(home);
+        free(home);
     }
     else
     {
@@ -63,47 +105,4 @@ void    builtin_cd(char **path)
             return ;
         }
     }
-}
-
-void    exec_builtin(char **cmd, t_env *env)
-{
-    if ((ft_strcmp(cmd[0], "cd")) == 0)
-        builtin_cd(cmd);
-    else if ((ft_strcmp(cmd[0], "pwd")) == 0)
-        builtin_pwd();
-    else if ((ft_strcmp(cmd[0], "env")) == 0)
-        builtin_env(env);
-    else if ((ft_strcmp(cmd[0], "unset")) == 0)
-        unset_list(&env, cmd[1]);
-    else if ((ft_strcmp(cmd[0], "exit")) == 0) // A Faire (tout free et exit)
-        exit(EXIT_SUCCESS);
-}
-
-int is_builtin(char *cmd)
-{
-    char    **all_cmd;
-    int     i;
-    int     res;
-
-    i = 0;
-    res = 1;
-    all_cmd = malloc(sizeof(char *) * 6);
-    all_cmd[0] = "cd";
-    all_cmd[1] = "pwd";
-    all_cmd[2] = "env";
-    all_cmd[3] = "unset";
-    all_cmd[4] = "exit";
-    all_cmd[5] = NULL;
-    while (all_cmd[i])
-    {
-        if ((ft_strcmp(all_cmd[i], cmd)) == 0)
-            res = 0;
-        i++;
-    }
-    if (all_cmd)
-    {
-        free (all_cmd);
-        all_cmd = NULL;
-    }
-    return (res);
 }
