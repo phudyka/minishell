@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:08:29 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/15 18:05:38 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:12: by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,18 @@ static t_token	*new_token(token type, char *value)
 	return (token);
 }
 
-static void	add_token(t_token **tokens, t_token *new)
+static void	add_token(t_token *tokens, t_token *new)
 {
 	t_token	*tmp;
 	
 	if (!tokens || !new)
 		return ;
-	if (!(*tokens))
+	if (!tokens)
 	{
-		*tokens = new;
+		tokens = new;
 		return ;
 	}
-	tmp = *tokens;
+	tmp = tokens;
 	while (tmp->next)
 	{
 		tmp = tmp->next;
@@ -67,20 +67,20 @@ static t_token	*tokenizer(char **cmd)
 	tokens = NULL;
 	while (*cmd)
 	{
-		if (ft_strcmp(*cmd, "<"))
-			add_token(&tokens, new_token(IPT, NULL));
-		else if (ft_strcmp(*cmd, ">"))
-			add_token(&tokens, new_token(TRC, NULL));
-		else if (ft_strcmp(*cmd, "<<"))
-			add_token(&tokens, new_token(HDC, NULL));
-		else if (ft_strcmp(*cmd, ">>"))
-			add_token(&tokens, new_token(APP, NULL));
-		else if (ft_strcmp(*cmd, "|"))
-			add_token(&tokens, new_token(PIP, NULL));
-		else if (ft_strcmp(*cmd, ";") || ft_strcmp(*cmd, "\\"))
-			cmd++;
+		if (ft_strcmp(*cmd, "<") == 0)
+			add_token(tokens, new_token(IPT, NULL));
+		else if (ft_strcmp(*cmd, ">") == 0)
+			add_token(tokens, new_token(TRC, NULL));
+		else if (ft_strcmp(*cmd, "<<") == 0)
+			add_token(tokens, new_token(HDC, NULL));
+		else if (ft_strcmp(*cmd, ">>") == 0)
+			add_token(tokens, new_token(APP, NULL));
+		else if (ft_strcmp(*cmd, "|") == 0)
+			add_token(tokens, new_token(PIP, NULL));
 		else
-			add_token(&tokens, new_token(CMD, ft_strdup(*cmd)));
+			add_token(tokens, new_token(CMD, ft_strdup(*cmd)));
+		if (!cmd || !tokens)
+			break ;
 		cmd++;
 	}
 	return (tokens);

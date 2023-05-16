@@ -6,11 +6,12 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/15 18:02:33 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:07:15 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+#include "../../include/lexer.h"
 #include "../../include/parser.h"
 
 char    *ft_access(char **path, char **cmd)
@@ -32,7 +33,7 @@ char    *ft_access(char **path, char **cmd)
                 ft_strlcpy(cur, path[i], ft_strlen(path[i]) + 1);
                 ft_strlcat(cur, cmd[0], len + 1);
                 // Vérifier si le fichier existe et peut être exécuté
-        if (access(cur, F_OK | X_OK) == 0)
+                if (access(cur, F_OK | X_OK) == 0)
                 {
                         exec = cur;
                         break;
@@ -80,7 +81,7 @@ void    ft_prompt(t_data *data, t_env *env)
         {
                 add_history(data->buffer);
                 data->cmd = ft_split(data->buffer, ' ');
-                //data->cmd = master_lexer(data->buffer);
+                master_lexer(data->buffer);
                 if (!data->cmd || !data->cmd[0])
                 {
                         free(data->buffer);
