@@ -89,7 +89,6 @@ static t_token	*tokenizer(char **cmd)
 char	**master_lexer(char *buff)
 {
     int		i;
-	//char	**parse;
 	char	**args;
     t_token	*tokens;
     
@@ -107,7 +106,8 @@ char	**master_lexer(char *buff)
         tokens = tokens->next;
     }
     args[i] = NULL;
-	//parse = master_parser(args, tokens);
+	//if (!master_parser(tokens))
+		//return (NULL);
     free_tokens(tokens);
     return (args);
 }

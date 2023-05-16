@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:35:44 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/15 18:08:35 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/16 15:39:07 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int     metachar(char c);
 int     ft_quotes(char *cmd);
 void    free_array(char **tab);
 char	*parse_quotes(char **str);
+int		skip_single_quotes(char **str);
+int		skip_double_quotes(char **str);
 int     skip_quotes(char **str, char quote);
 
 #endif
