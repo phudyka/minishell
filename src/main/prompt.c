@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 05:46:11 by kali              #+#    #+#             */
-/*   Updated: 2023/05/16 14:30:32 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/17 14:22:59 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char    *ft_access(char **path, char **cmd)
 
         i = 0;
         exec = NULL;
-        while (path[i]) 
+        while (path[i] != NULL) 
         {
                 len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
                 cur = malloc(sizeof(char) * len + 1);
@@ -76,7 +76,7 @@ static void     exec_cmd(char *path, char **cmd)
 
 void    ft_prompt(t_data *data, t_env *env)
 {
-        while ((data->buffer = readline("$ > ")))
+        while ((data->buffer = readline( GREEN "$ > " RESET)))
         {
                 add_history(data->buffer);
                 data->cmd = ft_split(data->buffer, ' ');
