@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 03:59:51 by kali              #+#    #+#             */
-/*   Updated: 2023/05/06 08:41:29 by kali             ###   ########.fr       */
+/*   Updated: 2023/05/30 14:30:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    free_list(t_env *env)
 {
 	t_env   *tmp;
 	
-	while (env != NULL)
+	while (env)
 	{
 		tmp = env;
 		env = env->next;
@@ -33,15 +33,15 @@ void unset_list(t_env **env, char *var)
 
 	current = *env;
 	prev = NULL;
-	while (current != NULL
+	while (current 
 		&& ft_strncmp(current->var, var, ft_strlen(var)) != 0) 
 	{
 		prev = current;
 		current = current->next;
 	}
-	if (current == NULL)
+	if (!current)
 		return;
-	if (prev == NULL)
+	if (!prev)
 		*env = current->next;
 	else
 		prev->next = current->next;
@@ -77,12 +77,12 @@ t_env *create_node(char *var)
 
 void add_node(t_env **head, t_env *node)
 {
-	if (*head == NULL) 
+	if (!*head) 
 		*head = node;
 	else 
 	{
 		t_env *current = *head;
-		while (current->next != NULL)
+		while (current->next)
 			current = current->next;
 		current->next = node;
 	}
@@ -90,9 +90,13 @@ void add_node(t_env **head, t_env *node)
 
 t_env *envp_to_list(char **envp)
 {
-	t_env *head = NULL;
-	int i = 0;
-	while (envp[i] != NULL) {
+	int		i;
+	t_env	*head;
+
+	i = 0;
+	head = NULL;
+	while (envp[i])
+	{
 		add_node(&head, create_node(envp[i]));
 		i++;
 	}
