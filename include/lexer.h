@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/15 18:09:12 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/02 10:24:03 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ typedef enum
 	HDC, // heredoc '<<'
 	APP, // append '>>'
     CMD, // commande
-    STR, //string       
+    STR, // string
+    LPR, // left parenthesis       
+    RPR  // right parenthesis       
 }           token;
 
 typedef struct	s_token
@@ -38,7 +40,6 @@ typedef struct	s_token
 }				t_token;
 
 char    *ft_chardup(char c);
-char    *parse_pipes(t_token **tokens);
 char    *master_parser(t_token *token);
 char    **master_lexer(char *buff);
 

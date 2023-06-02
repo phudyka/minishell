@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   brackets.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/01 15:11:01 by phudyka          ###   ########.fr       */
+/*   Created: 2023/06/01 09:17:25 by phudyka           #+#    #+#             */
+/*   Updated: 2023/06/01 12:39:56 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../include/lexer.h"
 #include "../../include/parser.h"
 
-int is_space(char c)
+char	*parse_brackets(t_token **tokens)
 {
-    return(c == ' ');
-}
-
-int metachar(char c)
-{
-    return (c == '|' || c == '<' ||
-        c == '>' || c == '&');
-}
-
-int is_char(char c)
-{
-    return (c >= 32 && c <= 126 && !metachar(c));
-}
-
-char *ft_chardup(char c)
-{
-    char *dup = (char *)malloc(sizeof(char) * 2);
-    if (!dup)
-        return (NULL);
-    dup[0] = c;
-    dup[1] = '\0';
-    return (dup);
+    (void)tokens;
+    return (NULL);
 }
