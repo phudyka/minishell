@@ -100,8 +100,7 @@ char **master_lexer(char *buff)
         return (NULL);
     tokens = tokenizer(&buff);
     parse = master_parser(tokens);
-	printf("%s\n", parse);
-    free_tokens(tokens);
+	//printf("%s\n", parse);
     while (tokens)
     {
         if (tokens->type == CMD)
@@ -116,5 +115,6 @@ char **master_lexer(char *buff)
         free_array(args);
         return (NULL);
     }
+    free_tokens(tokens);
     return (args);
 }
