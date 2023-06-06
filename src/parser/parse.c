@@ -6,52 +6,39 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/02 11:51:07 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/06 16:30:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
 #include "../../include/parser.h"
 
-static char	*parse_arg(t_token **tokens)
+static int parse_arg(t_token *tokens)
 {
-	char	*arg;
-
-	while (*tokens && (*tokens)->type != IPT && (*tokens)->type != TRC
-			&& (*tokens)->type != HDC && (*tokens)->type != APP
-			&& (*tokens)->type != PIP)
-	{
-		if ((*tokens)->type == CMD)
-		{
-			arg = ft_strdup((*tokens)->value);
-			*tokens = (*tokens)->next;
-			return (arg);
-		}
-		*tokens = (*tokens)->next;
-	}
-	return (NULL);
-}
-
-char *master_parser(t_token *tokens)
-{
-	char *arg;
-	char *parse;
-
-	while (tokens)
+	while (tokens && tokens->type != IPT && tokens->type != TRC
+			&& tokens->type != HDC && tokens->type != APP
+			&& tokens->type != PIP)
 	{
 		if (tokens->type == CMD)
-			arg = ft_strdup(tokens->value);
-		else if (tokens->type == IPT || tokens->type == TRC
-				|| tokens->type == HDC || tokens->type == APP)
-			arg = NULL;
-		else if (tokens->type == PIP)
-			arg = parse_pipes(&tokens);
-		else
-			arg = parse_arg(&tokens);
-		if (!arg)
-			return (NULL);
-		parse = ft_strjoin(arg, " ");
+		{
+			tokens = tokens->next;
+			return (0);
+		}
 		tokens = tokens->next;
 	}
-	return (parse);
+	return (1);
+}
+
+void	master_parser(t_token *token)
+{
+	while (token)
+	{
+		if (parse_arg(token))
+			ft_error(IPT);
+		if (parse_brackets(token))
+			ft_error(RPR);
+		if (parse_pipes(token))	
+			ft_error(PIP);
+		token = token->next;
+	}
 }

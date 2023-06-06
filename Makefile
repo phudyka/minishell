@@ -6,7 +6,7 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/06/01 09:17:41 by phudyka          ###   ########.fr        #
+#    Updated: 2023/06/06 16:07:16 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c	\
 				src/parser/parse.c src/parser/quotes.c					\
 				src/parser/parse_utils.c src/parser/pipes.c 			\
 				src/parser/brackets.c 									\
+				src/error/errors.c 										\
 				
-INCLUDE		=	include/main.h include/parse.h include/lexer.h
+INCLUDE		=	include/main.h include/parse.h include/lexer.h include/error.h
 
 OBJS		=	$(SRCS:%.c=%.o)
 

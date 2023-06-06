@@ -13,28 +13,26 @@
 #include "../../include/main.h"
 #include "../../include/lexer.h"
 
-char	*parse_pipes(t_token **tokens)
+char	*parse_pipes(t_token *tokens)
 {
 	char	*cmd1;
 	char	*cmd2;
 
-	cmd1 = NULL;
-	cmd2 = NULL;
-	while (*tokens)
+	while (tokens)
 	{
-		if ((*tokens)->type == CMD && !cmd1)
-			cmd1 = ft_strdup((*tokens)->value);
-		else if ((*tokens)->type == PIP)
+		if (tokens->type == CMD && !cmd1)
+			cmd1 = ft_strdup(tokens->value);
+		else if (tokens->type == PIP)
 			break ;
-		*tokens = (*tokens)->next;
+		tokens = tokens->next;
 	}
-	if (*tokens)
-		*tokens = (*tokens)->next;
-	while (*tokens)
+	if (tokens)
+		tokens = tokens->next;
+	while (tokens)
 	{
-		if ((*tokens)->type == CMD && !cmd2)
-			cmd2 = ft_strdup((*tokens)->value);
-		*tokens = (*tokens)->next;
+		if (tokens->type == CMD && !cmd2)
+			cmd2 = ft_strdup(tokens->value);
+		tokens = tokens->next;
 	}
 	if (cmd1 && cmd2)
 		return (ft_strjoin(ft_strjoin(cmd1, " | "), cmd2));

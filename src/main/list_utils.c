@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 03:59:51 by kali              #+#    #+#             */
-/*   Updated: 2023/05/30 14:30:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/06 15:28:14 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void unset_list(t_env **env, char *var)
 		*env = current->next;
 	else
 		prev->next = current->next;
-
 	free(current->var);
 	free(current);
 }

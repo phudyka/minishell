@@ -90,7 +90,7 @@ static t_token *tokenizer(char **cmd)
 char **master_lexer(char *buff)
 {
     int		i;
-    char	*parse;
+   //int		code;
     char	**args;
     t_token	*tokens;
     
@@ -99,8 +99,7 @@ char **master_lexer(char *buff)
     if (!args)
         return (NULL);
     tokens = tokenizer(&buff);
-    parse = master_parser(tokens);
-	//printf("%s\n", parse);
+    master_parser(tokens);
     while (tokens)
     {
         if (tokens->type == CMD)
@@ -109,12 +108,7 @@ char **master_lexer(char *buff)
             args[i++] = ft_chardup(tokens->type);
         tokens = tokens->next;
     }
-    args[i] = NULL;
-    if (!parse)
-    {
-        free_array(args);
-        return (NULL);
-    }
     free_tokens(tokens);
+    args[i] = NULL;
     return (args);
 }

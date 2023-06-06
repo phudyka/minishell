@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   brackets.c                                         :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/01 09:17:25 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/06 13:35:47 by phudyka          ###   ########.fr       */
+/*   Created: 2023/06/06 16:02:54 by phudyka           #+#    #+#             */
+/*   Updated: 2023/06/06 16:06:29 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lexer.h"
-#include "../../include/parser.h"
+#include "../../include/error.h"
 
-char	*parse_brackets(t_token *tokens)
+void	ft_error(int code)
 {
-    (void)tokens;
-    return (NULL);
+	printf("Program ended with error code %d\n", code);
 }
