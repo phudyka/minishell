@@ -72,7 +72,8 @@ void	ft_prompt(t_data *data, t_env *env)
 	while ((data->buffer = readline(GREEN "$ > " RESET)))
 	{
 		add_history(data->buffer);
-		data->cmd = master_lexer(data->buffer);
+		if (master_lexer(data->buffer))
+			printf("parsing error");
 		if (!data->cmd || !data->cmd[0])
 		{
 			free(data->buffer);

@@ -59,56 +59,38 @@ static void free_tokens(t_token *tokens)
 	tmp = NULL;
 }
 
-static t_token *tokenizer(char **cmd)
+static char	*tokenizer(char *temp, t_token *tokens)
 {
-	char	*temp;
-	t_token *tokens;
-	
-	temp = *cmd;
-	tokens = NULL;
-	while (temp && *temp)
-	{
-		if (ft_strcmp(temp, "<") == 0)
-			add_token(&tokens, new_token(IPT, NULL));
-		else if (ft_strcmp(temp, ">") == 0)
-			add_token(&tokens, new_token(TRC, NULL));
-		else if (ft_strcmp(temp, "<<") == 0)
-			add_token(&tokens, new_token(HDC, NULL));
-		else if (ft_strcmp(temp, ">>") == 0)
-			add_token(&tokens, new_token(APP, NULL));
-		else if (ft_strcmp(temp, "|") == 0)
-			add_token(&tokens, new_token(PIP, NULL));
-		else
-			add_token(&tokens, new_token(CMD, ft_strdup(temp)));
-		if (!temp || !tokens)
-			break ;
-		temp++;
-	}
-	return (tokens);
+
+	if (ft_strcmp(temp, "<") == 0)
+		add_token(&tokens, new_token(IPT, NULL));
+	else if (ft_strcmp(temp, ">") == 0)
+		add_token(&tokens, new_token(TRC, NULL));
+	else if (ft_strcmp(temp, "<<") == 0)
+		add_token(&tokens, new_token(HDC, NULL));
+	else if (ft_strcmp(temp, ">>") == 0)
+		add_token(&tokens, new_token(APP, NULL));
+	else if (ft_strcmp(temp, "|") == 0)
+		add_token(&tokens, new_token(PIP, NULL));
+	else
+		add_token(&tokens, new_token(CMD, ft_strdup(temp)));
+	return (tem);
 }
 
-char **master_lexer(char *buff)
+int	master_lexer(char *buff)
 {
-    int		i;
-   //int		code;
-    char	**args;
+	char	*temp;
     t_token	*tokens;
     
-    i = 0;
-    args = (char **)malloc(sizeof(char *) * (ft_strlen(buff) + 1));
-    if (!args)
-        return (NULL);
-    tokens = tokenizer(&buff);
-    master_parser(tokens);
-    while (tokens)
+	temp = buff;
+    while (*temp)
     {
-        if (tokens->type == CMD)
-            args[i++] = ft_strdup(tokens->value);
+        if (ft_isspace(*temp))
+            temp++;
         else
-            args[i++] = ft_chardup(tokens->type);
-        tokens = tokens->next;
+			temp = tokenizer(temp, tokens);
     }
+	master_parser(tokens);
     free_tokens(tokens);
-    args[i] = NULL;
-    return (args);
+    return ();
 }

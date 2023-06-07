@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/06 16:31:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/07 10:53:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct	s_token
 }				t_token;
 
 char    *ft_chardup(char c);
-char    **master_lexer(char *buff);
+int     master_lexer(char *buff);
 void    master_parser(t_token *token);
 
 #endif
