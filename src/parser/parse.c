@@ -6,53 +6,45 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/15 18:08:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/08 16:36:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
 #include "../../include/parser.h"
 
-static char	*parse_arg(t_token **tokens)
+static char	*parse_arg(t_token *tokens)
 {
 	char	*arg;
 
-	while (*tokens && (*tokens)->type != IPT && (*tokens)->type != TRC
-			&& (*tokens)->type != HDC && (*tokens)->type != APP
-			&& (*tokens)->type != PIP)
+	while (tokens && (tokens->type != PIP ||
+		tokens->type != QOT || tokens->type != RDR))
 	{
-		if ((*tokens)->type == CMD)
+		if (tokens->type == CMD)
 		{
-			arg = ft_strdup((*tokens)->value);
-			*tokens = (*tokens)->next;
+			arg = ft_strdup(tokens->value);
+			tokens = tokens->next;
 			return (arg);
 		}
-		*tokens = (*tokens)->next;
+		tokens = tokens->next;
 	}
 	return (NULL);
 }
 
-char	*master_parser(t_token *tokens)
+void	master_parser(t_token *tokens)
 {
-	char	*arg;
-	char	*parse;
-
 	while (tokens)
 	{
 		if (tokens->type == CMD)
-			arg = ft_strdup(tokens->value);
-		else if (tokens->type == IPT || tokens->type == TRC
-				|| tokens->type == HDC || tokens->type == APP)
-			arg = NULL;
-		else if (tokens->type == PIP)
-			arg = parse_pipes(&tokens);
+			ft_strdup(tokens->value);
+		/*else if (tokens->type == PIP)
+			parse_pipes(tokens);
+		else if (tokens->type == QOT)
+			parse_quotes(tokens);
+		else if (tokens->type == RDR)
+			parse_redir(tokens);*/
 		else
-			arg = parse_arg(&tokens);
-		if (!arg)
-			return (NULL);
-		parse = ft_strjoin(arg, " ");
-		free(arg);
+			parse_arg(tokens);
 		tokens = tokens->next;
 	}
-	return (parse);
 }

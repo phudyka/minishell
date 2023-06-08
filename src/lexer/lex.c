@@ -21,26 +21,25 @@ static t_token	*new_token(token type, char *value)
 		return (NULL);
 	token->type = type;
 	token->value = value;
+	token->next = NULL;
 	return (token);
 }
 
-static void	add_token(t_token *tokens, t_token *new)
+static void	add_token(t_token **tokens, t_token *new)
 {
 	t_token	*tmp;
 	
 	if (!tokens || !new)
 		return ;
-	if (!tokens)
+	if (!*tokens)
 	{
-		tokens = new;
+		*tokens = new;
 		return ;
 	}
-	tmp = tokens;
+	tmp = *tokens;
 	while (tmp->next)
-	{
 		tmp = tmp->next;
-		tmp->next = new;
-	}
+	tmp->next = new;
 }
 
 static void free_tokens(t_token *tokens)
@@ -67,18 +66,16 @@ static t_token	*tokenizer(char **cmd)
 	tokens = NULL;
 	while (*cmd)
 	{
-		if (ft_strcmp(*cmd, "<") == 0)
-			add_token(tokens, new_token(IPT, NULL));
-		else if (ft_strcmp(*cmd, ">") == 0)
-			add_token(tokens, new_token(TRC, NULL));
-		else if (ft_strcmp(*cmd, "<<") == 0)
-			add_token(tokens, new_token(HDC, NULL));
-		else if (ft_strcmp(*cmd, ">>") == 0)
-			add_token(tokens, new_token(APP, NULL));
+		if (ft_strcmp(*cmd, "\'") == 0 ||
+			ft_strcmp(*cmd, "\"") == 0)
+			add_token(&tokens, new_token(QOT, NULL));
+		else if (ft_strcmp(*cmd, ">") == 0 ||
+			ft_strcmp(*cmd, "<") == 0)
+			add_token(&tokens, new_token(RDR, NULL));		
 		else if (ft_strcmp(*cmd, "|") == 0)
-			add_token(tokens, new_token(PIP, NULL));
+			add_token(&tokens, new_token(PIP, NULL));
 		else
-			add_token(tokens, new_token(CMD, ft_strdup(*cmd)));
+			add_token(&tokens, new_token(STR, ft_strdup(*cmd)));
 		if (!cmd || !tokens)
 			break ;
 		cmd++;
@@ -88,29 +85,24 @@ static t_token	*tokenizer(char **cmd)
 
 char	**master_lexer(char *buff)
 {
-    int		i;
-	char	*parse;
-	char	**args;
-    t_token	*tokens;
-    
-    i = 0;
-    args = (char **)malloc(sizeof(char *) * (ft_strlen(buff) + 1));
-    if (!args)
-        return (NULL);
-    tokens = tokenizer(&buff);
-	parse = master_parser(tokens);
-	if (!parse)
+	int		i;
+	char	**cmd;
+	t_token	*tokens;
+
+	i = 0;
+	cmd = ft_split(buff, ' ');
+	if (!cmd)
+		return (NULL);
+	tokens = tokenizer(cmd);
+	master_parser(tokens);
+	if (!tokens)
 		return (NULL);
 	while (tokens)
 	{
-		if (tokens->type == CMD)
-			args[i++] = ft_strdup(tokens->value);
-        else
-			args[i++] = ft_chardup(tokens->type);
-		printf("%s\n", args[i]);
-        tokens = tokens->next;
-    }
-    args[i] = NULL;
-    free_tokens(tokens);
-    return (args);
+		cmd[i++] = tokens->value;
+		tokens = tokens->next;
+	}
+	cmd[i] = NULL;
+	free_tokens(tokens);
+	return (cmd);
 }
