@@ -10,14 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/main.h"
 #include "../../include/lexer.h"
 
 static t_token	*new_token(token type, char *value)
 {
 	t_token	*token;
 	
-	token = ft_calloc(1, sizeof(t_token));
+	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
 	token->type = type;
@@ -25,21 +24,23 @@ static t_token	*new_token(token type, char *value)
 	return (token);
 }
 
-static void add_token(t_token **tokens, t_token *new)
+static void	add_token(t_token *tokens, t_token *new)
 {
-	t_token *tmp;
-
+	t_token	*tmp;
+	
 	if (!tokens || !new)
 		return ;
-	if (!*tokens)
+	if (!tokens)
 	{
-		*tokens = new;
+		tokens = new;
 		return ;
 	}
-	tmp = *tokens;
+	tmp = tokens;
 	while (tmp->next)
+	{
 		tmp = tmp->next;
-	tmp->next = new;
+		tmp->next = new;
+	}
 }
 
 static void free_tokens(t_token *tokens)
@@ -59,38 +60,57 @@ static void free_tokens(t_token *tokens)
 	tmp = NULL;
 }
 
-static char	*tokenizer(char *temp, t_token *tokens)
+static t_token	*tokenizer(char **cmd)
 {
-
-	if (ft_strcmp(temp, "<") == 0)
-		add_token(&tokens, new_token(IPT, NULL));
-	else if (ft_strcmp(temp, ">") == 0)
-		add_token(&tokens, new_token(TRC, NULL));
-	else if (ft_strcmp(temp, "<<") == 0)
-		add_token(&tokens, new_token(HDC, NULL));
-	else if (ft_strcmp(temp, ">>") == 0)
-		add_token(&tokens, new_token(APP, NULL));
-	else if (ft_strcmp(temp, "|") == 0)
-		add_token(&tokens, new_token(PIP, NULL));
-	else
-		add_token(&tokens, new_token(CMD, ft_strdup(temp)));
-	return (tem);
+	t_token	*tokens;
+	
+	tokens = NULL;
+	while (*cmd)
+	{
+		if (ft_strcmp(*cmd, "<") == 0)
+			add_token(tokens, new_token(IPT, NULL));
+		else if (ft_strcmp(*cmd, ">") == 0)
+			add_token(tokens, new_token(TRC, NULL));
+		else if (ft_strcmp(*cmd, "<<") == 0)
+			add_token(tokens, new_token(HDC, NULL));
+		else if (ft_strcmp(*cmd, ">>") == 0)
+			add_token(tokens, new_token(APP, NULL));
+		else if (ft_strcmp(*cmd, "|") == 0)
+			add_token(tokens, new_token(PIP, NULL));
+		else
+			add_token(tokens, new_token(CMD, ft_strdup(*cmd)));
+		if (!cmd || !tokens)
+			break ;
+		cmd++;
+	}
+	return (tokens);
 }
 
-int	master_lexer(char *buff)
+char	**master_lexer(char *buff)
 {
-	char	*temp;
+    int		i;
+	char	*parse;
+	char	**args;
     t_token	*tokens;
     
-	temp = buff;
-    while (*temp)
-    {
-        if (ft_isspace(*temp))
-            temp++;
+    i = 0;
+    args = (char **)malloc(sizeof(char *) * (ft_strlen(buff) + 1));
+    if (!args)
+        return (NULL);
+    tokens = tokenizer(&buff);
+	parse = master_parser(tokens);
+	if (!parse)
+		return (NULL);
+	while (tokens)
+	{
+		if (tokens->type == CMD)
+			args[i++] = ft_strdup(tokens->value);
         else
-			temp = tokenizer(temp, tokens);
+			args[i++] = ft_chardup(tokens->type);
+		printf("%s\n", args[i]);
+        tokens = tokens->next;
     }
-	master_parser(tokens);
+    args[i] = NULL;
     free_tokens(tokens);
-    return ();
+    return (args);
 }
