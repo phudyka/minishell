@@ -68,14 +68,14 @@ static t_token	*tokenizer(char **cmd)
 	{
 		if (ft_strcmp(*cmd, "\'") == 0 ||
 			ft_strcmp(*cmd, "\"") == 0)
-			add_token(&tokens, new_token(QOT, NULL));
+				add_token(&tokens, new_token(QOT, NULL));
 		else if (ft_strcmp(*cmd, ">") == 0 ||
 			ft_strcmp(*cmd, "<") == 0)
 			add_token(&tokens, new_token(RDR, NULL));		
 		else if (ft_strcmp(*cmd, "|") == 0)
 			add_token(&tokens, new_token(PIP, NULL));
 		else
-			add_token(&tokens, new_token(STR, ft_strdup(*cmd)));
+			add_token(&tokens, new_token(CMD, ft_strdup(*cmd)));
 		if (!cmd || !tokens)
 			break ;
 		cmd++;

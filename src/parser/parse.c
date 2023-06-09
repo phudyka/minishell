@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 11:37:58 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:09:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static char	*parse_arg(t_token *tokens)
 
 void	master_parser(t_token *tokens)
 {
+
 	while (tokens)
 	{
 		if (tokens->type == CMD)

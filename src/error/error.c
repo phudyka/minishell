@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 11:57:12 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:05:41 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ static void	cmd_error(int code)
 		ft_putstr_fd("Error! [command]\n", 2);
 }
 
-void	ft_error(int case, int code)
+void	ft_error(int token, int code)
 {
-	if (case = CMD)
+	if (token == CMD)
 		cmd_error(code);
-	else if (case == PIP)
+	else if (token == PIP)
 		pipe_error(code);
-	else if (case = RDR)
+	else if (token == RDR)
 		redir_error(code);
-	else if (case = QOT)
+	else if (token == QOT)
 		quote_error(code);
-	else if (case == FATAL)
+	else if (token == FATAL)
 		fatal_error(code);
 	else
 		ft_putstr_fd("Error! [An unexpected behavior has occured]\n", 2);

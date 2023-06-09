@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 11:20:41 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 15:55:44 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ void parse_quotes(t_token *tokens)
 	temp = tokens;
     while (temp)
     {
-        if (temp->type == QOT)
+        if (temp->type == QOT && temp->value && temp->value[0])
         {
             type = temp->value[0];
             parsed = ft_sequence(type, temp->value);
             if (!parsed)
-                return;
+                ft_error(QOT, 0);
             free(temp->value);
             temp->value = parsed;
         }
