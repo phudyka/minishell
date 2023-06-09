@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/05/17 14:23:32 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 10:30:44 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@
 # include <sys/resource.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "error.h"
 # include "../libft/libft.h"
 
 #define RESET "\x1b[0m"
 #define GREEN "\x1b[32m"
+
 typedef struct  s_data
 {
     char    **path;

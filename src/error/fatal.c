@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   fatal.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/08 16:24:09 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 11:57:27 by phudyka          ###   ########.fr       */
+/*   Created: 2023/06/09 11:55:07 by phudyka           #+#    #+#             */
+/*   Updated: 2023/06/09 11:56:02 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-# define ERROR_H
+# include "../../include/error.h"
 
-# define FATAL	99 // Fatal error causing minishell to stop
-
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-
-void	fatal_error(int code);
-void	ft_error(int case, int code);
-
-#endif
+void	fatal_error(int code)
+{
+	if (code == 0)
+		ft_putstr_fd("FATAL ERROR ! [Causing minishell to stop]\n", 2);
+}

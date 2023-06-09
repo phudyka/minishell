@@ -6,19 +6,17 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/08 16:36:35 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 11:37:58 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lexer.h"
 #include "../../include/parser.h"
 
 static char	*parse_arg(t_token *tokens)
 {
 	char	*arg;
 
-	while (tokens && (tokens->type != PIP ||
-		tokens->type != QOT || tokens->type != RDR))
+	while (tokens)
 	{
 		if (tokens->type == CMD)
 		{
@@ -37,11 +35,11 @@ void	master_parser(t_token *tokens)
 	{
 		if (tokens->type == CMD)
 			ft_strdup(tokens->value);
-		/*else if (tokens->type == PIP)
-			parse_pipes(tokens);
 		else if (tokens->type == QOT)
 			parse_quotes(tokens);
-		else if (tokens->type == RDR)
+		else if (tokens->type == PIP)
+			parse_pipes(tokens);
+		/*else if (tokens->type == RDR)
 			parse_redir(tokens);*/
 		else
 			parse_arg(tokens);

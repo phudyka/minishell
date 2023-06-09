@@ -11,32 +11,35 @@
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-#include "../../include/lexer.h"
+#include "../../include/parser.h"
 
-char	*parse_pipes(t_token **tokens)
+void parse_pipes(t_token *tokens)
 {
-	char	*cmd1;
-	char	*cmd2;
-
-	cmd1 = NULL;
-	cmd2 = NULL;
-	while (*tokens)
-	{
-		if ((*tokens)->type == CMD && !cmd1)
-			cmd1 = ft_strdup((*tokens)->value);
-		else if ((*tokens)->type == PIP)
-			break ;
-		*tokens = (*tokens)->next;
-	}
-	if (*tokens)
-		*tokens = (*tokens)->next;
-	while (*tokens)
-	{
-		if ((*tokens)->type == CMD && !cmd2)
-			cmd2 = ft_strdup((*tokens)->value);
-		*tokens = (*tokens)->next;
-	}
-	if (cmd1 && cmd2)
-		return (ft_strjoin(ft_strjoin(cmd1, " | "), cmd2));
-	return (cmd1);
+    t_token *prev;
+    t_token *next;
+    
+	prev = NULL;
+	next = NULL;
+    while (tokens)
+    {
+        if (tokens->type == PIP)
+        {
+            if (!prev || prev->type == PIP ||
+                !tokens->next || tokens->next->type == PIP)
+				ft_error(PIP, 0);
+            next = tokens->next;
+            while (next && next->type != PIP)
+            {
+                if (next->type == CMD)
+                    break;
+                next = next->next;
+            }
+            if (!next || next->type != CMD)
+				ft_error(PIP, 1);
+        }
+        prev = tokens;
+        tokens = tokens->next;
+    }
 }
+
+

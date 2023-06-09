@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/08 16:20:25 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 11:49:09 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include "error.h"
 # include "../libft/libft.h"
 
 typedef enum
@@ -24,7 +25,7 @@ typedef enum
     RDR, // input '<' and truncate '>'
     PIP, // pipe '|'
     CMD, // commande
-    STR, //string       
+    STR, //string     
 }           token;
 
 typedef struct	s_token
@@ -34,8 +35,6 @@ typedef struct	s_token
 	struct s_token	*next;
 }				t_token;
 
-char    *ft_chardup(char c);
-char    *parse_pipes(t_token **tokens);
 void    master_parser(t_token *token);
 char    **master_lexer(char *buff);
 

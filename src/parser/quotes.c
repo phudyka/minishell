@@ -6,45 +6,70 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 16:18:15 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 11:20:41 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-int	is_quote(char c)
+int	is_squote(char c)
 {
-	return (c == '\'' || c == '\"');
+	return (c == '\'');
 }
 
-int	skip_quotes(char **str, char quote)
+int	is_dquote(char c)
 {
-	(*str)++;
-	while (**str && **str != quote)
-	{
-		if (**str == '\\' && is_quote(*(*str + 1)))
-			(*str)++;
-		(*str)++;
-	}
-	if (**str == quote)
-		(*str)++;
-	return (1);
+	return (c == '\"');
 }
 
-char	*parse_quotes(char **str)
+static char *ft_sequence(char type, const char *value)
 {
-	char	*arg;
-	char	*start;
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*parsed;
 
-	start = ++(*str);
-	while (**str && **str != *start)
-	{
-		if (**str == '\\' && is_quote(*(*str + 1)))
-			(*str)++;
-		(*str)++;
-	}
-	arg = ft_strndup(start, *str - start);
-	if (**str == *start)
-		(*str)++;
-	return (arg);
+    i = 0;
+    j = 1;
+    len = ft_strlen(value);
+    parsed = (char *)malloc(sizeof(char) * (len - 2));
+    if (!parsed)
+        return NULL;
+    while (j < len - 1)
+    {
+        if ((type == '\'' && is_squote(value[j])) ||
+            (type == '\"' && is_dquote(value[j])))
+        {
+            j++;
+            continue;
+        }
+        else if (type == '\"' && value[j] == '$')
+            parsed[i++] = value[j++];
+        else
+            parsed[i++] = value[j++];
+    }
+    parsed[i] = '\0';
+    return parsed;
+}
+
+void parse_quotes(t_token *tokens)
+{
+	char	type;
+	char	*parsed;
+    t_token *temp;
+	
+	temp = tokens;
+    while (temp)
+    {
+        if (temp->type == QOT)
+        {
+            type = temp->value[0];
+            parsed = ft_sequence(type, temp->value);
+            if (!parsed)
+                return;
+            free(temp->value);
+            temp->value = parsed;
+        }
+        temp = temp->next;
+    }
 }
