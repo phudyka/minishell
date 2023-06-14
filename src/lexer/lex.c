@@ -77,7 +77,11 @@ static t_token	*tokenizer(char **cmd)
 		else
 			add_token(&tokens, new_token(CMD, ft_strdup(*cmd)));
 		if (!cmd || !tokens)
+		{
+			if (tokens)
+				free_tokens(tokens);
 			break ;
+		}
 		cmd++;
 	}
 	return (tokens);
