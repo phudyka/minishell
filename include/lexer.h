@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/13 16:27:29 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/15 09:07:46 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 
 typedef enum
 {
-    QOT, // quotes /' /"
+    SQT, // single quote /'
+    DQT, // double quotes /""
     RDR, // input '<' and truncate '>'
     PIP, // pipe '|'
     CMD, // commande

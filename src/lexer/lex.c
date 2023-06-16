@@ -66,9 +66,10 @@ static t_token	*tokenizer(char **cmd)
 	tokens = NULL;
 	while (*cmd)
 	{
-		if (ft_strcmp(*cmd, "\'") == 0 ||
-			ft_strcmp(*cmd, "\"") == 0)
-				add_token(&tokens, new_token(QOT, NULL));
+		if (ft_strcmp(*cmd, "\'") == 0)
+				add_token(&tokens, new_token(SQT, NULL));
+		else if (ft_strcmp(*cmd, "\"") == 0)
+				add_token(&tokens, new_token(DQT, NULL));
 		else if (ft_strcmp(*cmd, ">") == 0 ||
 			ft_strcmp(*cmd, "<") == 0)
 			add_token(&tokens, new_token(RDR, NULL));		

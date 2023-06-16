@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/13 10:51:12 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/15 10:42:55 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void	master_parser(t_token *tokens)
 	{
 		if (tokens->type == CMD)
 			ft_strdup(tokens->value);
-		else if (tokens->type == QOT)
+		else if (tokens->type == SQT)
+			parse_quote(tokens);
+		else if (tokens->type == DQT )
 			parse_quotes(tokens);
 		else if (tokens->type == PIP)
 			parse_pipes(tokens);
-		/*else if (tokens->type == RDR)
-			parse_redir(tokens);*/
+		else if (tokens->type == RDR)
+			parse_redir(tokens);
 		else
 			parse_arg(tokens);
 		tokens = tokens->next;
