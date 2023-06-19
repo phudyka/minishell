@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 15:55:44 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/19 15:00:43 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	is_dquote(char c)
 	return (c == '\"');
 }
 
-static char *ft_sequence(char type, const char *value)
+static char *ft_sequence(const char *value)
 {
 	size_t	i;
 	size_t	j;
@@ -34,37 +34,32 @@ static char *ft_sequence(char type, const char *value)
     len = ft_strlen(value);
     parsed = (char *)malloc(sizeof(char) * (len - 2));
     if (!parsed)
-        return NULL;
+        return (NULL);
     while (j < len - 1)
     {
-        if ((type == '\'' && is_squote(value[j])) ||
-            (type == '\"' && is_dquote(value[j])))
+        if (is_squote(value[j]) || is_dquote(value[j]))
         {
             j++;
             continue;
         }
-        else if (type == '\"' && value[j] == '$')
-            parsed[i++] = value[j++];
         else
             parsed[i++] = value[j++];
     }
     parsed[i] = '\0';
-    return parsed;
+    return (parsed);
 }
 
 void parse_quotes(t_token *tokens)
 {
-	char	type;
 	char	*parsed;
     t_token *temp;
 	
 	temp = tokens;
     while (temp)
     {
-        if (temp->type == QOT && temp->value && temp->value[0])
+        if (temp->type == QOT && temp->value)
         {
-            type = temp->value[0];
-            parsed = ft_sequence(type, temp->value);
+            parsed = ft_sequence(temp->value);
             if (!parsed)
                 ft_error(QOT, 0);
             free(temp->value);

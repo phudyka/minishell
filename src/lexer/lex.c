@@ -42,7 +42,7 @@ static void	add_token(t_token **tokens, t_token *new)
 	tmp->next = new;
 }
 
-static void free_tokens(t_token *tokens)
+static void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
@@ -66,23 +66,18 @@ static t_token	*tokenizer(char **cmd)
 	tokens = NULL;
 	while (*cmd)
 	{
-		if (ft_strcmp(*cmd, "\'") == 0)
-				add_token(&tokens, new_token(SQT, NULL));
-		else if (ft_strcmp(*cmd, "\"") == 0)
-				add_token(&tokens, new_token(DQT, NULL));
+		if (ft_strcmp(*cmd, "\'") == 0 ||
+			ft_strcmp(*cmd, "\"") == 0)
+				add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
 		else if (ft_strcmp(*cmd, ">") == 0 ||
 			ft_strcmp(*cmd, "<") == 0)
-			add_token(&tokens, new_token(RDR, NULL));		
+			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));		
 		else if (ft_strcmp(*cmd, "|") == 0)
-			add_token(&tokens, new_token(PIP, NULL));
+			add_token(&tokens, new_token(PIP, "|"));
 		else
-			add_token(&tokens, new_token(CMD, ft_strdup(*cmd)));
-		if (!cmd || !tokens)
-		{
-			if (tokens)
-				free_tokens(tokens);
+			add_token(&tokens, new_token(STR, ft_strdup(*cmd)));
+		if (!cmd)
 			break ;
-		}
 		cmd++;
 	}
 	return (tokens);

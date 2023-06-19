@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 15:05:41 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/19 10:39:34 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ static void	pipe_error(int code)
 		ft_putstr_fd("Error! [pipe]\n", 2);
 }
 
-static void	cmd_error(int code)
+static void	str_error(int code)
 {
 	if (code)
-		ft_putstr_fd("Error! [command]\n", 2);
+		ft_putstr_fd("Error! [string]\n", 2);
 }
 
 void	ft_error(int token, int code)
 {
-	if (token == CMD)
-		cmd_error(code);
+	if (token == STR)
+		str_error(code);
 	else if (token == PIP)
 		pipe_error(code);
 	else if (token == RDR)

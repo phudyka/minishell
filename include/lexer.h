@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/15 09:07:46 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/19 10:45:36 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@
 
 typedef enum
 {
-    SQT, // single quote /'
-    DQT, // double quotes /""
+    QOT, // quotes : /' and /"
     RDR, // input '<' and truncate '>'
     PIP, // pipe '|'
-    CMD, // commande
-    STR, // string
+    STR, // commande
 }           token;
 
 typedef struct	s_token
@@ -38,6 +36,7 @@ typedef struct	s_token
 }				t_token;
 
 
+void	parse_redir(t_token *tokens);
 void	parse_pipes(t_token *tokens);
 void	parse_quotes(t_token *tokens);
 void    master_parser(t_token *token);

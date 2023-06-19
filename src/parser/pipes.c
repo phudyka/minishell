@@ -30,11 +30,11 @@ void parse_pipes(t_token *tokens)
             next = tokens->next;
             while (next && next->type != PIP)
             {
-                if (next->type == CMD)
+                if (next->type == STR)
                     break;
                 next = next->next;
             }
-            if (!next || next->type != CMD)
+            if (!next || next->type != STR)
 				ft_error(PIP, 1);
         }
         prev = tokens;

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/05/15 17:37:37 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:35:00 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,14 @@ void    builtin_export(t_data *data, t_env *env)
     t_env   *new_variable;
     
     variable = NULL;
-    // Vérification des arguments
     if (data->cmd[1] == NULL)
         return;
-    // Vérification si la variable existe déja
     current = env;
     variable = ft_split(data->cmd[1], '=');
     while (current != NULL)
     {
         if (ft_strncmp(current->var, variable[0], ft_strlen(variable[0])) == 0)
         {
-            // La variable existe déjà, mise à jour de sa valeur
             free(current->var);
             free_array(variable);
             current->var = strdup(data->cmd[1]);
