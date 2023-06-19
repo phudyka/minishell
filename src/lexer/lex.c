@@ -66,8 +66,7 @@ static t_token	*tokenizer(char **cmd)
 	tokens = NULL;
 	while (*cmd)
 	{
-		if (ft_strcmp(*cmd, "\'") == 0 ||
-			ft_strcmp(*cmd, "\"") == 0)
+		if (**cmd == '\'' || **cmd == '\"')
 				add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
 		else if (ft_strcmp(*cmd, ">") == 0 ||
 			ft_strcmp(*cmd, "<") == 0)
@@ -76,7 +75,7 @@ static t_token	*tokenizer(char **cmd)
 			add_token(&tokens, new_token(PIP, "|"));
 		else
 			add_token(&tokens, new_token(STR, ft_strdup(*cmd)));
-		if (!cmd)
+		if (!*cmd)
 			break ;
 		cmd++;
 	}
