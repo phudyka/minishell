@@ -68,10 +68,9 @@ static t_token	*tokenizer(char **cmd)
 	{
 		if (**cmd == '\'' || **cmd == '\"')
 				add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
-		else if (ft_strcmp(*cmd, ">") == 0 ||
-			ft_strcmp(*cmd, "<") == 0)
+		else if (**cmd == '>' || **cmd == '<')
 			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));		
-		else if (ft_strcmp(*cmd, "|") == 0)
+		else if (**cmd == '|')
 			add_token(&tokens, new_token(PIP, "|"));
 		else
 			add_token(&tokens, new_token(STR, ft_strdup(*cmd)));
@@ -95,7 +94,10 @@ char	**master_lexer(char *buff)
 	tokens = tokenizer(cmd);
 	master_parser(tokens);
 	if (!tokens)
+	{
+		free_array(cmd);
 		return (NULL);
+	}
 	while (tokens)
 	{
 		cmd[i++] = tokens->value;

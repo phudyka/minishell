@@ -6,28 +6,30 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/19 15:00:43 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/20 16:47:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-int	is_squote(char c)
+static int	is_squote(char c)
 {
 	return (c == '\'');
 }
 
-int	is_dquote(char c)
+static int	is_dquote(char c)
 {
 	return (c == '\"');
 }
 
 static char *ft_sequence(const char *value)
 {
-	size_t	i;
-	size_t	j;
-	size_t	len;
-	char	*parsed;
+    size_t  i;
+    size_t  j;
+    size_t  len;
+    char    *parsed;
+    int     in_squote;
+    int     in_dquote;
 
     i = 0;
     j = 1;
@@ -35,13 +37,28 @@ static char *ft_sequence(const char *value)
     parsed = (char *)malloc(sizeof(char) * (len - 2));
     if (!parsed)
         return (NULL);
+    in_squote = 0;
+    in_dquote = 0;
     while (j < len - 1)
     {
-        if (is_squote(value[j]) || is_dquote(value[j]))
+        if (is_squote(value[j]))
         {
+            if (!in_dquote)
+                in_squote = !in_squote;
+            if (!in_squote && !in_dquote)
+                parsed[i++] = value[j];
             j++;
-            continue;
         }
+        else if (is_dquote(value[j]))
+        {
+            if (!in_squote)
+                in_dquote = !in_dquote;
+            if (!in_squote && !in_dquote)
+                parsed[i++] = value[j];
+            j++;
+        }
+        else if (value[j] == '$' && in_dquote)
+            j++;
         else
             parsed[i++] = value[j++];
     }
