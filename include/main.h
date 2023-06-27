@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/06/13 10:49:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/26 16:59:01 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdlib.h>
 # include <signal.h>
 # include <dirent.h>
+# include <termios.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/time.h>
