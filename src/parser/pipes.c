@@ -41,5 +41,3 @@ void parse_pipes(t_token *tokens)
         tokens = tokens->next;
     }
 }
-
-

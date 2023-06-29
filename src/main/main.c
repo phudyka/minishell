@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/06/26 16:59:16 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/28 15:55:50 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    free_array(char **tab)
 		i++;
 	while (i >= 0)
 		free(tab[i--]);
-	free (tab);
+	free(tab);
 }
 
 char *ft_path(char **envp)

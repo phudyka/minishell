@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:35:44 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/19 10:57:22 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/28 12:11:48 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 # include "error.h"
 # include "lexer.h"
 # include "../libft/libft.h"

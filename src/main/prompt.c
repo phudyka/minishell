@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/19 10:11:21 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/19 10:11:21by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,5 @@ void	ft_prompt(t_data *data, t_env *env)
 	free_array (data->path);
 	free(data->buffer);
 	free(data);
+	printf("ok\n");
 }

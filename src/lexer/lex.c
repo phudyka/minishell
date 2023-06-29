@@ -44,17 +44,20 @@ static void	add_token(t_token **tokens, t_token *new)
 
 static void	free_tokens(t_token *tokens)
 {
+	t_token *tmp;
+
 	if (!tokens)
-		return ;
+		return;
 	while (tokens)
 	{
 		if (tokens->value)
 			free(tokens->value);
-		free(tokens);
-		tokens = NULL;
+		tmp = tokens;
 		tokens = tokens->next;
+		free(tmp);
 	}
 	tokens = NULL;
+	printf("free\n");
 }
 
 static t_token	*tokenizer(char **cmd)
@@ -103,6 +106,5 @@ char	**master_lexer(char *buff)
 	}
 	cmd[i] = NULL;
 	free_tokens(tokens);
-	tokens = NULL;
 	return (cmd);
 }
