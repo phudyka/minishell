@@ -6,13 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:19:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/15 17:43:56 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/03 14:13:24 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-t_env *envp_to_list(char **envp)
+t_env   *envp_to_list(char **envp)
 {
         t_env *head = NULL;
         int i = 0;

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/28 12:42:03 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/03 13:55:21 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void ft_sigquit(int sig)
 
 void ft_signals(void)
 {
-    struct sigaction sa;
+    struct sigaction    sa;
     
     sa.sa_flags = SA_RESTART;
     sigemptyset(&sa.sa_mask);

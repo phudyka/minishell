@@ -6,34 +6,29 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/09 15:11:48 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/03 16:48:24 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
+
+int	is_squote(char c)
+{
+	return (c == '\'');
+}
+
+int	is_dquote(char c)
+{
+	return (c == '\"');
+}
 
 int is_space(char c)
 {
     return(c == ' ');
 }
 
-int metachar(char c)
+/*void ft_dollar(size_t i, size_t j,
+        char *parsed, const char *value)
 {
-    return (c == '|' || c == '<' ||
-        c == '>' || c == '&');
-}
-
-int is_char(char c)
-{
-    return (c >= 32 && c <= 126 && !metachar(c));
-}
-
-char *ft_chardup(char c)
-{
-    char *dup = (char *)malloc(sizeof(char) * 2);
-    if (!dup)
-        return (NULL);
-    dup[0] = c;
-    dup[1] = '\0';
-    return (dup);
-}
+ 
+}*/

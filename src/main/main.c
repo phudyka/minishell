@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/06/28 15:55:50 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:34:28 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void    free_array(char **tab)
 	free(tab);
 }
 
-char *ft_path(char **envp)
+char	*ft_path(char **envp)
 {
     int i;
 
@@ -55,7 +55,7 @@ char    **get_path(char **envp)
 	return (final_path); 
 }
 
-int main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
     t_data  *data;

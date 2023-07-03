@@ -83,7 +83,7 @@ void	ft_prompt(t_data *data, t_env *env)
 		{
 			exec_builtin(data, env);
 			free_array(data->cmd);
-			free (data->buffer);
+			free(data->buffer);
 			continue ;
 		}
 		else
@@ -99,5 +99,4 @@ void	ft_prompt(t_data *data, t_env *env)
 	free_array (data->path);
 	free(data->buffer);
 	free(data);
-	printf("ok\n");
 }

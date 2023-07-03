@@ -6,14 +6,14 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/06 03:59:51 by kali              #+#    #+#             */
-/*   Updated: 2023/05/30 14:30:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:34:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-void    free_list(t_env *env)
+void	free_list(t_env *env)
 {
 	t_env   *tmp;
 	
@@ -26,7 +26,7 @@ void    free_list(t_env *env)
 	}
 }
 
-void unset_list(t_env **env, char *var)
+void	 unset_list(t_env **env, char *var)
 {
 	t_env *current;
 	t_env *prev;
@@ -45,7 +45,6 @@ void unset_list(t_env **env, char *var)
 		*env = current->next;
 	else
 		prev->next = current->next;
-
 	free(current->var);
 	free(current);
 }
@@ -62,7 +61,7 @@ void	afficher_liste(t_env *env)
 	}
 }
 
-t_env *create_node(char *var)
+t_env	*create_node(char *var)
 {
 	t_env *node;
 	
@@ -75,7 +74,7 @@ t_env *create_node(char *var)
 	return (node);
 }
 
-void add_node(t_env **head, t_env *node)
+void	add_node(t_env **head, t_env *node)
 {
 	if (!*head) 
 		*head = node;
@@ -88,7 +87,7 @@ void add_node(t_env **head, t_env *node)
 	}
 }
 
-t_env *envp_to_list(char **envp)
+t_env	*envp_to_list(char **envp)
 {
 	int		i;
 	t_env	*head;

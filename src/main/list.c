@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:07:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/15 18:07:20 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/30 16:33:20 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    free_list(t_env *env)
 {
         t_env   *tmp;
 
-        while (env != NULL)
+        while (env)
         {
                 tmp = env;
                 env = env->next;
@@ -33,19 +33,17 @@ void unset_list(t_env **env, char *var)
 
         current = *env;
         prev = NULL;
-        while (current != NULL
-                && ft_strncmp(current->var, var, ft_strlen(var)) != 0) 
+        while (current && ft_strncmp(current->var, var, ft_strlen(var)) != 0) 
         {
                 prev = current;
                 current = current->next;
         }
-        if (current == NULL)
+        if (!current)
                 return;
-        if (prev == NULL)
+        if (!prev)
                 *env = current->next;
         else
                 prev->next = current->next;
-
         free(current->var);
         free(current);
 }
@@ -77,12 +75,12 @@ t_env *create_node(char *var)
 
 void add_node(t_env **head, t_env *node)
 {
-        if (*head == NULL) 
+        if (!*head) 
                 *head = node;
         else 
         {
                 t_env *current = *head;
-                while (current->next != NULL)
+                while (current->next)
                         current = current->next;
                 current->next = node;
         }

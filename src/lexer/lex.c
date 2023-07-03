@@ -57,7 +57,6 @@ static void	free_tokens(t_token *tokens)
 		free(tmp);
 	}
 	tokens = NULL;
-	printf("free\n");
 }
 
 static t_token	*tokenizer(char **cmd)
@@ -79,6 +78,7 @@ static t_token	*tokenizer(char **cmd)
 			break ;
 		cmd++;
 	}
+	free_array(cmd);
 	return (tokens);
 }
 
