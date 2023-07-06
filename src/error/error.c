@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/19 10:39:34 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/06 12:07:41 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ static void	redir_error(int code)
 
 static void	quote_error(int code)
 {
-	if (code)
-		ft_putstr_fd("Error! [quote]\n", 2);
+	if (code == 0)
+		ft_putstr_fd("Error! [0]\n", 2);
+	else if (code == 1)
+		ft_putstr_fd("Error! [quotes open]\n", 2);
 }
 
 static void	pipe_error(int code)

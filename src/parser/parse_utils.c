@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/03 16:48:24 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/06 12:08:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,18 @@ int is_space(char c)
     return(c == ' ');
 }
 
-/*void ft_dollar(size_t i, size_t j,
-        char *parsed, const char *value)
+int	is_meta(char c)
 {
+	return (c == '|' || c == '&'
+		|| c == '<' || c == '>'
+		|| c == ';' || c == '\\'
+		|| c == '(' || c == ')'
+		|| c == '{' || c == '}'
+		|| c == '%');
+}
+
+// void ft_dollar(size_t i, size_t j,
+//         char *parsed, const char *value)
+// {
  
-}*/
+// }
