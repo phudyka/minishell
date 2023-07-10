@@ -6,41 +6,41 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/06 12:08:21 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/07 14:22:14 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static void ft_squote(size_t *j, size_t *i, char *parsed, const char *value)
+static void ft_squote(size_t *j, size_t *i, char *parsed, const char *str)
 {
     (*j)++;
-    while (value[*j] && !is_squote(value[*j]))
+    while (str[*j] && !is_squote(str[*j]))
     {
-        if (is_meta(value[*j]) || value[*j] == '$')
+        if (is_meta(str[*j]) || str[*j] == '$')
             (*j)++;
-        parsed[(*i)++] = value[*j];
+        parsed[(*i)++] = str[*j];
         (*j)++;
     }
-    if (is_squote(value[*j]))
+    if (is_squote(str[*j]))
         (*j)++;
 }
 
-static void ft_dquote(size_t *i, size_t *j, char *parsed, const char *value)
+static void ft_dquote(size_t *i, size_t *j, char *parsed, const char *str)
 {
     (*j)++;
-    while (value[*j] && !is_dquote(value[*j]))
+    while (str[*j] && !is_dquote(str[*j]))
     {
-        if (is_meta(value[*j]))
+        if (is_meta(str[*j]))
             (*j)++;
-        /*if (value[*j] == '$')
-            ft_dollar(i, j, parsed, value);*/
-        if (value[*j] == '\\' && is_dquote(value[*j + 1]))
+        if (str[*j] == '$' && str[*j - 1] != '\\')
+            master_expander(parsed);
+        if (str[*j] == '\\' && is_dquote(str[*j + 1]))
         {
             (*j)++;
-            if (value[*j])
+            if (str[*j])
             {
-                parsed[(*i)++] = value[*j];
+                parsed[(*i)++] = str[*j];
                 (*j)++;
             }
             else
@@ -48,31 +48,35 @@ static void ft_dquote(size_t *i, size_t *j, char *parsed, const char *value)
         }
         else
         {
-            parsed[(*i)++] = value[*j];
+            parsed[(*i)++] = str[*j];
             (*j)++;
         }
     }
-    if (is_dquote(value[*j]))
+    if (is_dquote(str[*j]))
         (*j)++;
 }
 
-static int is_odd(const char *value)
+static int is_odd(const char *str)
 {
     size_t  j;
-    size_t  qot;
+    size_t  sqot;
+    size_t  dqot;
 
     j = 0;
-    qot = 0;
-    while (value[j])
+    sqot = 0;
+    dqot = 0;
+    while (str[j])
     {
-        if (is_squote(value[j]) || is_dquote(value[j]))
-            qot++;
+        if (is_squote(str[j]))
+            sqot++;
+        if (is_dquote(str[j]))
+            dqot++;
         j++;
     }
-    return (qot % 2);
+    return (sqot % 2 || dqot % 2);
 }
 
-static char *ft_sequence(size_t len, const char *value)
+static char *ft_sequence(size_t len, const char *str)
 {
     size_t  i;
     size_t  j;
@@ -80,19 +84,19 @@ static char *ft_sequence(size_t len, const char *value)
 
     i = 0;
     j = 0;
-    if (is_odd(value))
-        ft_error(QOT, 0);
+    if (is_odd(str))
+        ft_error(QOT, 1);
     parsed = (char *)malloc(sizeof(char) * (len + 1));
     if (!parsed)
         return (NULL);
-    while (value[j])
+    while (str[j])
     {
-        if (is_squote(value[j]))
-            ft_squote(&j, &i, parsed, value);
-        else if (is_dquote(value[j]))
-            ft_dquote(&i, &j, parsed, value);
+        if (is_squote(str[j]))
+            ft_squote(&j, &i, parsed, str);
+        else if (is_dquote(str[j]))
+            ft_dquote(&i, &j, parsed, str);
         else
-            parsed[i++] = value[j++];
+            parsed[i++] = str[j++];
     }
     parsed[i] = '\0';
     return (parsed);

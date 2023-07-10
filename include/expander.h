@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/06 15:15:44 by phudyka          ###   ########.fr       */
+/*   Created: 2023/07/06 15:16:09 by phudyka           #+#    #+#             */
+/*   Updated: 2023/07/06 15:22:02 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parser.h"
+#ifndef EXPANDER_H
+# define EXPANDER_H
 
-int	is_squote(char c)
-{
-	return (c == '\'');
-}
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include "parser.h"
 
-int	is_dquote(char c)
-{
-	return (c == '\"');
-}
+void	master_expander(const char *str);
 
-int is_space(char c)
-{
-    return(c == ' ');
-}
-
-int	is_meta(char c)
-{
-	return (c == '|' || c == '&'
-		|| c == '<' || c == '>'
-		|| c == ';' || c == '\\'
-		|| c == '(' || c == ')'
-		|| c == '{' || c == '}'
-		|| c == '%');
-}
+#endif

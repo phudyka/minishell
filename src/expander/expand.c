@@ -1,38 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/06 15:15:44 by phudyka          ###   ########.fr       */
+/*   Created: 2023/07/06 15:19:22 by phudyka           #+#    #+#             */
+/*   Updated: 2023/07/06 15:24:46 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parser.h"
+# include "../../include/expander.h"
 
-int	is_squote(char c)
+void	master_expander(char meta, const char *str)
 {
-	return (c == '\'');
-}
-
-int	is_dquote(char c)
-{
-	return (c == '\"');
-}
-
-int is_space(char c)
-{
-    return(c == ' ');
-}
-
-int	is_meta(char c)
-{
-	return (c == '|' || c == '&'
-		|| c == '<' || c == '>'
-		|| c == ';' || c == '\\'
-		|| c == '(' || c == ')'
-		|| c == '{' || c == '}'
-		|| c == '%');
+	if (meta == '$')
+		ft_dollar(str);	
 }

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/28 12:21:05 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:51:48 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	parse_redir(t_token *tokens)
 			else if (ft_strcmp(tokens->value, ">>") == 0)
 				redir_hdc(tokens);				
 			else
-				ft_error(RDR, 0);
+				ft_error(RDR, 2);
 		}
 		tokens = tokens->next;
 	}

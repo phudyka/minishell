@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/06 12:07:41 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/06 14:49:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,30 @@ static void	redir_error(int code)
 {
 	if (code)
 		ft_putstr_fd("Error! [redirection]\n", 2);
+	return ;
 }
 
 static void	quote_error(int code)
 {
-	if (code == 0)
+	if (code == 1)
 		ft_putstr_fd("Error! [0]\n", 2);
-	else if (code == 1)
+	else if (code == 2)
 		ft_putstr_fd("Error! [quotes open]\n", 2);
+	return ;
 }
 
 static void	pipe_error(int code)
 {
 	if (code)
 		ft_putstr_fd("Error! [pipe]\n", 2);
+	return ;
 }
 
 static void	str_error(int code)
 {
 	if (code)
 		ft_putstr_fd("Error! [string]\n", 2);
+	return ;
 }
 
 void	ft_error(int token, int code)
