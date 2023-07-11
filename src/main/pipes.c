@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/11 09:47:27 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 15:15:02 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	exec_pipe_child(t_pipe_data *pipe_data)
 {
 	dup2(pipe_data->data->fd_in, 0);
 	close(pipe_data->data->fd_in);
-	if (pipe_data->data->cmd_parts[pipe_data->i + 1] != NULL)
+	if (pipe_data->data->cmd_parts[pipe_data->i + 1])
 		dup2(pipe_data->data->fd[1], 1);
 	close(pipe_data->data->fd[1]);
 	close(pipe_data->data->fd[0]);
@@ -60,9 +60,8 @@ static void	start_fork(t_data *data, t_pipe_data *pipe_data)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("fork");
 		free_data(data);
-		exit(EXIT_FAILURE);
+		ft_error(PIP, 1);
 	}
 	else if (pid == 0)
 	{
@@ -87,10 +86,7 @@ void	execute_pipeline(t_data *data, t_env *env)
 	while (data->cmd_parts[i])
 	{
 		if (pipe(data->fd) == -1)
-		{
-			perror("pipe");
-			exit(EXIT_FAILURE);
-		}
+			ft_error(PIP, 1);
 		free(data->buffer);
 		data->buffer = ft_strdup(data->cmd_parts[i]);
 		free_array(data->cmd);

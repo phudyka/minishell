@@ -15,13 +15,15 @@
 #include "../../include/parser.h"
 
 /* Fonction provisoire pour trouver les pipes */
-int find_pipes(t_data *data)
+int	find_pipes(t_data *data)
 {
-	int pipes;
 	int i;
+	int pipes;
 
-	pipes = 0;
 	i = 0;
+	pipes = 0;
+	if (!data->buffer || !data->cmd || !*data->cmd)
+		return (0);
 	while (data->cmd[i])
 	{
 		if (ft_strncmp(data->cmd[i], "|", ft_strlen(data->cmd[i])) == 0)
@@ -41,7 +43,7 @@ char	*ft_access(char **path, char **cmd)
 	i = 0;
 	exec = NULL;
 	if (!path || !path[0])
-		return NULL;
+		return (NULL);
 	while (path[i]) 
 	{
         len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
@@ -61,7 +63,7 @@ char	*ft_access(char **path, char **cmd)
     return (exec);
 }
 
-void exec_cmd(char *path, char **cmd, char **envp)
+void	exec_cmd(char *path, char **cmd, char **envp)
 {
 	pid_t	pid;
 	int		status;
@@ -93,38 +95,38 @@ void exec_cmd(char *path, char **cmd, char **envp)
 	}
 }
 
-void process_command(t_data *data, t_env *env)
+void	process_command(t_data *data, t_env *env)
 {
 	char **envp;
 
 	envp = list_to_array(env);
-	if (data->path != NULL)
+	if (data->path)
 		free_array(data->path);
 	data->path = get_path(envp);
 	if (!data->cmd || !data->cmd[0])
 	{
 		free(data->buffer);
 		free(data->cmd);
-		return;
+		return ;
 	}
 	if (is_builtin(data) == 0)
 	{
 		exec_builtin(data, env);
 		free_array(data->cmd);
 		free(data->buffer);
-		return;
+		return ;
 	}
-	if (data->buffer != NULL)
+	if (data->buffer)
 		free(data->buffer);
 	data->buffer = ft_access(data->path, data->cmd);
 	exec_cmd(data->buffer, data->cmd, envp);
 	free_array(envp);
 	free_array(data->cmd);
-	if (data->buffer != NULL)
+	if (data->buffer)
 		free(data->buffer);
 }
 
-void ft_prompt(t_data *data, t_env *env)
+void	ft_prompt(t_data *data, t_env *env)
 {
 	int pipes;
 

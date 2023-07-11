@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 15:16:09 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/06 15:22:02 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 15:27:02 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # include <stdlib.h>
 # include "parser.h"
 
-void	master_expander(const char *str);
+void	master_expander(char meta, const char *str);
 
 #endif

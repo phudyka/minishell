@@ -21,8 +21,8 @@ void print_arguments(t_data *data, int start_index)
 
 void builtin_echo(t_data *data)
 {
-	int skip_newline;
 	int i;
+	int skip_newline;
 
 	i = 1;
 	skip_newline = 0;

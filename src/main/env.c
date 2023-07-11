@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:19:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/11 09:46:13 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 16:51:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ t_env   *envp_to_list(char **envp)
         int     i;
         t_env   *head;
         
-        i = -1;
+        i = 0;
         head = NULL;
-        while (envp[++i])
+        while (envp[i])
+        {
                 add_node(&head, create_node(envp[i]));
+                i++;
+        }
         return (head);
 }
 

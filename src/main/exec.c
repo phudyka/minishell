@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/11 10:10:13 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 16:54:15 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int     is_builtin(t_data *data)
         int     res;
         char    **all_cmd;
 
-        i = -1;
+        i = 0;
         res = 1;
         all_cmd = malloc(sizeof(char *) * 8);
         all_cmd[0] = "cd";
@@ -48,14 +48,15 @@ int     is_builtin(t_data *data)
         all_cmd[5] = "export";
         all_cmd[6] = "echo";
         all_cmd[7] = NULL;
-        while (all_cmd[++i])
+        while (all_cmd[i])
         {
                 if ((ft_strcmp(all_cmd[i], data->cmd[0])) == 0)
                 res = 0;
+                i++;
         }
         if (all_cmd)
         {
-                free (all_cmd);
+                free(all_cmd);
                 all_cmd = NULL;
         }
         return (res);
