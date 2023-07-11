@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/07 14:22:14 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 10:29:54 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void ft_dquote(size_t *i, size_t *j, char *parsed, const char *str)
     {
         if (is_meta(str[*j]))
             (*j)++;
-        if (str[*j] == '$' && str[*j - 1] != '\\')
-            master_expander(parsed);
+        //if (str[*j] == '$' && str[*j - 1] != '\\')
+        //    master_expander(parsed);
         if (str[*j] == '\\' && is_dquote(str[*j + 1]))
         {
             (*j)++;

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/06/26 16:59:01 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 11:04:22 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,25 @@
 
 typedef struct  s_data
 {
-    char    **path;
+	int     fd[2];
+    int     fd_in;
     char    **cmd;
+    char    **path;
+    char    **redir;
     char    *buffer;
-}   t_data;
-
+	char    **cmd_parts;
+}               t_data;
 typedef struct  s_env
 {
     char            *var;
     struct s_env   *next;
-}   t_env;
+}               t_env;
+typedef struct  s_pipe_data
+{
+    int     i;
+	t_env   *env;
+	t_data  *data;
+}               t_pipe_data;
 
 //---------SIGNALS------------//
 void    ft_signals(void);
@@ -59,17 +68,28 @@ void    builtin_pwd(void);
 int     is_builtin(t_data *data);
 void    exec_builtin(t_data *data, t_env *env);
 void    builtin_cd(char **path, t_env *env);
+void    builtin_echo(t_data *data);
 //----------LIST--------------//
 t_env   *envp_to_list(char **envp);
 t_env   *create_node(char *var);
+void    print_list_token(t_token *env);
 void    print_list(t_env *env);
 void    free_list(t_env *env);
 void    unset_list(t_env **env, char *var);
 void    add_node(t_env **head, t_env *node);
 int     search_in_env(t_env *env, char *variable);
 char    *get_from_env(char *variable, t_env *env);
+char    **list_to_array(t_env *head);
 //---------AUTRES------------//
+char    **get_path(char **envp);
 void    ft_prompt(t_data *data, t_env *env);
 void    free_array(char **tab);
+void    execute_pipeline(t_data *data, t_env *env);
+char    *ft_access(char **path, char **cmd);
+void     exec_cmd(char *path, char **cmd, char **envp);
+void    process_command(t_data *data, t_env *env);
+int     find_pipes(t_data *data);
+int     ft_pipex(char **cmd, char *path);
+void    free_data(t_data *data);
 
 #endif

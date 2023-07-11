@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:19:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/03 14:13:24 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 09:46:13 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,25 @@
 
 t_env   *envp_to_list(char **envp)
 {
-        t_env *head = NULL;
-        int i = 0;
-        while (envp[i] != NULL) {
+        int     i;
+        t_env   *head;
+        
+        i = -1;
+        head = NULL;
+        while (envp[++i])
                 add_node(&head, create_node(envp[i]));
-                i++;
-        }
         return (head);
 }
 
 char    *get_from_env(char *variable, t_env *env)
 {
-        t_env   *current;
-        char    **tmp;
         char    *str;
+        char    **tmp;
+        t_env   *current;
 
-        current = env;
         tmp = NULL;
         str = NULL;
+        current = env;
         while (current)
         {
                 if (ft_strncmp(current->var, variable, ft_strlen(variable)) == 0)
@@ -54,10 +55,9 @@ int     search_in_env(t_env *env, char *variable)
         current = env;
         while (current)
         {
-                if (ft_strncmp(current->var, variable, ft_strlen(variable)) == 0)
-                {
+                if (ft_strncmp(current->var, variable,
+                        ft_strlen(variable)) == 0)
                         return (0);
-                }
                 current = current->next;
         }
         return (1);

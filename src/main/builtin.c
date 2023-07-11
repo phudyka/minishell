@@ -6,38 +6,18 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/06/19 16:35:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 10:33:16 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-void    builtin_export(t_data *data, t_env *env)
+void    builtin_env(t_env *env, char **cmd)
 {
-    char    **variable;
-    t_env   *current;
-    t_env   *new_variable;
-    
-    variable = NULL;
-    if (data->cmd[1] == NULL)
-        return;
-    current = env;
-    variable = ft_split(data->cmd[1], '=');
-    while (current != NULL)
-    {
-        if (ft_strncmp(current->var, variable[0], ft_strlen(variable[0])) == 0)
-        {
-            free(current->var);
-            free_array(variable);
-            current->var = strdup(data->cmd[1]);
-            return;
-        }
-        current = current->next;
-    }
-    if (variable)
-        free_array(variable);
-    new_variable = create_node(data->cmd[1]);
-    add_node(&env, new_variable);
+    if (!cmd[1])
+        print_list(env);
+    else
+        printf("env: invalid option -- '%s'\n", cmd[1]);
 }
 
 void    builtin_exit(t_data *data, t_env *env)
@@ -52,14 +32,6 @@ void    builtin_exit(t_data *data, t_env *env)
     if (env)
         free_list(env);
     exit(EXIT_SUCCESS);
-}
-
-void    builtin_env(t_env *env, char **cmd)
-{
-    if (!cmd[1])
-        print_list(env);
-    else
-        printf("env: invalid option -- '%s'\n", cmd[1]);
 }
 
 void    builtin_pwd(void)
@@ -102,4 +74,32 @@ void    builtin_cd(char **path, t_env *env)
             return ;
         }
     }
+}
+
+void    builtin_export(t_data *data, t_env *env)
+{
+    char    **variable;
+    t_env   *current;
+    t_env   *new_variable;
+    
+    variable = NULL;
+    if (!data->cmd[1])
+        return;
+    current = env;
+    variable = ft_split(data->cmd[1], '=');
+    while (current)
+    {
+        if (ft_strncmp(current->var, variable[0], ft_strlen(variable[0])) == 0)
+        {
+            free(current->var);
+            free_array(variable);
+            current->var = strdup(data->cmd[1]);
+            return;
+        }
+        current = current->next;
+    }
+    if (variable)
+        free_array(variable);
+    new_variable = create_node(data->cmd[1]);
+    add_node(&env, new_variable);
 }

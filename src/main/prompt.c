@@ -14,6 +14,23 @@
 #include "../../include/lexer.h"
 #include "../../include/parser.h"
 
+/* Fonction provisoire pour trouver les pipes */
+int find_pipes(t_data *data)
+{
+	int pipes;
+	int i;
+
+	pipes = 0;
+	i = 0;
+	while (data->cmd[i])
+	{
+		if (ft_strncmp(data->cmd[i], "|", ft_strlen(data->cmd[i])) == 0)
+			pipes++;
+		i++;
+	}
+	return (pipes);
+}
+
 char	*ft_access(char **path, char **cmd)
 {
 	int     i;
@@ -23,9 +40,11 @@ char	*ft_access(char **path, char **cmd)
 	
 	i = 0;
 	exec = NULL;
+	if (!path || !path[0])
+		return NULL;
 	while (path[i]) 
 	{
-                len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
+        len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
 		cur = malloc(sizeof(char) * len + 1);
 		if (!cur)
 			return (NULL);
@@ -42,61 +61,85 @@ char	*ft_access(char **path, char **cmd)
     return (exec);
 }
 
-static void	exec_cmd(char *path, char **cmd)
+void exec_cmd(char *path, char **cmd, char **envp)
 {
 	pid_t	pid;
-	int		status;  
-	
-	status = 0;
+	int		status;
+
+	if (!path)
+	{
+		printf("%s: Command not found\n", cmd[0]);
+		return;
+	}
 	pid = fork();
 	if (pid == -1)
-		perror("Error! [Failed to fork]\n");
-	else if (pid > 0)
 	{
-		waitpid(pid, &status, 0);
-		kill(pid, SIGTERM);
+		perror("fork");
+		exit(EXIT_FAILURE);
 	}
-    else
+	else if (pid == 0)
 	{
-		if (execve(path, cmd, NULL) == -1)
+		if (execve(path, cmd, envp) == -1)
+			perror("execve");
+		exit(EXIT_FAILURE);
+	}
+	else
+	{
+		if (waitpid(pid, &status, 0) == -1)
 		{
-			printf("%s: Command not found\n", cmd[0]);
+			perror("waitpid");
 			exit(EXIT_FAILURE);
 		}
-		exit(EXIT_SUCCESS);
 	}
 }
 
-void	ft_prompt(t_data *data, t_env *env)
+void process_command(t_data *data, t_env *env)
 {
+	char **envp;
+
+	envp = list_to_array(env);
+	if (data->path != NULL)
+		free_array(data->path);
+	data->path = get_path(envp);
+	if (!data->cmd || !data->cmd[0])
+	{
+		free(data->buffer);
+		free(data->cmd);
+		return;
+	}
+	if (is_builtin(data) == 0)
+	{
+		exec_builtin(data, env);
+		free_array(data->cmd);
+		free(data->buffer);
+		return;
+	}
+	if (data->buffer != NULL)
+		free(data->buffer);
+	data->buffer = ft_access(data->path, data->cmd);
+	exec_cmd(data->buffer, data->cmd, envp);
+	free_array(envp);
+	free_array(data->cmd);
+	if (data->buffer != NULL)
+		free(data->buffer);
+}
+
+void ft_prompt(t_data *data, t_env *env)
+{
+	int pipes;
+
+	pipes = 0;
 	while ((data->buffer = readline(GREEN "$ > " RESET)))
 	{
 		add_history(data->buffer);
 		data->cmd = master_lexer(data->buffer);
-		if (!data->cmd || !data->cmd[0])
-		{
-			free(data->buffer);
-			free(data->cmd);
-			continue ;
-		}
-		if ((is_builtin(data)) == 0)
-		{
-			exec_builtin(data, env);
-			free_array(data->cmd);
-			free(data->buffer);
-			continue ;
-		}
+		pipes = find_pipes(data);
+		if (pipes > 0)
+			execute_pipeline(data, env);
 		else
-		{
-			free (data->buffer);
-			data->buffer = ft_access(data->path, data->cmd);
-			exec_cmd(data->buffer, data->cmd);
-			free(data->buffer);
-			free_array (data->cmd);
-		}
+			process_command(data, env);
 	}
 	clear_history();
-	free_array (data->path);
-	free(data->buffer);
-	free(data);
+	if (data->path)
+		free_array(data->path);
 }

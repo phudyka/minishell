@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/15 17:41:49 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/11 10:10:13 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void    exec_builtin(t_data *data, t_env *env)
                 builtin_exit(data, env);
         else if ((ft_strcmp(data->cmd[0], "export")) == 0)
                 builtin_export(data, env);
+        else if ((ft_strcmp(data->cmd[0], "echo") == 0) ||
+        	(ft_strcmp(data->cmd[0], "echo") == 0 && ft_strcmp(data->cmd[1], "-n") == 0))
+		builtin_echo(data);
 }
 
 int     is_builtin(t_data *data)
@@ -34,21 +37,21 @@ int     is_builtin(t_data *data)
         int     res;
         char    **all_cmd;
 
-        i = 0;
+        i = -1;
         res = 1;
-        all_cmd = malloc(sizeof(char *) * 7);
+        all_cmd = malloc(sizeof(char *) * 8);
         all_cmd[0] = "cd";
         all_cmd[1] = "pwd";
         all_cmd[2] = "env";
         all_cmd[3] = "unset";
         all_cmd[4] = "exit";
         all_cmd[5] = "export";
-        all_cmd[6] = NULL;
-        while (all_cmd[i])
+        all_cmd[6] = "echo";
+        all_cmd[7] = NULL;
+        while (all_cmd[++i])
         {
                 if ((ft_strcmp(all_cmd[i], data->cmd[0])) == 0)
-                        res = 0;
-                i++;
+                res = 0;
         }
         if (all_cmd)
         {
