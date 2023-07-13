@@ -6,11 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:55:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 11:56:02 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 14:11:27 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/error.h"
+#include "../../include/error.h"
 
 void	fatal_error(int code)
 {

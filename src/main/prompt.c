@@ -6,32 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 12:38:36 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:37:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/lexer.h"
 #include "../../include/parser.h"
-
-/* Fonction provisoire pour trouver les pipes */
-int	find_pipes(t_data *data)
-{
-	int i;
-	int pipes;
-
-	i = 0;
-	pipes = 0;
-	if (!data->buffer || !data->cmd || !*data->cmd)
-		return (0);
-	while (data->cmd[i])
-	{
-		if (ft_strncmp(data->cmd[i], "|", ft_strlen(data->cmd[i])) == 0)
-			pipes++;
-		i++;
-	}
-	return (pipes);
-}
 
 char	*ft_access(char **path, char **cmd)
 {
@@ -45,7 +26,7 @@ char	*ft_access(char **path, char **cmd)
 	{
 		exe = allocatenate(cmd[0], path[i]);
 		if (!exe)
-			return(NULL);
+			return (NULL);
 		if (access(exe, F_OK | X_OK) == 0)
 			return (exe);
 		free(exe);
@@ -88,13 +69,13 @@ void	exec_cmd(char *path, char **cmd, char **envp)// ft_error
 
 static void	execute_command(t_data *data, char **envp)
 {
-    if (data->buffer)
-    {
-        free(data->buffer);
-        data->buffer = NULL;
-    }
-    data->buffer = ft_access(data->path, data->cmd);
-    exec_cmd(data->buffer, data->cmd, envp);
+	if (data->buffer)
+	{
+		free(data->buffer);
+		data->buffer = NULL;
+	}
+	data->buffer = ft_access(data->path, data->cmd);
+	exec_cmd(data->buffer, data->cmd, envp);
 }
 
 void	process_command(t_data *data, t_env *env)
@@ -128,8 +109,11 @@ void	ft_prompt(t_data *data, t_env *env)
 	int	pipes;
 
 	pipes = 0;
-	while ((data->buffer = readline(GREEN "$ > " RESET)))
+	while (69)
 	{
+		data->buffer = readline(GREEN "$ > " RESET);
+		if (!data->buffer)
+			break ;
 		add_history(data->buffer);
 		data->cmd = master_lexer(data->buffer);
 		pipes = find_pipes(data);

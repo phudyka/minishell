@@ -6,11 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/06 14:49:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 14:10:59 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/error.h"
+#include "../../include/error.h"
 
 static void	redir_error(int code)
 {

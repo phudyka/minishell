@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:08:29 by phudyka           #+#    #+#             */
-/*   Updated: 2023/05/16 14:12: by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 14:10:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static t_token	*new_token(token type, char *value)
 {
 	t_token	*token;
-	
+
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
@@ -28,7 +28,7 @@ static t_token	*new_token(token type, char *value)
 static void	add_token(t_token **tokens, t_token *new)
 {
 	t_token	*tmp;
-	
+
 	if (!tokens || !new)
 		return ;
 	if (!*tokens)
@@ -44,10 +44,10 @@ static void	add_token(t_token **tokens, t_token *new)
 
 static void	free_tokens(t_token *tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	if (!tokens)
-		return;
+		return ;
 	while (tokens)
 	{
 		if (tokens->value)
@@ -62,14 +62,14 @@ static void	free_tokens(t_token *tokens)
 static t_token	*tokenizer(char **cmd)
 {
 	t_token	*tokens;
-	
+
 	tokens = NULL;
 	while (*cmd)
 	{
 		if (**cmd == '\'' || **cmd == '\"')
-				add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
+			add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
 		else if (**cmd == '>' || **cmd == '<')
-			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));		
+			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));
 		else if (**cmd == '|')
 			add_token(&tokens, new_token(PIP, "|"));
 		else

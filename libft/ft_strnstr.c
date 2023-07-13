@@ -6,7 +6,7 @@
 /*   By: dtassel <dtassel@42nice.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 10:47:55 by dtassel           #+#    #+#             */
-/*   Updated: 2022/04/03 14:28:49 by dtassel          ###   ########.fr       */
+/*   Updated: 2023/07/13 13:43:59 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strnstr(const char *s1, const char *s2, size_t len)
 	size_t	i;
 	size_t	j;
 
-		i = 0;
+	i = 0;
 	while (s2[i])
 		i++;
 	if (i == 0)
