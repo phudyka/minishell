@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/07/11 11:04:22 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:33:32 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int     search_in_env(t_env *env, char *variable);
 char    *get_from_env(char *variable, t_env *env);
 char    **list_to_array(t_env *head);
 //---------AUTRES------------//
-char    **get_path(char **envp);
+char	*allocatenate(char *cmd, char *path);
+char	**get_path(char **envp);
 void    ft_prompt(t_data *data, t_env *env);
 void    free_array(char **tab);
 void    execute_pipeline(t_data *data, t_env *env);
@@ -91,5 +92,6 @@ void    process_command(t_data *data, t_env *env);
 int     find_pipes(t_data *data);
 int     ft_pipex(char **cmd, char *path);
 void    free_data(t_data *data);
+void	free_buff(t_data *data);
 
 #endif

@@ -6,14 +6,15 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:24:09 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/09 15:05:45 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 10:01:20 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-# define FATAL	99 // Fatal error causing minishell to stop
+# define MALLOC	42
+# define FATAL	99
 
 # include <unistd.h>
 # include <stdio.h>

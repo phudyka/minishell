@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 10:58:09 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:34:34 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,27 @@ void	free_data(t_data *data)
 char	*allocatenate(char *cmd, char *path)
 {
 	int		len;
-	char	*exec;
+	char	*exe;
 
 	len = ft_strlen(path) + ft_strlen(cmd);
-	exec = malloc(sizeof(char) * (len + 1));
-	if (!exec)
+	exe = (char *)malloc(sizeof(char) * (len + 1));
+	if (!exe)
 		return (NULL);
-	ft_strlcpy(exec, path, ft_strlen(path) + 1);
-	ft_strlcat(exec, cmd, len + 1);
-	return (exec);
+	ft_strlcpy(exe, path, ft_strlen(path) + 1);
+	ft_strlcat(exe, cmd, len + 1);
+	return (exe);
+}
+
+void	free_buff(t_data *data)
+{
+	if (data->buffer)
+	{
+		free(data->buffer);
+		data->buffer = NULL;
+	}
+	if (data->cmd)
+	{
+		free_array(data->cmd);
+		data->cmd = NULL;
+	}
 }

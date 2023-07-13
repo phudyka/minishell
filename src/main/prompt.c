@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 10:58:11 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 12:38:36 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,25 @@ int	find_pipes(t_data *data)
 char	*ft_access(char **path, char **cmd)
 {
 	int		i;
-	char	*cur;
-	char	*exec;
+	char	*exe;
 
 	i = 0;
-	exec = NULL;
 	if (!path || !path[0])
 		return (NULL);
 	while (path[i])
 	{
-		cur = allocatenate(path[i], cmd[0]);
-		if (!cur)
-			return (NULL);
-		if (access(cur, F_OK | X_OK) == 0)
-		{
-			exec = cur;
-			break;
-		}
-		free(cur);
+		exe = allocatenate(cmd[0], path[i]);
+		if (!exe)
+			return(NULL);
+		if (access(exe, F_OK | X_OK) == 0)
+			return (exe);
+		free(exe);
 		i++;
 	}
-	return (exec);
+	return (NULL);
 }
 
-void	exec_cmd(char *path, char **cmd, char **envp) // ft_error
+void	exec_cmd(char *path, char **cmd, char **envp)// ft_error
 {
 	pid_t	pid;
 	int		status;
@@ -91,40 +86,46 @@ void	exec_cmd(char *path, char **cmd, char **envp) // ft_error
 	}
 }
 
+static void	execute_command(t_data *data, char **envp)
+{
+    if (data->buffer)
+    {
+        free(data->buffer);
+        data->buffer = NULL;
+    }
+    data->buffer = ft_access(data->path, data->cmd);
+    exec_cmd(data->buffer, data->cmd, envp);
+}
+
 void	process_command(t_data *data, t_env *env)
 {
 	char	**envp;
 
 	envp = list_to_array(env);
 	if (data->path)
+	{
 		free_array(data->path);
-	data->path = get_path(envp);
+		data->path = get_path(envp);
+	}
 	if (!data->cmd || !data->cmd[0])
 	{
-		free(data->buffer);
-		free(data->cmd);
+		free_buff(data);
 		return ;
 	}
 	if (is_builtin(data) == 0)
 	{
 		exec_builtin(data, env);
-		free_array(data->cmd);
-		free(data->buffer);
+		free_buff(data);
 		return ;
 	}
-	if (data->buffer)
-		free(data->buffer);
-	data->buffer = ft_access(data->path, data->cmd);
-	exec_cmd(data->buffer, data->cmd, envp);
+	execute_command(data, envp);
 	free_array(envp);
-	free_array(data->cmd);
-	if (data->buffer)
-		free(data->buffer);
+	free_buff(data);
 }
 
 void	ft_prompt(t_data *data, t_env *env)
 {
-	int pipes;
+	int	pipes;
 
 	pipes = 0;
 	while ((data->buffer = readline(GREEN "$ > " RESET)))
