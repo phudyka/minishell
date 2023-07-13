@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/06/19 10:11:21by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 10:58:11 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,35 +35,31 @@ int	find_pipes(t_data *data)
 
 char	*ft_access(char **path, char **cmd)
 {
-	int     i;
-	int     len;
-	char    *exec;
-	char    *cur;
-	
+	int		i;
+	char	*cur;
+	char	*exec;
+
 	i = 0;
 	exec = NULL;
 	if (!path || !path[0])
 		return (NULL);
-	while (path[i]) 
+	while (path[i])
 	{
-        len = (ft_strlen(path[i]) + ft_strlen(cmd[0]));
-		cur = malloc(sizeof(char) * len + 1);
+		cur = allocatenate(path[i], cmd[0]);
 		if (!cur)
 			return (NULL);
-		ft_strlcpy(cur, path[i], ft_strlen(path[i]) + 1);
-		ft_strlcat(cur, cmd[0], len + 1);
 		if (access(cur, F_OK | X_OK) == 0)
 		{
 			exec = cur;
 			break;
 		}
-        free(cur);
-        i++;
-    }
-    return (exec);
+		free(cur);
+		i++;
+	}
+	return (exec);
 }
 
-void	exec_cmd(char *path, char **cmd, char **envp)
+void	exec_cmd(char *path, char **cmd, char **envp) // ft_error
 {
 	pid_t	pid;
 	int		status;
@@ -71,7 +67,7 @@ void	exec_cmd(char *path, char **cmd, char **envp)
 	if (!path)
 	{
 		printf("%s: Command not found\n", cmd[0]);
-		return;
+		return ;
 	}
 	pid = fork();
 	if (pid == -1)
@@ -83,7 +79,7 @@ void	exec_cmd(char *path, char **cmd, char **envp)
 	{
 		if (execve(path, cmd, envp) == -1)
 			perror("execve");
-		exit(EXIT_FAILURE);
+		exit (EXIT_FAILURE);
 	}
 	else
 	{
@@ -97,7 +93,7 @@ void	exec_cmd(char *path, char **cmd, char **envp)
 
 void	process_command(t_data *data, t_env *env)
 {
-	char **envp;
+	char	**envp;
 
 	envp = list_to_array(env);
 	if (data->path)
