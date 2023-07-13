@@ -6,13 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:08:29 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 14:10:30 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:27:59 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
 
-static t_token	*new_token(token type, char *value)
+static t_token	*new_token(t_id type, char *value)
 {
 	t_token	*token;
 
@@ -42,7 +42,7 @@ static void	add_token(t_token **tokens, t_token *new)
 	tmp->next = new;
 }
 
-static void	free_tokens(t_token *tokens)
+void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 

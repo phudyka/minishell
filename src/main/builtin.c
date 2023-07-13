@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/07/13 11:58:10 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:10:48 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,6 @@ void	builtin_env(t_env *env, char **cmd)
 		print_list(env);
 	else
 		printf("env: invalid option -- '%s'\n", cmd[1]);
-}
-
-void	builtin_exit(t_data *data, t_env *env)
-{
-	if (data)
-	{
-		free_array(data->cmd);
-		free_array(data->path);
-		free (data->buffer);
-		free (data);
-	}
-	if (env)
-		free_list(env);
-	exit (EXIT_SUCCESS);
 }
 
 void	builtin_pwd(void)
@@ -48,6 +34,28 @@ void	builtin_pwd(void)
 		free (cwd);
 		cwd = NULL;
 	}
+}
+
+void	builtin_echo(t_data *data)
+{
+	int	i;
+	int	skip;
+
+	i = 1;
+	skip = 0;
+	if (!data->cmd[i])
+	{
+		write(1, "\n", 1);
+		return ;
+	}
+	if (ft_strcmp(data->cmd[i], "-n") == 0)
+	{
+		skip = 1;
+		i++;
+	}
+	print_arguments(data, i);
+	if (!skip)
+		write(1, "\n", 1);
 }
 
 void	builtin_cd(char **path, t_env *env)

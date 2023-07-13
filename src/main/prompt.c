@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 13:37:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:40:11 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_access(char **path, char **cmd)
 	return (NULL);
 }
 
-void	exec_cmd(char *path, char **cmd, char **envp)// ft_error
+void	exec_cmd(char *path, char **cmd, char **envp)
 {
 	pid_t	pid;
 	int		status;
@@ -47,23 +47,12 @@ void	exec_cmd(char *path, char **cmd, char **envp)// ft_error
 	}
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
+		ft_error(FATAL, 1, NULL, NULL, NULL);
 	else if (pid == 0)
-	{
-		if (execve(path, cmd, envp) == -1)
-			perror("execve");
-		exit (EXIT_FAILURE);
-	}
+		ft_error(FATAL, 2, NULL, NULL, NULL);
 	else
-	{
 		if (waitpid(pid, &status, 0) == -1)
-		{
-			perror("waitpid");
-			exit(EXIT_FAILURE);
-		}
+			ft_error(FATAL, 3, NULL, NULL, NULL);
 	}
 }
 
@@ -104,7 +93,7 @@ void	process_command(t_data *data, t_env *env)
 	free_buff(data);
 }
 
-void	ft_prompt(t_data *data, t_env *env)
+void	ft_prompt(t_data *data, t_env *env, t_token *tokens)
 {
 	int	pipes;
 
@@ -115,7 +104,7 @@ void	ft_prompt(t_data *data, t_env *env)
 		if (!data->buffer)
 			break ;
 		add_history(data->buffer);
-		data->cmd = master_lexer(data->buffer);
+		data->cmd = master_lexer(data->buffer, t_token *tokens);
 		pipes = find_pipes(data);
 		if (pipes > 0)
 			execute_pipeline(data, env);

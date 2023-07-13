@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/07/13 13:55:22 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:53:32 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ typedef struct s_pipe_data
 	t_data	*data;
 }				t_pipe_data;
 
-void	ft_signals(void);
+void	ft_signals(t_data *data, t_env *env, t_token *tokens);
 void	builtin_export(t_data *data, t_env *env);
-void	builtin_exit(t_data *data, t_env *env);
+void	builtin_exit(t_data *data, t_env *env, t_token *token);
 void	builtin_env(t_env *env, char **cmd);
 void	builtin_pwd(void);
 int		is_builtin(t_data *data);
@@ -81,8 +81,7 @@ char	*get_from_env(char *variable, t_env *env);
 char	**list_to_array(t_env *head);
 char	*allocatenate(char *cmd, char *path);
 char	**get_path(char **envp);
-void	ft_prompt(t_data *data, t_env *env);
-void	free_array(char **tab);
+void	ft_prompt(t_data *data, t_env *env, t_token *tokens);
 void	execute_pipeline(t_data *data, t_env *env);
 char	*ft_access(char **path, char **cmd);
 void	exec_cmd(char *path, char **cmd, char **envp);
@@ -91,5 +90,7 @@ int		find_pipes(t_data *data);
 int		ft_pipex(char **cmd, char *path);
 void	free_data(t_data *data);
 void	free_buff(t_data *data);
+void	free_array(char **tab);
+void	free_shell(t_data *data, t_env *env);
 
 #endif

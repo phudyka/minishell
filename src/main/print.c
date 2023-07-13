@@ -1,16 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_bis.c                                      :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 09:20:49 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 09:38:37 by phudyka          ###   ########.fr       */
+/*   Created: 2023/07/13 16:07:41 by phudyka           #+#    #+#             */
+/*   Updated: 2023/07/13 16:49:40 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+void	print_list(t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		printf("%s\n", tmp->var);
+		tmp = tmp->next;
+	}
+}
 
 void	print_arguments(t_data *data, int start_index)
 {
@@ -32,24 +44,3 @@ void	print_arguments(t_data *data, int start_index)
 	}
 }
 
-void	builtin_echo(t_data *data)
-{
-	int	i;
-	int	skip;
-
-	i = 1;
-	skip = 0;
-	if (!data->cmd[i])
-	{
-		write(1, "\n", 1);
-		return ;
-	}
-	if (ft_strcmp(data->cmd[i], "-n") == 0)
-	{
-		skip = 1;
-		i++;
-	}
-	print_arguments(data, i);
-	if (!skip)
-		write(1, "\n", 1);
-}

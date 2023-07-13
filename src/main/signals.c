@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 12:21:20 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/13 16:51:38 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ static void	ft_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	ft_sigterm(int sig)
+static void	ft_sigterm(int sig, t_data *data, t_env *env, t_token *tokens)
 {
 	(void)sig;
+	ft_freeshell(data, env, tokens);
 	exit (EXIT_SUCCESS);
 }
 
@@ -35,7 +36,7 @@ static void	ft_sigquit(int sig)
 	rl_redisplay();
 }
 
-void	ft_signals(void)
+void	ft_signals(t_data *data, t_env *env, t_token *tokens)
 {
 	struct sigaction	sa;
 
