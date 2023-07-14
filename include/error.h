@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:24:09 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:55:18 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 14:39:07 phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 
 # define FATAL	99
 
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
 # include "main.h"
-# include "lexer.h"
 
-void	fatal_error(t_data *data, t_env *env, t_token *tokens);
-void	ft_error(int token, int code, t_data *data, t_env *env, t_token *tokens);
+typedef struct s_shell t_shell;
+
+void	fatal_error(int code, t_shell *shell);
+void	ft_error(int code, int token, t_shell *shell);
 
 #endif

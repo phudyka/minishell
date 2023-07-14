@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/07/13 16:53:55 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 15:21:22 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,17 @@ char	**list_to_array(t_env *head)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_env	*env;
-	t_data	*data;
-	t_token	*tokens;
+	t_shell	*shell;
 
 	(void)argc;
 	(void)argv;
-	env = envp_to_list(envp);
-	data = malloc(sizeof(t_data));
-	data->path = get_path(envp);
-	ft_signals(data, env, tokens);
-	ft_prompt(data, env, tokens);
-	free_shell(data, env, tokens);
+	shell = malloc(sizeof(t_shell));
+	shell->env = envp_to_list(envp);
+	shell->data = malloc(sizeof(t_data));
+	shell->data->path = get_path(envp);
+	ft_signals(shell);
+	ft_prompt(shell);
+	free_shell(shell);
 	ft_putstr_fd("exit\n", 1);
 	return (0);
 }

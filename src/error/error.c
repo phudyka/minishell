@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:38:41 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 15:31:52 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	str_error(int code)
 	return ;
 }
 
-void	ft_error(int token, int code, t_data *data, t_env *env)
+void	ft_error(int code, int token, t_shell *shell)
 {
 	if (token == STR)
 		str_error(code);
@@ -53,7 +53,7 @@ void	ft_error(int token, int code, t_data *data, t_env *env)
 	else if (token == QOT)
 		quote_error(code);
 	else if (token == FATAL)
-		fatal_error(code, data, env);
+		fatal_error(code, shell);
 	else
 		ft_putstr_fd("Error! [An unexpected behavior has occured]\n", 2);
 }

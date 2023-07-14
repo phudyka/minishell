@@ -6,31 +6,31 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:00:42 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 17:45:26 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/error.h"
 
-void	exec_builtin(t_data *data, t_env *env)
+void	exec_builtin(t_shell *shell)
 {
-	if ((ft_strcmp(data->cmd[0], "cd")) == 0)
-		builtin_cd(data->cmd, env);
-	else if ((ft_strcmp(data->cmd[0], "pwd")) == 0)
+	if ((ft_strcmp(shell->data->cmd[0], "cd")) == 0)
+		builtin_cd(shell);
+	else if ((ft_strcmp(shell->data->cmd[0], "pwd")) == 0)
 		builtin_pwd();
-	else if ((ft_strcmp(data->cmd[0], "env")) == 0)
-		builtin_env(env, data->cmd);
-	else if ((ft_strcmp(data->cmd[0], "unset")) == 0)
-		unset_list(&env, data->cmd[1]);
-	else if ((ft_strcmp(data->cmd[0], "exit")) == 0)
-		builtin_exit(data, env);
-	else if ((ft_strcmp(data->cmd[0], "export")) == 0)
-		builtin_export(data, env);
-	else if ((ft_strcmp(data->cmd[0], "echo") == 0)
-		|| (ft_strcmp(data->cmd[0], "echo") == 0
-			&& ft_strcmp(data->cmd[1], "-n") == 0))
-		builtin_echo(data);
+	else if ((ft_strcmp(shell->data->cmd[0], "env")) == 0)
+		builtin_env(shell);
+	else if ((ft_strcmp(shell->data->cmd[0], "unset")) == 0)
+		unset_list(shell->env, shell->data->cmd[1]);
+	else if ((ft_strcmp(shell->data->cmd[0], "exit")) == 0)
+		builtin_exit(shell);
+	else if ((ft_strcmp(shell->data->cmd[0], "export")) == 0)
+		builtin_export(shell);
+	else if ((ft_strcmp(shell->data->cmd[0], "echo") == 0)
+		|| (ft_strcmp(shell->data->cmd[0], "echo") == 0
+			&& ft_strcmp(shell->data->cmd[1], "-n") == 0))
+		builtin_echo(shell);
 }
 
 static void	free_cmd(char **all)
@@ -59,7 +59,7 @@ static char	**set_cmd(void)
 	return (all);
 }
 
-int	is_builtin(t_data *data)
+int	is_builtin(t_shell *shell)
 {
 	int		i;
 	int		res;
@@ -70,12 +70,12 @@ int	is_builtin(t_data *data)
 	all = set_cmd();
 	if (!all)
 	{
-		ft_error(MALLOC, 0);
+		ft_error(BUILTIN, 1, shell);
 		return (0);
 	}
 	while (all[++i])
 	{
-		if ((ft_strcmp(all[i], data->cmd[0])) == 0)
+		if ((ft_strcmp(all[i], shell->data->cmd[0])) == 0)
 			res = 0;
 	}
 	free_cmd (all);

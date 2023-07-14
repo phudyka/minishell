@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:26:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 17:34:09 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,20 +65,20 @@ static void	start_fork(t_data *data, t_pipe_data *pipe_data)
 		exec_pipe_parent(data);
 }
 
-void	execute_pipeline(t_data *data, t_env *env)
+void	execute_pipeline(t_shell *shell)
 {
 	int			i;
-	t_pipe_data	*pipe_data;
+	t_pipe	*pipe;
 
 	i = 0;
-	data->fd_in = 0;
-	data->cmd_parts = ft_split(data->buffer, '|');
-	while (data->cmd_parts[i])
+	shell->data->fd_in = 0;
+	shell->data->cmd_parts = ft_split(shell->data->buffer, '|');
+	while (shell->data->cmd_parts[i])
 	{
-		if (pipe(data->fd) == -1)
-			ft_error(PIP, 1);
-		free(data->buffer);
-		data->buffer = ft_strdup(data->cmd_parts[i]);
+		if (shell->pipes(shell->data->fd) == -1)
+			ft_error(shell);
+		free(shell->data->buffer);
+		shell->data->buffer = ft_strdup(shell->data->cmd_parts[i]);
 		free_array(data->cmd);
 		data->cmd = ft_split(data->buffer, ' ');
 		pipe_data = init_pipe_data(data, env, i++);

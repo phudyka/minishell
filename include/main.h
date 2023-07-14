@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/07/13 16:53:32 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 17:48:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@
 # include <sys/resource.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "lexer.h"
+# include "parser.h"
+# include "expander.h"
 # include "error.h"
 # include "../libft/libft.h"
 
 # define RESET "\x1b[0m"
 # define GREEN "\x1b[32m"
-
 typedef struct s_data
 {
 	int		fd[2];
@@ -46,29 +48,41 @@ typedef struct s_data
 	char	*buffer;
 	char	**cmd_parts;
 }			t_data;
-
 typedef struct s_env
 {
 	char			*var;
 	struct s_env	*next;
 }				t_env;
-
-typedef struct s_pipe_data
+typedef struct s_pipe
 {
 	int		i;
 	t_env	*env;
 	t_data	*data;
-}				t_pipe_data;
+}				t_pipe;
+typedef struct s_token
+{
+	t_id			type;
+	char			*value;
+	struct s_token	*next;
+}			t_token;
+typedef struct	s_shell
+{
+	t_env		*env;
+	t_data		*data;
+	t_pipe		*pipes;
+	t_token		*tokens;
+	t_error		*errors;
+}				t_shell;
 
-void	ft_signals(t_data *data, t_env *env, t_token *tokens);
-void	builtin_export(t_data *data, t_env *env);
-void	builtin_exit(t_data *data, t_env *env, t_token *token);
+void	ft_signals(t_shell *shell);
+void	builtin_export(t_shell *shell);
+void	builtin_exit(t_shell *shell);
 void	builtin_env(t_env *env, char **cmd);
 void	builtin_pwd(void);
+void	builtin_cd(t_shell *shell);
+void	builtin_echo(t_shell *shell);
 int		is_builtin(t_data *data);
-void	exec_builtin(t_data *data, t_env *env);
-void	builtin_cd(char **path, t_env *env);
-void	builtin_echo(t_data *data);
+void	exec_builtin(t_shell *shell);
 t_env	*envp_to_list(char **envp);
 t_env	*create_node(char *var);
 void	print_list_token(t_token *env);
@@ -81,16 +95,16 @@ char	*get_from_env(char *variable, t_env *env);
 char	**list_to_array(t_env *head);
 char	*allocatenate(char *cmd, char *path);
 char	**get_path(char **envp);
-void	ft_prompt(t_data *data, t_env *env, t_token *tokens);
-void	execute_pipeline(t_data *data, t_env *env);
+void	ft_prompt(t_shell *shell);
+void	execute_pipeline(t_shell *shell);
 char	*ft_access(char **path, char **cmd);
-void	exec_cmd(char *path, char **cmd, char **envp);
-void	process_command(t_data *data, t_env *env);
+void	exec_cmd(char **envp, t_shell *shell);
+void	process_command(t_shell *shell);
 int		find_pipes(t_data *data);
 int		ft_pipex(char **cmd, char *path);
 void	free_data(t_data *data);
 void	free_buff(t_data *data);
 void	free_array(char **tab);
-void	free_shell(t_data *data, t_env *env);
+void	free_shell(t_shell *shell);
 
 #endif

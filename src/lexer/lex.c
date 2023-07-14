@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:08:29 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:27:59 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 15:22:44 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,14 @@ static t_token	*tokenizer(char **cmd)
 	return (tokens);
 }
 
-char	**master_lexer(char *buff)
+char	**master_lexer(char *buff, t_shell *shell)
 {
 	int		i;
 	char	**cmd;
 	t_token	*tokens;
 
 	i = 0;
+	tokens = shell->tokens;
 	cmd = ft_split(buff, ' ');
 	if (!cmd)
 		return (NULL);

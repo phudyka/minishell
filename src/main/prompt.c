@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:40:11 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/14 17:49:41 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,83 +35,81 @@ char	*ft_access(char **path, char **cmd)
 	return (NULL);
 }
 
-void	exec_cmd(char *path, char **cmd, char **envp)
+void	execute_command(t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
-
-	if (!path)
+	
+	if (!shell->data->path)
 	{
-		printf("%s: Command not found\n", cmd[0]);
+		printf("%s : Commande introuvable\n", shell->data->cmd[0]);
 		return ;
 	}
+	if (shell->data->buffer)
+	{
+		free(shell->data->buffer);
+		shell->data->buffer = NULL;
+	}
+	shell->data->buffer = ft_access(shell->data->path, shell->data->cmd);
 	pid = fork();
 	if (pid == -1)
-		ft_error(FATAL, 1, NULL, NULL, NULL);
+		ft_error(FATAL, 1, shell);
 	else if (pid == 0)
-		ft_error(FATAL, 2, NULL, NULL, NULL);
+		ft_error(FATAL, 2, shell);
 	else
-		if (waitpid(pid, &status, 0) == -1)
-			ft_error(FATAL, 3, NULL, NULL, NULL);
-	}
-}
-
-static void	execute_command(t_data *data, char **envp)
-{
-	if (data->buffer)
 	{
-		free(data->buffer);
-		data->buffer = NULL;
+		if (waitpid(pid, &status, 0) == -1)
+			ft_error(FATAL, 3, shell);
 	}
-	data->buffer = ft_access(data->path, data->cmd);
-	exec_cmd(data->buffer, data->cmd, envp);
 }
 
-void	process_command(t_data *data, t_env *env)
+void	process_command(t_shell *shell)
 {
 	char	**envp;
 
-	envp = list_to_array(env);
-	if (data->path)
+	envp = list_to_array(shell->env);
+	if (shell->data->path) 
 	{
-		free_array(data->path);
-		data->path = get_path(envp);
+		free_array(shell->data->path);
+		shell->data->path = get_path(envp);
 	}
-	if (!data->cmd || !data->cmd[0])
+	if (!shell->data->cmd || !shell->data->cmd[0])
 	{
-		free_buff(data);
+		free_buff(shell->data);
 		return ;
 	}
-	if (is_builtin(data) == 0)
+	if (is_builtin(shell->data) == 0)
 	{
-		exec_builtin(data, env);
-		free_buff(data);
+		exec_builtin(shell);
+		free_buff(shell->data);
 		return ;
 	}
-	execute_command(data, envp);
+	execute_command(shell->data);
 	free_array(envp);
-	free_buff(data);
+	free_buff(shell->data);
 }
 
-void	ft_prompt(t_data *data, t_env *env, t_token *tokens)
+void	ft_prompt(t_shell *shell)
 {
-	int	pipes;
+	int		pipes;
+	char	*buff;
 
 	pipes = 0;
+	buff = shell->data->buffer;
 	while (69)
 	{
-		data->buffer = readline(GREEN "$ > " RESET);
-		if (!data->buffer)
+		buff = readline(GREEN "$ > " RESET);
+		if (!buff)
 			break ;
-		add_history(data->buffer);
-		data->cmd = master_lexer(data->buffer, t_token *tokens);
-		pipes = find_pipes(data);
+		add_history(buff);
+		shell->data->cmd = master_lexer(buff, shell);
+		pipes = find_pipes(shell->data);
 		if (pipes > 0)
-			execute_pipeline(data, env);
+			execute_pipeline(shell);
 		else
-			process_command(data, env);
+			process_command(shell);
 	}
 	clear_history();
-	if (data->path)
-		free_array(data->path);
+	if (shell->data->path)
+		free_array(shell->data->path);
 }
