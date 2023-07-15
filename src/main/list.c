@@ -6,25 +6,12 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:07:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/14 17:43:51 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 16:37:14 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
-
-void	free_list(t_env *env)
-{
-	t_env	*tmp;
-
-	while (env)
-	{
-		tmp = env;
-		env = env->next;
-		free (tmp->var);
-		free (tmp);
-	}
-}
 
 t_env	*create_node(char *var)
 {

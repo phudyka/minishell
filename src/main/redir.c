@@ -6,12 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/15 11:52:46 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 17:25:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-#include "../../include/parser.h"
 
 static void	redir_in(t_shell *shell)
 {
