@@ -6,25 +6,27 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 16:11:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:42:40 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:51:47 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_freeshell(t_data *data, t_env *env, t_token *tokens)
+#include "../../include/main.h"
+
+void	ft_freeshell(t_shell *shell)
 {
-	if (data)
-		free_data(data);
-	if (env)
-		free_list(env);
-    if (tokens)
-        free_token(tokens);
-	env = NULL;
-	data = NULL;
-    tokens = NULL;
+	if (shell->data)
+		free_data(shell->data);
+	if (shell->env)
+		free_list(shell->env);
+    if (shell->tokens)
+        free_token(shell->tokens);
+	shell->env = NULL;
+	shell->data = NULL;
+    shell->tokens = NULL;
 }
 
-void	builtin_exit(t_data *data, t_env *env, t_token tokens)
+void	builtin_exit(t_shell *shell)
 {
-	ft_freeshell(data, env, tokens);
+	free_shell(shell);
     exit (EXIT_SUCCESS);
 }

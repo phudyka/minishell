@@ -6,11 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/14 17:17:28 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 10:55:52 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+static t_shell *g_shell;
 
 static void	ft_sigint(int sig)
 {
@@ -21,10 +23,10 @@ static void	ft_sigint(int sig)
 	rl_redisplay();
 }
 
-static void	ft_sigterm(int sig, t_shell *shell)
+static void	ft_sigterm(int sig)
 {
 	(void)sig;
-	ft_freeshell(shell);
+	free_shell(g_shell);
 	exit (EXIT_SUCCESS);
 }
 
@@ -40,6 +42,7 @@ void	ft_signals(t_shell *shell)
 {
 	struct sigaction	sa;
 
+	g_shell = shell;
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
 	sa.sa_handler = &ft_sigterm;

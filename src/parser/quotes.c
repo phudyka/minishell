@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 14:08:50 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:26:52 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	is_odd(const char *str)
 	return (sqot % 2 || dqot % 2);
 }
 
-static char	*ft_sequence(size_t len, const char *str)
+static char	*ft_sequence(size_t len, const char *str, t_shell *shell)
 {
 	size_t	i;
 	size_t	j;
@@ -81,7 +81,7 @@ static char	*ft_sequence(size_t len, const char *str)
 	i = 0;
 	j = 0;
 	if (is_odd(str))
-		ft_error(QOT, 1);
+		ft_error(QOT, 1, shell);
 	parsed = (char *)malloc(sizeof(char) * (len + 1));
 	if (!parsed)
 		return (NULL);
@@ -98,7 +98,7 @@ static char	*ft_sequence(size_t len, const char *str)
 	return (parsed);
 }
 
-void	parse_quotes(t_token *tokens)
+void	parse_quotes(t_token *tokens, t_shell *shell)
 {
 	size_t	len;
 	char	*parsed;
@@ -110,7 +110,7 @@ void	parse_quotes(t_token *tokens)
 		if (temp->type == QOT && temp->value)
 		{
 			len = ft_strlen(temp->value);
-			parsed = ft_sequence(len, temp->value);
+			parsed = ft_sequence(len, temp->value, shell);
 			if (!parsed)
 				return ;
 			free(temp->value);

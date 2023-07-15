@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:55:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/14 15:29:08 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:27:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	fatal_error(int code, t_shell *shell)
 		perror("FATAL ERROR ! [execve]\n");
 	else if (code == 3)
 		perror("FATAL ERROR ! [waitpid]\n");
-	ft_freeshell(shell);
+	free_shell(shell);
 	exit (EXIT_FAILURE);
 }

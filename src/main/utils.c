@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/14 11:47:27 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:49:49 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,21 @@ void	free_buff(t_data *data)
 	}
 }
 
+void	ft_export(char **variable, t_data *data, t_env *current)
+{
+	while (current)
+	{
+		if (ft_strncmp(current->var,
+				variable[0], ft_strlen(variable[0])) == 0)
+		{
+			free(current->var);
+			free_array(variable);
+			current->var = strdup(data->cmd[1]);
+			return ;
+		}
+		current = current->next;
+	}
+}
 char	*allocatenate(char *cmd, char *path)
 {
 	int		len;

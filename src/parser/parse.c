@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/14 15:21:51 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:40:01 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	find_pipes(t_data *data)
 	return (pipes);
 }
 
-static void	parse_pipes(t_token *tokens)
+static void	parse_pipes(t_token *tokens, t_shell *shell)
 {
 	t_token	*prev;
 	t_token	*next;
@@ -44,7 +44,7 @@ static void	parse_pipes(t_token *tokens)
 		{
 			if (!prev || prev->type == PIP 
 				|| !tokens->next || tokens->next->type == PIP)
-				ft_error(PIP, 0);
+				ft_error(PIP, 0, shell);
 			next = tokens->next;
 			while (next && next->type != PIP)
 			{
@@ -53,25 +53,25 @@ static void	parse_pipes(t_token *tokens)
 				next = next->next;
 			}
 			if (!next || next->type != STR)
-				ft_error(PIP, 1);
+				ft_error(PIP, 1, shell);
 		}
 		prev = tokens;
 		tokens = tokens->next;
 	}
 }
 
-void	master_parser(t_token *tokens)
+void	master_parser(t_token *tokens, t_shell *shell)
 {
 	while (tokens)
 	{
 		if (tokens->type == STR)
 			ft_strdup(tokens->value);
 		else if (tokens->type == QOT)
-			parse_quotes(tokens);
+			parse_quotes(tokens, shell);
 		else if (tokens->type == PIP)
-			parse_pipes(tokens);
+			parse_pipes(tokens, shell);
 		else if (tokens->type == RDR)
-			parse_redir(tokens);
+			parse_redir(shell);
 		else
 			tokens = tokens->next;
 		tokens = tokens->next;

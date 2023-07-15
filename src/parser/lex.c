@@ -6,11 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:08:29 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/14 15:22:44 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:24:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/lexer.h"
+#include "../../include/main.h"
 
 static t_token	*new_token(t_id type, char *value)
 {
@@ -99,7 +99,7 @@ char	**master_lexer(char *buff, t_shell *shell)
 		free_array(cmd);
 		return (NULL);
 	}
-	master_parser(tokens);
+	master_parser(tokens, shell);
 	while (tokens)
 	{
 		cmd[i++] = tokens->value;

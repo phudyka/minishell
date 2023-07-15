@@ -6,12 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/14 17:49:41 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/15 11:21:47 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-#include "../../include/lexer.h"
 #include "../../include/parser.h"
 
 char	*ft_access(char **path, char **cmd)
@@ -35,22 +34,11 @@ char	*ft_access(char **path, char **cmd)
 	return (NULL);
 }
 
-void	execute_command(t_shell *shell)
+static void	process_pid(t_shell *shell)
 {
 	pid_t	pid;
 	int		status;
-	
-	if (!shell->data->path)
-	{
-		printf("%s : Commande introuvable\n", shell->data->cmd[0]);
-		return ;
-	}
-	if (shell->data->buffer)
-	{
-		free(shell->data->buffer);
-		shell->data->buffer = NULL;
-	}
-	shell->data->buffer = ft_access(shell->data->path, shell->data->cmd);
+
 	pid = fork();
 	if (pid == -1)
 		ft_error(FATAL, 1, shell);
@@ -61,6 +49,25 @@ void	execute_command(t_shell *shell)
 		if (waitpid(pid, &status, 0) == -1)
 			ft_error(FATAL, 3, shell);
 	}
+}
+
+void	execute_command(t_shell *shell)
+{
+	t_data	*data;
+	
+	data = shell->data;
+	if (!data->path)
+	{
+		printf("%s : Commande introuvable\n", data->cmd[0]);
+		return ;
+	}
+	if (data->buffer)
+	{
+		free(data->buffer);
+		data->buffer = NULL;
+	}
+	data->buffer = ft_access(data->path, data->cmd);
+	process_pid(shell);
 }
 
 void	process_command(t_shell *shell)
@@ -78,13 +85,13 @@ void	process_command(t_shell *shell)
 		free_buff(shell->data);
 		return ;
 	}
-	if (is_builtin(shell->data) == 0)
+	if (is_builtin(shell) == 0)
 	{
 		exec_builtin(shell);
 		free_buff(shell->data);
 		return ;
 	}
-	execute_command(shell->data);
+	execute_command(shell);
 	free_array(envp);
 	free_buff(shell->data);
 }

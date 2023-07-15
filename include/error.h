@@ -13,6 +13,7 @@
 #ifndef ERROR_H
 # define ERROR_H
 
+# define MALLOC 42
 # define FATAL	99
 
 # include "main.h"
