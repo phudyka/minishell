@@ -6,38 +6,44 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/15 11:23:39 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/18 11:55:02 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-static t_pipe	*init_pipe_data(int i, t_shell *shell)
-{
-	t_pipe	*pipe;
+// J'initialise la struct t_pipe_data, pas le choix sinon mes fonctions avait
+// trop de parametres.
 
-	pipe = malloc(sizeof(t_pipe));
-	if (!pipe)
+static t_pipe	*init_pipe_data(t_data *data, t_env *env, int i)
+{
+	t_pipe	*pipe_data;
+
+	pipe_data = malloc(sizeof(t_pipe));
+	if (!pipe_data)
 		return (NULL);
-	pipe->data = shell->data;
-	pipe->env = shell->env;
-	pipe->i = i;
-	return (pipe);
+	pipe_data->data = data;
+	pipe_data->env = env;
+	pipe_data->i = i;
+	return (pipe_data);
 }
 
-static void	exec_pipe_child(t_shell *shell)
+// Processus fils : il récupère la commande, la fait tourner et se termine.
+
+static void	exec_pipe_child(t_pipe *pipe_data)
 {
-	dup2(shell->pipes->data->fd_in, 0);
-	close(shell->pipes->data->fd_in);
-	if (shell->pipes->data->cmd_parts[shell->pipes->i + 1])
-		dup2(shell->pipes->data->fd[1], 1);
-	close(shell->pipes->data->fd[1]);
-	close(shell->pipes->data->fd[0]);
-	process_command(shell);
+	dup2(pipe_data->data->fd_in, 0);
+	close(pipe_data->data->fd_in);
+	if (pipe_data->data->cmd_parts[pipe_data->i + 1])
+		dup2(pipe_data->data->fd[1], 1);
+	close(pipe_data->data->fd[1]);
+	close(pipe_data->data->fd[0]);
+	process_command(pipe_data->data, pipe_data->env);
 	exit(EXIT_SUCCESS);
 }
 
+// Je ferme la fin d'écriture du pipe et attends qu'il finisse.
 static void	exec_pipe_parent(t_data *data)
 {
 	wait(NULL);
@@ -45,47 +51,48 @@ static void	exec_pipe_parent(t_data *data)
 	data->fd_in = data->fd[0];
 }
 
-static void	start_fork(t_shell *shell)
+// Je crée un nouveau processus. Si ca foire, je le signale et arrête tout.
+static void	start_fork(t_data *data, t_pipe *pipe_data)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
 	{
-		free_data(shell->data);
-		ft_error(PIP, 1, shell);
+		free_data(data);
+		ft_error(PIP, 1);
 	}
 	else if (pid == 0)
 	{
-		exec_pipe_child(shell);
+		exec_pipe_child(pipe_data);
 		exit(EXIT_FAILURE);
 	}
 	else
-		exec_pipe_parent(shell->data);
+		exec_pipe_parent(data);
 }
 
-void	execute_pipeline(t_shell *shell)
+// Je mets tout en place : créer les pipes, préparer les commandes,
+// créer les processus, gérer le processus parent.
+
+void	execute_pipeline(t_data *data, t_env *env)
 {
 	int			i;
 	t_pipe		*pipe_data;
 
-	shell->data->fd_in = 0;
 	i = 0;
-	shell->data->cmd_parts = ft_split(shell->data->buffer, '|');
-	while (shell->data->cmd_parts[i])
+	data->fd_in = 0;
+	data->cmd_parts = ft_split(data->buffer, '|');
+	while (data->cmd_parts[i])
 	{
-		if (pipe(shell->data->fd) == -1)
-		{
-			perror("pipe");
-			exit(EXIT_FAILURE);
-		}
-		free(shell->data->buffer);
-		shell->data->buffer = ft_strdup(shell->data->cmd_parts[i]);
-		free_array(shell->data->cmd);
-		shell->data->cmd = ft_split(shell->data->buffer, ' ');
-		pipe_data = init_pipe_data(i++, shell);
-		start_fork(shell);
+		if (pipe(data->fd) == -1)
+			ft_error(PIP, 1);
+		free(data->buffer);
+		data->buffer = ft_strdup(data->cmd_parts[i]);
+		free_array(data->cmd);
+		data->cmd = ft_split(data->buffer, ' ');
+		pipe_data = init_pipe_data(data, env, i++);
+		start_fork(data, pipe_data);
 		free(pipe_data);
 	}
-	free_data(shell->data);
+	free_data(data);
 }

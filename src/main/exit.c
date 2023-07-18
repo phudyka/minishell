@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 16:11:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/15 17:20:19 by phudyka          ###   ########.fr       */
+/*   Created: 2023/07/18 12:10:27 by phudyka           #+#    #+#             */
+/*   Updated: 2023/07/18 15:18:15 phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-void	free_list(t_env *env)
+void	free_env(t_env *env)
 {
 	t_env	*tmp;
 
@@ -23,25 +23,20 @@ void	free_list(t_env *env)
 		free (tmp->var);
 		free (tmp);
 	}
-	tmp = NULL;
-	tmp->var = NULL;
 }
 
-void	free_shell(t_shell *shell)
+void	free_shell(void)
 {
-	if (shell->data)
-		free_data(shell->data);
-	if (shell->env)
-		free_list(shell->env);
-    if (shell->tokens)
-		free_tokens(shell->tokens);
-	shell->env = NULL;
-	shell->data = NULL;
-    shell->tokens = NULL;
+	if (g_shell.env)
+		free_env(g_shell.env);
+	if (g_shell.data)
+		free_data(g_shell.data);
+	if (g_shell.tokens)
+		free_tokens(g_shell.tokens);
 }
 
-void	builtin_exit(t_shell *shell)
+void	builtin_exit(void)
 {
-	free_shell(shell);
-    exit (EXIT_SUCCESS);
+	free_shell();
+	exit (EXIT_SUCCESS);
 }

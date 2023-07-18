@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 14:03:06 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/06 15:15:44 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	is_dquote(char c)
 	return (c == '\"');
 }
 
-int	is_space(char c)
+int is_space(char c)
 {
-	return (c == ' ');
+    return(c == ' ');
 }
 
 int	is_meta(char c)

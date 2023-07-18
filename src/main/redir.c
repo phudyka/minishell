@@ -6,64 +6,65 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/15 17:25:35 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/18 11:54:53 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+#include "../../include/parser.h"
 
-static void	redir_in(t_shell *shell)
+static void	redir_in(t_token *tokens)
 {
 	int	fd;
 	
-	if (!shell->tokens->next || shell->tokens->next->type != STR)
-		ft_error(RDR, 1, shell);
-	fd = open(shell->tokens->next->value, O_RDONLY);
+	if (!tokens->next || tokens->next->type != STR)
+		ft_error(RDR, 1);
+	fd = open(tokens->next->value, O_RDONLY);
 	if (fd == -1)
-		ft_error(RDR, 2, shell);
+		ft_error(RDR, 2);
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
 
-static void	redir_out(t_shell *shell)
+static void	redir_out(t_token *tokens)
 {
 	int	fd;
 	
-	if (!shell->tokens->next || shell->tokens->next->type != STR)
-		ft_error(RDR, 2, shell);
-	fd = open(shell->tokens->next->value, O_WRONLY, O_CREAT, O_TRUNC, 0644);
+	if (!tokens->next || tokens->next->type != STR)
+		ft_error(RDR, 1);
+	fd = open(tokens->next->value, O_WRONLY, O_CREAT, O_TRUNC, 0644);
 	if (fd == -1)
-		ft_error(RDR, 2, shell);
+		ft_error(RDR, 2);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
 
-static void	redir_app(t_shell *shell)
+static void	redir_app(t_token *tokens)
 {
 	int	fd;
 	
-	if (!shell->tokens->next || shell->tokens->next->type != STR)
-		ft_error(RDR, 1, shell);
-	fd = open(shell->tokens->next->value, O_WRONLY, O_CREAT, O_APPEND, 0644);
+	if (!tokens->next || tokens->next->type != STR)
+		ft_error(RDR, 1);
+	fd = open(tokens->next->value, O_WRONLY, O_CREAT, O_APPEND, 0644);
 	if (fd == -1)
-		ft_error(RDR, 2, shell);
+		ft_error(RDR, 2);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 }
 
-static void	redir_hdc(t_shell *shell)
+static void	redir_hdc(t_token *tokens)
 {
 	int		fd[2];
 	char	*max;
 	char	*line;
 	
-	if (!shell->tokens->next || shell->tokens->next->type != STR)
-		ft_error(RDR, 1, shell);
+	if (!tokens->next || tokens->next->type != STR)
+		ft_error(RDR, 1);
 	pipe(fd);
-	max = shell->tokens->next->value;
+	max = tokens->next->value;
 	while (1)
 	{
-		line = readline(shell->tokens->value);
+		line = readline(tokens->value);
 		if (ft_strcmp(line, max) == 0)
 		{
 			free(line);
@@ -77,11 +78,8 @@ static void	redir_hdc(t_shell *shell)
 	close(fd[0]);
 }
 
-void	parse_redir(t_shell *shell)
+void	parse_redir(t_token *tokens)
 {
-	t_token	*tokens;
-
-	tokens = shell->tokens;
 	while (tokens)
 	{
 		if (tokens->type == RDR)
@@ -95,7 +93,7 @@ void	parse_redir(t_shell *shell)
 			else if (ft_strcmp(tokens->value, ">>") == 0)
 				redir_hdc(tokens);				
 			else
-				ft_error(RDR, 1, shell);
+				ft_error(RDR, 2);
 		}
 		tokens = tokens->next;
 	}

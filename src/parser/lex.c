@@ -6,16 +6,16 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:08:29 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/15 11:24:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/05/16 14:12: by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-static t_token	*new_token(t_id type, char *value)
+static t_token	*new_token(token type, char *value)
 {
 	t_token	*token;
-
+	
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
@@ -28,7 +28,7 @@ static t_token	*new_token(t_id type, char *value)
 static void	add_token(t_token **tokens, t_token *new)
 {
 	t_token	*tmp;
-
+	
 	if (!tokens || !new)
 		return ;
 	if (!*tokens)
@@ -42,34 +42,32 @@ static void	add_token(t_token **tokens, t_token *new)
 	tmp->next = new;
 }
 
-void	free_tokens(t_token *tokens)
+void free_tokens(t_token *tokens)
 {
-	t_token	*tmp;
+    t_token *current;
+    t_token *next;
 
-	if (!tokens)
-		return ;
-	while (tokens)
-	{
-		if (tokens->value)
-			free(tokens->value);
-		tmp = tokens;
-		tokens = tokens->next;
-		free(tmp);
-	}
-	tokens = NULL;
+    current = tokens;
+    while (current)
+    {
+        next = current->next;
+        free(current->value);
+        free(current);
+        current = next;
+    }
 }
 
 static t_token	*tokenizer(char **cmd)
 {
 	t_token	*tokens;
-
+	
 	tokens = NULL;
 	while (*cmd)
 	{
 		if (**cmd == '\'' || **cmd == '\"')
-			add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
+				add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
 		else if (**cmd == '>' || **cmd == '<')
-			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));
+			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));		
 		else if (**cmd == '|')
 			add_token(&tokens, new_token(PIP, "|"));
 		else
@@ -82,14 +80,13 @@ static t_token	*tokenizer(char **cmd)
 	return (tokens);
 }
 
-char	**master_lexer(char *buff, t_shell *shell)
+char	**master_lexer(char *buff)
 {
 	int		i;
 	char	**cmd;
 	t_token	*tokens;
 
 	i = 0;
-	tokens = shell->tokens;
 	cmd = ft_split(buff, ' ');
 	if (!cmd)
 		return (NULL);
@@ -99,7 +96,7 @@ char	**master_lexer(char *buff, t_shell *shell)
 		free_array(cmd);
 		return (NULL);
 	}
-	master_parser(tokens, shell);
+	master_parser(tokens);
 	while (tokens)
 	{
 		cmd[i++] = tokens->value;

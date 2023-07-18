@@ -6,12 +6,30 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/15 11:21:47 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:52:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
+
+int	find_pipes(t_data *data)
+{
+	int i;
+	int pipes;
+
+	i = 0;
+	pipes = 0;
+	if (!data->buffer || !data->cmd || !*data->cmd)
+		return (0);
+	while (data->cmd[i])
+	{
+		if (ft_strncmp(data->cmd[i], "|", ft_strlen(data->cmd[i])) == 0)
+			pipes++;
+		i++;
+	}
+	return (pipes);
+}
 
 char	*ft_access(char **path, char **cmd)
 {
@@ -25,7 +43,7 @@ char	*ft_access(char **path, char **cmd)
 	{
 		exe = allocatenate(cmd[0], path[i]);
 		if (!exe)
-			return (NULL);
+			return(NULL);
 		if (access(exe, F_OK | X_OK) == 0)
 			return (exe);
 		free(exe);
@@ -34,89 +52,94 @@ char	*ft_access(char **path, char **cmd)
 	return (NULL);
 }
 
-static void	process_pid(t_shell *shell)
+void	exec_cmd(char *path, char **cmd, char **envp)
 {
 	pid_t	pid;
 	int		status;
 
+	if (!path)
+	{
+		printf("%s: Command not found\n", cmd[0]);
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
-		ft_error(FATAL, 1, shell);
+	{
+		perror("fork");
+		exit(EXIT_FAILURE);
+	}
 	else if (pid == 0)
-		ft_error(FATAL, 2, shell);
+	{
+		if (execve(path, cmd, envp) == -1)
+			perror("execve");
+		exit (EXIT_FAILURE);
+	}
 	else
 	{
 		if (waitpid(pid, &status, 0) == -1)
-			ft_error(FATAL, 3, shell);
+		{
+			perror("waitpid");
+			exit(EXIT_FAILURE);
+		}
 	}
 }
 
-void	execute_command(t_shell *shell)
+static void	execute_command(t_data *data, char **envp)
 {
-	t_data	*data;
-	
-	data = shell->data;
-	if (!data->path)
-	{
-		printf("%s : Commande introuvable\n", data->cmd[0]);
-		return ;
-	}
-	if (data->buffer)
-	{
-		free(data->buffer);
-		data->buffer = NULL;
-	}
-	data->buffer = ft_access(data->path, data->cmd);
-	process_pid(shell);
+    if (data->buffer)
+    {
+        free(data->buffer);
+        data->buffer = NULL;
+    }
+    data->buffer = ft_access(data->path, data->cmd);
+    exec_cmd(data->buffer, data->cmd, envp);
 }
 
-void	process_command(t_shell *shell)
+void	process_command(t_data *data, t_env *env)
 {
 	char	**envp;
 
-	envp = list_to_array(shell->env);
-	if (shell->data->path) 
+	envp = list_to_array(env);
+	if (data->path)
 	{
-		free_array(shell->data->path);
-		shell->data->path = get_path(envp);
+		free_array(data->path);
+		data->path = get_path(envp);
 	}
-	if (!shell->data->cmd || !shell->data->cmd[0])
+	if (!data->cmd || !data->cmd[0])
 	{
-		free_buff(shell->data);
+		free_buff(data);
 		return ;
 	}
-	if (is_builtin(shell) == 0)
+	if (is_builtin(data) == 0)
 	{
-		exec_builtin(shell);
-		free_buff(shell->data);
+		exec_builtin(data, env);
+		free_buff(data);
 		return ;
 	}
-	execute_command(shell);
+	execute_command(data, envp);
 	free_array(envp);
-	free_buff(shell->data);
+	free_buff(data);
 }
 
-void	ft_prompt(t_shell *shell)
+void	ft_prompt(t_data *data, t_env *env)
 {
-	int		pipes;
-	char	*buff;
+	int	pipes;
 
 	pipes = 0;
-	buff = shell->data->buffer;
 	while (69)
 	{
-		buff = readline(GREEN "$ > " RESET);
-		if (!buff)
+		data->buffer = readline(GREEN "$ > " RESET);
+		if (!data->buffer)
 			break ;
-		add_history(buff);
-		shell->data->cmd = master_lexer(buff, shell);
-		pipes = find_pipes(shell->data);
+		add_history(data->buffer);
+		data->cmd = master_lexer(data->buffer);
+		pipes = find_pipes(data);
 		if (pipes > 0)
-			execute_pipeline(shell);
+			execute_pipeline(data, env);
 		else
-			process_command(shell);
+			process_command(data, env);
 	}
 	clear_history();
-	if (shell->data->path)
-		free_array(shell->data->path);
+	if (data->path)
+		free_array(data->path);
 }

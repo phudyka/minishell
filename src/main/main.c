@@ -6,11 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/07/15 17:19:26 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/18 17:46:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+t_shell	g_shell;
 
 static char	*ft_path(char **envp)
 {
@@ -84,17 +86,14 @@ char	**list_to_array(t_env *head)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell	*shell;
-
 	(void)argc;
 	(void)argv;
-	shell = malloc(sizeof(t_shell));
-	shell->env = envp_to_list(envp);
-	shell->data = malloc(sizeof(t_data));
-	shell->data->path = get_path(envp);
-	ft_signals(shell);
-	ft_prompt(shell);
-	free_shell(shell);
+	g_shell.env = envp_to_list(envp);
+	g_shell.data = malloc(sizeof(t_data));
+	g_shell.data->path = get_path(envp);
+	ft_signals();
+	ft_prompt(g_shell.data, g_shell.env);
+	free_shell();
 	ft_putstr_fd("exit\n", 1);
 	return (0);
 }

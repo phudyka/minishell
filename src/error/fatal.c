@@ -6,20 +6,14 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:55:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/15 11:27:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/06/09 11:56:02 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/error.h"
+# include "../../include/error.h"
 
-void	fatal_error(int code, t_shell *shell)
+void	fatal_error(int code)
 {
-	if (code == 1)
-		perror("FATAL ERROR ! [fork]\n");
-	else if (code == 2)
-		perror("FATAL ERROR ! [execve]\n");
-	else if (code == 3)
-		perror("FATAL ERROR ! [waitpid]\n");
-	free_shell(shell);
-	exit (EXIT_FAILURE);
+	if (code == 0)
+		ft_putstr_fd("FATAL ERROR ! [Causing minishell to stop]\n", 2);
 }

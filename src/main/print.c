@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/13 16:07:41 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 16:49:40 by phudyka          ###   ########.fr       */
+/*   Created: 2023/07/18 12:08:50 by phudyka           #+#    #+#             */
+/*   Updated: 2023/07/18 12:12:12 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/main.h"
+# include "../../include/main.h"
 
 void	print_list(t_env *env)
 {
@@ -43,4 +43,3 @@ void	print_arguments(t_data *data, int start_index)
 			write(1, " ", 1);
 	}
 }
-
