@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 10:50:29 by dtassel           #+#    #+#             */
-/*   Updated: 2023/06/28 15:44:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/19 16:10:34 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	j = 0;
 	if (start + len > ft_strlen(s))
 		len = ft_strlen((char *)s) - start;
-	r = malloc(sizeof(char) * (len + 1));
+	r = (char *)malloc(sizeof(char) * (len + 1));
 	if (!r)
 		return (NULL);
 	while (s[i] && j < len)
-	{
 		r[j++] = s[i++];
-	}
 	r[j] = '\0';
 	return (r);
 }

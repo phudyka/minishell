@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/18 15:22:38 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/21 14:45:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void	ft_sigint(int sig)
 static void	ft_sigterm(int sig)
 {
 	(void)sig;
-	free_shell();
-	exit (EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
 
 static void	ft_sigquit(int sig)

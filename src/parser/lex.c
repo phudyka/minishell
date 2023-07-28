@@ -44,17 +44,16 @@ static void	add_token(t_token **tokens, t_token *new)
 
 void free_tokens(t_token *tokens)
 {
-    t_token *current;
-    t_token *next;
+	t_token	*tmp;
 
-    current = tokens;
-    while (current)
+    while (tokens)
     {
-        next = current->next;
-        free(current->value);
-        free(current);
-        current = next;
+		tmp = tokens;
+		tokens = tokens->next;
+		free(tmp->value);
+		free(tmp);
     }
+	tokens = NULL;
 }
 
 static t_token	*tokenizer(char **cmd)
@@ -70,6 +69,8 @@ static t_token	*tokenizer(char **cmd)
 			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));		
 		else if (**cmd == '|')
 			add_token(&tokens, new_token(PIP, "|"));
+		else if (**cmd == '\\' || **cmd == ';')
+			cmd++;
 		else
 			add_token(&tokens, new_token(STR, ft_strdup(*cmd)));
 		if (!*cmd)
@@ -103,6 +104,5 @@ char	**master_lexer(char *buff)
 		tokens = tokens->next;
 	}
 	cmd[i] = NULL;
-	free_tokens(tokens);
 	return (cmd);
 }

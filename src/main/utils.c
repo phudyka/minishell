@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/18 17:50:18 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/25 11:01:05 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,12 @@ void	free_array(char **tab)
 	if (!tab[i])
 		return ;
 	while (tab[i])
+	{
+		free(tab[i]);
 		i++;
-	while (i >= 0)
-		free(tab[i--]);
-	free (tab);
-}
-
-void	free_data(t_data *data)
-{
-	if (data->buffer)
-	{
-		free(data->buffer);
-		data->buffer = NULL;
 	}
-	if (data->cmd)
-	{
-		free_array(data->cmd);
-		data->cmd = NULL;
-	}
-	if (data->cmd_parts)
-	{
-		free_array(data->cmd_parts);
-		data->cmd_parts = NULL;
-	}
-	if (data->redir)
-	{
-		free_array(data->redir);
-		data->redir = NULL;		
-	}
+	free(tab);
+	tab = NULL;
 }
 
 char	*allocatenate(char *cmd, char *path)
@@ -66,14 +44,8 @@ char	*allocatenate(char *cmd, char *path)
 
 void	free_buff(t_data *data)
 {
-	if (data->buffer)
-	{
-		free(data->buffer);
-		data->buffer = NULL;
-	}
-	if (data->cmd)
-	{
-		free_array(data->cmd);
-		data->cmd = NULL;
-	}
+	free(data->buffer);
+	free_array(data->cmd);
+	data->cmd = NULL;
+	data->buffer = NULL;
 }

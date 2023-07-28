@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/07/18 17:46:37 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/28 11:46:24 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ static char	**make_env(char **env, t_env *current)
 	i = 0;
 	while (current)
 	{
-		env[i] = (char *)malloc((sizeof(char) * ft_strlen(current->var) + 1));
+		env[i] = ft_strdup(current->var);
 		if (!env[i])
 			exit(EXIT_FAILURE);
-		ft_strlcpy(env[i], current->var, ft_strlen(current->var));
 		current = current->next;
 		i++;
 	}
@@ -76,7 +75,7 @@ char	**list_to_array(t_env *head)
 		count++;
 		current = current->next;
 	}
-	env = (char **)malloc(sizeof(char *) * (count + 1));
+	env = (char **)ft_calloc(count + 1, sizeof(char *));
 	if (!env)
 		exit(EXIT_FAILURE);
 	current = head;

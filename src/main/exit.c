@@ -25,6 +25,14 @@ void	free_env(t_env *env)
 	}
 }
 
+void	free_data(t_data *data)
+{
+	free(data->buffer);
+	data->buffer = NULL;
+	free_array(data->cmd);
+	data->cmd = NULL;
+}
+
 void	free_shell(void)
 {
 	if (g_shell.env)

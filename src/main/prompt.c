@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/18 17:52:30 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/28 11:50:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,20 @@ void	process_command(t_data *data, t_env *env)
 	}
 	if (!data->cmd || !data->cmd[0])
 	{
+		free_array(envp);
 		free_buff(data);
 		return ;
 	}
 	if (is_builtin(data) == 0)
 	{
 		exec_builtin(data, env);
+		free_array(envp);
 		free_buff(data);
 		return ;
 	}
 	execute_command(data, envp);
 	free_array(envp);
-	free_buff(data);
+	free_data(data);
 }
 
 void	ft_prompt(t_data *data, t_env *env)
@@ -140,6 +142,5 @@ void	ft_prompt(t_data *data, t_env *env)
 			process_command(data, env);
 	}
 	clear_history();
-	if (data->path)
-		free_array(data->path);
+	free_array(data->path);
 }

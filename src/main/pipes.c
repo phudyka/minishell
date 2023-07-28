@@ -6,15 +6,12 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/18 11:55:02 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/27 15:27:27 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
-
-// J'initialise la struct t_pipe_data, pas le choix sinon mes fonctions avait
-// trop de parametres.
 
 static t_pipe	*init_pipe_data(t_data *data, t_env *env, int i)
 {
@@ -29,8 +26,6 @@ static t_pipe	*init_pipe_data(t_data *data, t_env *env, int i)
 	return (pipe_data);
 }
 
-// Processus fils : il récupère la commande, la fait tourner et se termine.
-
 static void	exec_pipe_child(t_pipe *pipe_data)
 {
 	dup2(pipe_data->data->fd_in, 0);
@@ -43,7 +38,6 @@ static void	exec_pipe_child(t_pipe *pipe_data)
 	exit(EXIT_SUCCESS);
 }
 
-// Je ferme la fin d'écriture du pipe et attends qu'il finisse.
 static void	exec_pipe_parent(t_data *data)
 {
 	wait(NULL);
@@ -51,7 +45,6 @@ static void	exec_pipe_parent(t_data *data)
 	data->fd_in = data->fd[0];
 }
 
-// Je crée un nouveau processus. Si ca foire, je le signale et arrête tout.
 static void	start_fork(t_data *data, t_pipe *pipe_data)
 {
 	pid_t	pid;
@@ -70,9 +63,6 @@ static void	start_fork(t_data *data, t_pipe *pipe_data)
 	else
 		exec_pipe_parent(data);
 }
-
-// Je mets tout en place : créer les pipes, préparer les commandes,
-// créer les processus, gérer le processus parent.
 
 void	execute_pipeline(t_data *data, t_env *env)
 {
