@@ -28,9 +28,11 @@ void	free_env(t_env *env)
 void	free_data(t_data *data)
 {
 	free(data->buffer);
-	data->buffer = NULL;
 	free_array(data->cmd);
+	free_array(data->cmd_parts);
+	data->buffer = NULL;
 	data->cmd = NULL;
+	data->cmd_parts = NULL;
 }
 
 void	free_shell(void)

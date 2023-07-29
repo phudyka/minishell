@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/28 11:50:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/07/29 12:05:33 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,5 +142,6 @@ void	ft_prompt(t_data *data, t_env *env)
 			process_command(data, env);
 	}
 	clear_history();
-	free_array(data->path);
+	if (data->path != NULL)
+		free_array(data->path);
 }

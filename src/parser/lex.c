@@ -20,7 +20,7 @@ static t_token	*new_token(token type, char *value)
 	if (!token)
 		return (NULL);
 	token->type = type;
-	token->value = value;
+	token->value = ft_strdup(value);
 	token->next = NULL;
 	return (token);
 }
@@ -56,53 +56,114 @@ void free_tokens(t_token *tokens)
 	tokens = NULL;
 }
 
-static t_token	*tokenizer(char **cmd)
+static t_token	*tokenizer(char **cmd, int size)
 {
 	t_token	*tokens;
+	t_token *new_token_instance;
+	int		i;
 	
+	i = 0;
 	tokens = NULL;
-	while (*cmd)
+	while (i < size)
 	{
-		if (**cmd == '\'' || **cmd == '\"')
-				add_token(&tokens, new_token(QOT, ft_strdup(*cmd)));
-		else if (**cmd == '>' || **cmd == '<')
-			add_token(&tokens, new_token(RDR, ft_strdup(*cmd)));		
-		else if (**cmd == '|')
-			add_token(&tokens, new_token(PIP, "|"));
-		else if (**cmd == '\\' || **cmd == ';')
-			cmd++;
+		if (cmd[i][0] == '\'' || cmd[i][0] == '\"')
+			new_token_instance = new_token(QOT, cmd[i]);
+		else if (cmd[i][0] == '>' || cmd[i][0] == '<')
+			new_token_instance = new_token(RDR, cmd[i]);		
+		else if (cmd[i][0] == '|')
+			new_token_instance = new_token(PIP, "|");
+		else if (cmd[i][0] == '\\' || cmd[i][0] == ';')
+			i++;
 		else
-			add_token(&tokens, new_token(STR, ft_strdup(*cmd)));
-		if (!*cmd)
+			new_token_instance = new_token(STR, cmd[i]);
+
+		if (!new_token_instance)
+		{
+			free_tokens(tokens);
+			return (NULL);
+		}
+		add_token(&tokens, new_token_instance);
+		if (!cmd[i])
 			break ;
-		cmd++;
+		i++;
 	}
-	free_array(cmd);
 	return (tokens);
 }
 
-char	**master_lexer(char *buff)
+static char	**split_command(char *buff, int *cmd_len)
 {
-	int		i;
-	char	**cmd;
-	t_token	*tokens;
+	char **cmd;
 
-	i = 0;
 	cmd = ft_split(buff, ' ');
 	if (!cmd)
 		return (NULL);
-	tokens = tokenizer(cmd);
+	*cmd_len = 0;
+	while (cmd[*cmd_len])
+		(*cmd_len)++;
+	return cmd;
+}
+
+static t_token *tokenize_command(char **cmd, int cmd_len)
+{
+	t_token *tokens;
+
+	tokens = tokenizer(cmd, cmd_len);
 	if (!tokens)
 	{
 		free_array(cmd);
 		return (NULL);
 	}
-	master_parser(tokens);
-	while (tokens)
+	return tokens;
+}
+
+static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
+{
+	int i;
+	char *temp;
+
+	i = 0;
+	while (i < cmd_len && *tokens)
 	{
-		cmd[i++] = tokens->value;
-		tokens = tokens->next;
+		free(cmd[i]);
+		temp = ft_strdup((*tokens)->value);
+		if (!temp)
+		{
+			free_array(cmd);
+			return (NULL);
+		}
+		cmd[i] = temp;
+		*tokens = (*tokens)->next;
+		i++;
 	}
 	cmd[i] = NULL;
-	return (cmd);
+	return cmd;
+}
+
+char **master_lexer(char *buff)
+{
+	char	**cmd;
+	t_token	*tokens;
+	t_token	*start;
+	int		cmd_len;
+
+	cmd = split_command(buff, &cmd_len);
+	if (!cmd)
+		return (NULL);
+	tokens = tokenize_command(cmd, cmd_len);
+	if (!tokens)
+	{
+		free_array(cmd);
+		return (NULL);
+	}
+	start = tokens;
+	master_parser(tokens);
+	cmd = reassign_cmd(&tokens, cmd, cmd_len);
+	if (!cmd)
+	{
+		free_tokens(start);
+		free_array(cmd);
+		return (NULL);
+	}
+	free_tokens(start);
+	return cmd;
 }
