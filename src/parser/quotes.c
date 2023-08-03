@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/11 16:10:16 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/02 15:22:55 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ static char *ft_sequence(size_t len, const char *str)
     i = 0;
     j = 0;
     if (is_odd(str))
+    {
         ft_error(QOT, 1);
+        return (NULL);
+    }
     parsed = (char *)malloc(sizeof(char) * (len + 1));
     if (!parsed)
         return (NULL);

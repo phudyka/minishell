@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/07/24 16:34:54 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/02 16:06:34 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,10 @@ int     search_in_env(t_env *env, char *variable);
 char    *get_from_env(char *variable, t_env *env);
 char    **list_to_array(t_env *head);
 //---------PARSE-------------//
+t_token *new_token(token type, char *value);
+t_token *tokenize_command(char **cmd, int cmd_len);
+t_token	*tokenizer(char **cmd, int size, t_token *tokens);
+void	add_token(t_token **tokens, t_token *new);
 void	parse_redir(t_token *tokens);
 void	parse_quotes(t_token *tokens);
 void    master_parser(t_token *token);

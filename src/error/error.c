@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/06 14:49:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/02 15:22:13 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,35 @@
 
 static void	redir_error(int code)
 {
-	if (code)
-		ft_putstr_fd("Error! [redirection]\n", 2);
+	if (code == 1)
+		perror("Error! [illegal declaration]\n");
+	if (code == 2)
+		perror("Error! [open failed]\n");
+	if (code == 3)
+		perror("Error! [dup2 failed]\n");
 	return ;
 }
 
 static void	quote_error(int code)
 {
 	if (code == 1)
-		ft_putstr_fd("Error! [0]\n", 2);
+		perror("Error! [quotes open]\n");
 	else if (code == 2)
-		ft_putstr_fd("Error! [quotes open]\n", 2);
+		perror("Error! [0]\n");
 	return ;
 }
 
 static void	pipe_error(int code)
 {
 	if (code)
-		ft_putstr_fd("Error! [pipe]\n", 2);
+		perror("Error! [pipe]\n");
 	return ;
 }
 
 static void	str_error(int code)
 {
 	if (code)
-		ft_putstr_fd("Error! [string]\n", 2);
+		perror("Error! [string]\n");
 	return ;
 }
 
@@ -55,5 +59,5 @@ void	ft_error(int token, int code)
 	else if (token == FATAL)
 		fatal_error(code);
 	else
-		ft_putstr_fd("Error! [An unexpected behavior has occured]\n", 2);
+		perror("Error! [An unexpected behavior has occured]\n");
 }
