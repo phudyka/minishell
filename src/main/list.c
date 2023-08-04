@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:07:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/18 15:29:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/03 14:22:54 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ t_env	*create_node(char *var)
 	{
 		node->var = ft_strdup(var);
 		node->next = NULL;
+	}
+	else
+	{
+		perror("malloc");
+		return(NULL);
 	}
 	return (node);
 }
@@ -61,4 +66,6 @@ void	unset_list(t_env **env, char *var)
 		prev->next = current->next;
 	free (current->var);
 	free (current);
+	current->var = NULL;
+	current = NULL;
 }

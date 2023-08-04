@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/02 15:20:38 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/03 11:46:55 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,6 @@ void	ft_prompt(t_data *data, t_env *env)
 			process_command(data, env);
 	}
 	clear_history();
-	if (data->path != NULL)
+	if (data->path)
 		free_array(data->path);
 }

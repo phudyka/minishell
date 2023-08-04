@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/02 15:22:55 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/03 15:15:34 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ static int is_odd(const char *str)
             dqot++;
         j++;
     }
-    return (sqot % 2 || dqot % 2);
+    if (dqot % 2 | sqot % 2)
+        return (1);
+    return (0);
 }
 
 static char *ft_sequence(size_t len, const char *str)
@@ -115,7 +117,7 @@ void    parse_quotes(t_token *tokens)
             len = ft_strlen(temp->value);
             parsed = ft_sequence(len, temp->value);
             if (!parsed)
-                return;
+                return ;
             free(temp->value);
             temp->value = parsed;
         }

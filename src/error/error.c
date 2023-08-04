@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/02 15:22:13 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/03 14:41:51 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	redir_error(int code)
 {
 	if (code == 1)
-		perror("Error! [illegal declaration]\n");
+		perror("Error! [parse error near `\n']\n");
 	if (code == 2)
 		perror("Error! [open failed]\n");
 	if (code == 3)
@@ -25,10 +25,8 @@ static void	redir_error(int code)
 
 static void	quote_error(int code)
 {
-	if (code == 1)
+	if (code)
 		perror("Error! [quotes open]\n");
-	else if (code == 2)
-		perror("Error! [0]\n");
 	return ;
 }
 

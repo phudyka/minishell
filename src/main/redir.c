@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/02 16:06:55 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/03 15:27:45 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	redir_in(t_token *tokens)
 {
 	int	fd;
 	
-	if (!tokens->next || tokens->next->type != STR)
-		ft_error(RDR, 1);
+	// if (!tokens->next || tokens->next->type != STR)
+	// 	ft_error(RDR, 1);
 	fd = open(tokens->next->value, O_RDONLY);
 	if (fd < 0)
 		ft_error(RDR, 2);
@@ -31,8 +31,6 @@ static void	redir_out(int app, t_token *tokens)
 {
 	int	fd;
 	
-	if (!tokens->next || tokens->next->type != STR)
-		ft_error(RDR, 1);
 	if (app)
 		fd = open(tokens->next->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
@@ -50,14 +48,12 @@ static void	redir_hdc(t_token *tokens)
 	char	*max;
 	char	*line;
 	
-	if (!tokens->next || tokens->next->type != STR)
-		ft_error(RDR, 1);
 	pipe(fd);
 	max = tokens->next->value;
 	while (1)
 	{
-		line = readline(tokens->value);
-		if (ft_strcmp(line, max) == 0)
+		line = readline("heredoc>");
+		if (ft_strcmp(line, max) == 1)
 		{
 			free(line);
 			break ;
@@ -75,16 +71,19 @@ void	parse_redir(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == RDR)
+		if ((tokens->type == STR || tokens->type == QOT)
+			&& tokens->next->type == RDR)
 		{
-			if (ft_strcmp(tokens->value, "<") == 0)
-				redir_in(tokens);
-			else if (ft_strcmp(tokens->value, ">") == 0)
-				redir_out(0, tokens);
-			else if (ft_strcmp(tokens->value, ">>") == 0)
-				redir_out(1, tokens);
-			else if (ft_strcmp(tokens->value, "<<") == 0)			
-				redir_hdc(tokens);				
+			if (tokens->next->next->type != STR)
+				ft_error(RDR, 1);
+			if (ft_strcmp(tokens->next->value, "<") == 0)
+				redir_in(tokens->next);
+			else if (ft_strcmp(tokens->next->value, ">") == 0)
+				redir_out(0, tokens->next);
+			else if (ft_strcmp(tokens->next->value, ">>") == 0)
+				redir_out(1, tokens->next);
+			else if (ft_strcmp(tokens->next->value, "<<") == 0)			
+				redir_hdc(tokens->next);				
 			else
 				ft_error(RDR, 2);
 		}
