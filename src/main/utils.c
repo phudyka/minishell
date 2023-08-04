@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/29 11:45:04 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/04 16:46:28 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void free_array(char **tab)
     }
     free(tab);
 }
-
-
 
 char	*allocatenate(char *cmd, char *path)
 {

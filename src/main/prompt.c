@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 16:13:28 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/04 16:51:46 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,35 +52,39 @@ char	*ft_access(char **path, char **cmd)
 	return (NULL);
 }
 
-void	exec_cmd(char *path, char **cmd, char **envp)
+void exec_cmd(char *path, char **cmd, char **envp)
 {
-	pid_t	pid;
-	int		status;
+    pid_t pid;
+    int status;
 
-	if (!path)
-	{
-		printf("%s: Command not found\n", cmd[0]);
-		return ;
-	}
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("fork");
-		exit(EXIT_FAILURE);
-	}
-	else if (pid == 0)
-	{
-		if (execve(path, cmd, envp) == -1)
-			perror("execve");
-		exit (EXIT_FAILURE);
-	}
-	else
-	{
+    if (!path)
+    {
+        printf("%s: Command not found\n", cmd[0]);
+        return ;
+    }
+
+    pid = fork();
+    if (pid == -1)
+    {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+    else if (pid == 0)
+    {
+        signal(SIGINT, SIG_DFL);
+        if (execve(path, cmd, envp) == -1)
+            perror("execve");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        g_shell.data->pid = pid;
 		if (waitpid(pid, &status, 0) == -1)
-		{
-			perror("waitpid");
-			exit(EXIT_FAILURE);
-		}
+        {
+            perror("waitpid");
+            exit(EXIT_FAILURE);
+        }
+        g_shell.data->pid = 0;
 	}
 }
 
@@ -128,6 +132,7 @@ void	ft_prompt(t_data *data, t_env *env)
 	int	pipes;
 
 	pipes = 0;
+	data->pid = 0;
 	while (69)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);

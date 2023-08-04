@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/02 16:06:34 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/04 16:35:36 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef enum
 }           token;
 typedef struct  s_data
 {
+    pid_t   pid;
 	int     fd[2];
     int     fd_in;
     char    **cmd;
