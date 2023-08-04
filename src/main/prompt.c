@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 21:02:26 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/04 21:07:47 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ static void	execute_command(t_data *data, char **envp)
         data->buffer = ft_access(data->path, data->cmd);
     exec_cmd(data->buffer, data->cmd, envp);
 }
-
 
 void	process_command(t_data *data, t_env *env)
 {
