@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 18:07:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/03 14:22:54 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/04 11:08:11 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	unset_list(t_env **env, char *var)
 	else
 		prev->next = current->next;
 	free (current->var);
-	free (current);
 	current->var = NULL;
+	free (current);
 	current = NULL;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 16:51:46 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/04 11:10:04 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,13 @@ static void	execute_command(t_data *data, char **envp)
         free(data->buffer);
         data->buffer = NULL;
     }
-    data->buffer = ft_access(data->path, data->cmd);
+    if (data->cmd[0][0] == '/')
+        data->buffer = ft_strdup(data->cmd[0]);
+    else
+        data->buffer = ft_access(data->path, data->cmd);
     exec_cmd(data->buffer, data->cmd, envp);
 }
+
 
 void	process_command(t_data *data, t_env *env)
 {
