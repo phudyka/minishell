@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 16:46:28 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/04 17:05:32 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void free_array(char **tab)
     int i;
 
     i = 0;
-    if (tab == NULL)
+    if (!tab)
         return;
     while (tab[i])
     {
@@ -37,7 +37,7 @@ char	*allocatenate(char *cmd, char *path)
 	if (!exe)
 		return (NULL);
 	ft_strlcpy(exe, path, ft_strlen(path) + 1);
-	ft_strlcat(exe, cmd, len + 1);
+	ft_strlcat(exe, cmd, len + ft_strlen(cmd) + 1);
 	return (exe);
 }
 

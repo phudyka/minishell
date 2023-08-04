@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/03 15:15:34 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/04 17:43:45 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ static char *ft_sequence(size_t len, const char *str)
             ft_squote(&j, &i, parsed, str);
         else if (is_dquote(str[j]))
             ft_dquote(&i, &j, parsed, str);
+        else if (str[j] == ' ')
+        {
+            parsed[i++] = str[j++];
+            while (str[j] && str[j] == ' ')
+                j++;
+        }
         else
             parsed[i++] = str[j++];
     }

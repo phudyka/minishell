@@ -38,8 +38,9 @@ t_token	*tokenizer(char **cmd, int size, t_token *tokens)
         if (cmd[i][0] == '\\' || cmd[i][0] == ';')
 		{
             i++;
+			printf("minishell: command not found: %s\n", cmd[i]);
             continue ;
-        }       
+        }
         new_token_instance = create_token(cmd[i]);      
         if (!new_token_instance)
 		{
