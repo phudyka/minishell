@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/07/29 11:52:42 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/04 16:12:18 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	g_shell.env = envp_to_list(envp);
 	g_shell.data = malloc(sizeof(t_data));
-	if (g_shell.data != NULL)
+	if (g_shell.data)
 	{
     	g_shell.data->buffer = NULL;
     	g_shell.data->cmd = NULL;
