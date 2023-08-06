@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/04 16:35:36 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/06 16:15:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 #define GREEN "\x1b[32m"
 typedef enum
 {
+    DOL, // dollar sign $
     QOT, // quotes : /' and /"
     RDR, // input '<' and truncate '>'
     PIP, // pipe '|'
@@ -72,6 +73,7 @@ typedef struct	s_token
 }				t_token;
 typedef struct  s_shell
 {
+    int     status;
     t_env   *env;
     t_data  *data;
     t_pipe  *pipes;
@@ -108,9 +110,12 @@ t_token	*tokenizer(char **cmd, int size, t_token *tokens);
 void	add_token(t_token **tokens, t_token *new);
 void	parse_redir(t_token *tokens);
 void	parse_quotes(t_token *tokens);
+void    parse_dollar(t_token *tokens);
 void    master_parser(t_token *token);
 char    **master_lexer(char *buff);
 //---------AUTRES------------//
+
+char	**ft_split_buff(char const *s);
 char	*allocatenate(char *cmd, char *path);
 char	**get_path(char **envp);
 void    ft_prompt(t_data *data, t_env *env);

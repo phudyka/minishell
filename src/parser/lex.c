@@ -22,6 +22,8 @@ static t_token	*create_token(char *cmd)
         new_token_instance = new_token(RDR, cmd);		
     else if (cmd[0] == '|')
         new_token_instance = new_token(PIP, "|");
+	else if (cmd[0] == '$')
+		new_token_instance = new_token(DOL, "$");
     else
         new_token_instance = new_token(STR, cmd);
     return (new_token_instance);
@@ -35,12 +37,6 @@ t_token	*tokenizer(char **cmd, int size, t_token *tokens)
 	i = -1;
     while (++i < size)
 	{
-        // if (cmd[i][0] == '\\' || cmd[i][0] == ';')
-		// {
-        //     i++;
-		// 	printf("minishell: command not found: %s\n", cmd[1]);
-        //     continue ;
-        // }
         new_token_instance = create_token(cmd[i]);      
         if (!new_token_instance)
 		{
@@ -58,7 +54,7 @@ static char	**split_command(char *buff, int *cmd_len)
 {
 	char **cmd;
 
-	cmd = ft_split(buff, ' ');
+	cmd = ft_split_buff(buff);
 	if (!cmd)
 		return (NULL);
 	*cmd_len = 0;

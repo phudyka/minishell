@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/05 15:34:04 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/06 16:13:23 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	master_parser(t_token *tokens)
 			parse_pipes(tokens);
 		else if (tokens->type == RDR)
 			parse_redir(tokens);
+		else if (tokens->type == DOL)
+			parse_dollar(tokens);
 		tokens = tokens->next;
 	}
 }
