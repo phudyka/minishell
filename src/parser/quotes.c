@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 17:43:45 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/05 19:22:45 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ static int is_odd(const char *str)
             dqot++;
         j++;
     }
-    if (dqot % 2 | sqot % 2)
-        return (1);
-    return (0);
+    return (dqot % 2 && sqot % 2);
 }
 
 static char *ft_sequence(size_t len, const char *str)
 {
-    size_t  i;
-    size_t  j;
+    size_t  i = 0;
+    size_t  j = 0;
     char    *parsed;
 
     i = 0;
@@ -96,12 +94,6 @@ static char *ft_sequence(size_t len, const char *str)
             ft_squote(&j, &i, parsed, str);
         else if (is_dquote(str[j]))
             ft_dquote(&i, &j, parsed, str);
-        else if (str[j] == ' ')
-        {
-            parsed[i++] = str[j++];
-            while (str[j] && str[j] == ' ')
-                j++;
-        }
         else
             parsed[i++] = str[j++];
     }
@@ -112,8 +104,8 @@ static char *ft_sequence(size_t len, const char *str)
 void    parse_quotes(t_token *tokens)
 {
     size_t  len;
-    char    *parsed;
     t_token *temp;
+    char    *parsed;
 
     temp = tokens;
     while (temp)

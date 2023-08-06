@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 21:15:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/05 18:53:56 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ static void	ft_sigterm(int sig)
 static void	ft_sigquit(int sig)
 {
 	(void)sig;
-	  if (g_shell.data->pid > 0)
+	pid_t shell_pgid;
+	pid_t terminal_pgid;
+	
+	shell_pgid = getpgrp();
+	terminal_pgid = tcgetpgrp(STDIN_FILENO);
+	if (shell_pgid != terminal_pgid)
+		return;
+	if (g_shell.data->pid > 0)
 	{
 		kill(g_shell.data->pid, SIGINT);
 		ft_putstr_fd("\n", 1);

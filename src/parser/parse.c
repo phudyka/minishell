@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/02 16:06:31 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/05 15:34:04 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,7 @@ static void find_next_string_token(t_token *curr)
 		next = next->next;
 	}
 	if (!next || next->type != STR)
-	{
 		ft_error(PIP, 1);
-	}
 }
 
 static void parse_pipes(t_token *tokens)
