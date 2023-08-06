@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/06 15:55:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/06 11:49:03 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+int    ft_equal(const char *s)
+{
+    int    i;
+
+    i = 0;
+    while (s[i])
+    {
+        if (s[i] == '=')
+            return (1);
+        i++;
+    }
+    return (0);
+}
 
 void free_array(char **tab)
 {

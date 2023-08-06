@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/06 11:15:51 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/06 11:51:27 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	builtin_export(t_data *data, t_env *env)
 		return;
 	}
 	current = env;
+	if (!ft_equal(data->cmd[1]))
+		return;
 	variable = ft_split(data->cmd[1], '=');
 	while (current)
 	{

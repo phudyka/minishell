@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/06 11:16:34 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/06 11:49:19 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,6 @@ void    free_pipe(t_pipe *pipe_data);
 void	free_buff(t_data *data);
 void	free_tokens(t_token *tokens);
 void	free_shell(void);
+int    ft_equal(const char *s);
 
 #endif

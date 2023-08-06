@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 21:08:24 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/06 11:20:38 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/06 11:24:22 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void	unset_list(t_env **env, char *var)
 	t_env	*current;
 
 	prev = NULL;
-	current = *env;
 	if (!var)
 		return;
+	current = *env;
 	while (current && ft_strncmp(current->var, var, ft_strlen(var)) != 0)
 	{
 		prev = current;
