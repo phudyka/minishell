@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/06 16:15:30 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/06 11:16:34 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_env   *envp_to_list(char **envp);
 t_env   *create_node(char *var);
 void    print_list_token(t_token *env);
 void    print_list(t_env *env);
+void	print_list_export(t_env *env);
 void    unset_list(t_env **env, char *var);
 void    add_node(t_env **head, t_env *node);
 int     search_in_env(t_env *env, char *variable);

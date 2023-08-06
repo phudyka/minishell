@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:08:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/18 12:12:12 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/06 11:15:35 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../include/main.h"
+
+void	print_list_export(t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		printf("declare -x %s\n", tmp->var);
+		tmp = tmp->next;
+	}
+}
 
 void	print_list(t_env *env)
 {

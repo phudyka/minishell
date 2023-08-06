@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/07/18 17:08:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/06 11:15:51 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ void	builtin_export(t_data *data, t_env *env)
 
 	variable = NULL;
 	if (!data->cmd[1])
-		return ;
+	{
+		print_list_export(env);
+		return;
+	}
 	current = env;
 	variable = ft_split(data->cmd[1], '=');
 	while (current)
