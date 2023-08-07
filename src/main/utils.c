@@ -6,25 +6,11 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 19:31:44 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/07 19:38:09 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
-
-int    ft_equal(const char *s)
-{
-    int    i;
-
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == '=')
-            return (1);
-        i++;
-    }
-    return (0);
-}
 
 int    ft_equal(const char *s)
 {

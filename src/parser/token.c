@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:41:21 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 11:01:09 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/07 19:46:53 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_token *tokenize_command(char **cmd, int cmd_len)
 	tokens = tokenizer(cmd, cmd_len, tokens);
 	if (!tokens && cmd_len)
 	{
-		
 		free_array(cmd);
 		return (NULL);
 	}
