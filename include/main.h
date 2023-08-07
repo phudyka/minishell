@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/06 11:49:19 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/07 09:49:38 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,15 @@ typedef struct  s_pipe
 	t_env   *env;
 	t_data  *data;
 }               t_pipe;
-typedef struct	s_token
+typedef struct s_token
 {
-	token			type;
-	char			*value;
+	int		type;
+	char	*value;
+	char	*redir;
+	char	*file;
 	struct s_token	*next;
-}				t_token;
+}	t_token;
+
 typedef struct  s_shell
 {
     int     status;
@@ -135,5 +138,6 @@ void	free_buff(t_data *data);
 void	free_tokens(t_token *tokens);
 void	free_shell(void);
 int    ft_equal(const char *s);
+void    redirections(char **cmd);
 
 #endif

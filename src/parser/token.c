@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:41:21 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 16:16:23 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/07 11:01:09 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_token	*new_token(token type, char *value)
 		return (NULL);
 	token->type = type;
 	token->value = ft_strdup(value);
+	token->redir = NULL;
+	token->file = NULL;
 	token->next = NULL;
 	return (token);
 }
@@ -65,8 +67,14 @@ void free_tokens(t_token *tokens)
     {
 		tmp = tokens;
 		tokens = tokens->next;
-		free(tmp->value);
+
+		if (tmp->value)
+			free(tmp->value);
+		if (tmp->redir)
+			free(tmp->redir);
+		if (tmp->file)
+			free(tmp->file);
+
 		free(tmp);
     }
-	tokens = NULL;
 }

@@ -3,90 +3,147 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/03 15:27:45 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/07 10:57:35 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-static void	redir_in(t_token *tokens)
+int redirect_input(char **cmd, int i)
 {
-	int	fd;
-	
-	// if (!tokens->next || tokens->next->type != STR)
-	// 	ft_error(RDR, 1);
-	fd = open(tokens->next->value, O_RDONLY);
+	int fd;
+
+	fd = open(cmd[i + 1], O_RDONLY);
 	if (fd < 0)
-		ft_error(RDR, 2);
-	if (dup2(fd, STDIN_FILENO) == -1)
-		ft_error(RDR, 3);
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDIN_FILENO) < 0)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
 	close(fd);
+	return (fd);
 }
 
-static void	redir_out(int app, t_token *tokens)
+int redirect_output(char **cmd, int i, int append)
 {
 	int	fd;
-	
-	if (app)
-		fd = open(tokens->next->value, O_WRONLY | O_CREAT | O_APPEND, 0644);
+
+	if (append)
+		fd = open(cmd[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
-		fd = open(tokens->next->value, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		fd = open(cmd[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		ft_error(RDR, 2);
-	if (dup2(fd, STDOUT_FILENO) == -1)
-		ft_error(RDR, 3);
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
+	if (dup2(fd, STDOUT_FILENO) < 0)
+	{
+		perror("dup2");
+		exit(EXIT_FAILURE);
+	}
 	close(fd);
+	return fd;
 }
 
-static void	redir_hdc(t_token *tokens)
+void remove_redirection(char **cmd, int start)
 {
-	int		fd[2];
-	char	*max;
-	char	*line;
-	
-	pipe(fd);
-	max = tokens->next->value;
-	while (1)
-	{
-		line = readline("heredoc>");
-		if (ft_strcmp(line, max) == 1)
-		{
-			free(line);
-			break ;
-		}
-		ft_putendl_fd(line, fd[1]);
-		free(line);
-	}
-	close(fd[1]);
-	if (dup2(fd[0], STDOUT_FILENO) == -1)
-		ft_error(RDR, 3);
-	close(fd[0]);
+    if (cmd[start + 2] == NULL)
+        cmd[start] = NULL;
+    else
+    {
+        while (cmd[start + 2])
+        {
+            cmd[start] = cmd[start + 2];
+            start++;
+        }
+        cmd[start] = NULL;
+    }
 }
 
-void	parse_redir(t_token *tokens)
+void redirect_here_doc(char **cmd, int i)
 {
-	while (tokens)
-	{
-		if ((tokens->type == STR || tokens->type == QOT)
-			&& tokens->next->type == RDR)
-		{
-			if (tokens->next->next->type != STR)
-				ft_error(RDR, 1);
-			if (ft_strcmp(tokens->next->value, "<") == 0)
-				redir_in(tokens->next);
-			else if (ft_strcmp(tokens->next->value, ">") == 0)
-				redir_out(0, tokens->next);
-			else if (ft_strcmp(tokens->next->value, ">>") == 0)
-				redir_out(1, tokens->next);
-			else if (ft_strcmp(tokens->next->value, "<<") == 0)			
-				redir_hdc(tokens->next);				
-			else
-				ft_error(RDR, 2);
-		}
-		tokens = tokens->next;
-	}
+    char	*delimiter;
+    char	*line;
+    size_t	len;
+    ssize_t	read;
+    int		fd;
+
+	fd = open("/tmp/minishell_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	len = 0;
+	line = NULL;
+	delimiter = cmd[i + 1];
+    if (fd < 0)
+    {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
+    printf("Enter lines of text, end with '%s'\n", delimiter);
+    while ((read = getline(&line, &len, stdin)) != -1) 
+    {
+        if (read > 0 && line[read - 1] == '\n')
+        {
+            line[read - 1] = '\0';
+            read--;
+        }
+        printf("Read line: %s\n", line);
+        if (ft_strcmp(line, delimiter) == 0)
+            break;
+        line[read] = '\n';
+        write(fd, line, read + 1);
+    }
+    close(fd);
+    free(line);
+    fd = open("/tmp/minishell_heredoc", O_RDONLY);
+    if (fd < 0)
+    {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
+    if (dup2(fd, STDIN_FILENO) < 0)
+    {
+        perror("dup2");
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
+}
+
+void redirections(char **cmd)
+{
+    int i;
+
+    i = 0;
+    while (cmd[i])
+    {
+        if (strcmp(cmd[i], "<") == 0)
+        {
+            redirect_input(cmd, i);
+            remove_redirection(cmd, i);
+        }
+        else if (strcmp(cmd[i], ">") == 0)
+        {
+            redirect_output(cmd, i, 0);
+            remove_redirection(cmd, i);
+        }
+        else if (strcmp(cmd[i], ">>") == 0)
+        {
+            redirect_output(cmd, i, 1);
+            remove_redirection(cmd, i);
+        }
+        else if (strcmp(cmd[i], "<<") == 0)
+        {
+            redirect_here_doc(cmd, i);
+            remove_redirection(cmd, i);
+        }
+        else
+            i++;
+    }
 }

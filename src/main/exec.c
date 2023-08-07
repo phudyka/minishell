@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/18 15:13:45 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/07 10:51:04 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ int	is_builtin(t_data *data)
 		if ((ft_strcmp(all[i], data->cmd[0])) == 0)
 			res = 0;
 	}
-	free_cmd (all);
+	free_cmd(all);
 	return (res);
 }

@@ -18,16 +18,18 @@ static t_token	*create_token(char *cmd)
     
     if (cmd[0] == '\'' || cmd[0] == '\"')
         new_token_instance = new_token(QOT, cmd);
-    else if (cmd[0] == '>' || cmd[0] == '<')
+    else if (ft_strcmp(cmd, ">") == 0 ||
+		ft_strcmp(cmd, "<") == 0 || ft_strcmp(cmd, ">>") == 0)
         new_token_instance = new_token(RDR, cmd);		
-    else if (cmd[0] == '|')
+    else if (ft_strcmp(cmd, "|") == 0)
         new_token_instance = new_token(PIP, "|");
-	else if (cmd[0] == '$')
+	else if (ft_strcmp(cmd, "$") == 0)
 		new_token_instance = new_token(DOL, "$");
     else
         new_token_instance = new_token(STR, cmd);
     return (new_token_instance);
 }
+
 
 t_token	*tokenizer(char **cmd, int size, t_token *tokens)
 {
@@ -37,15 +39,16 @@ t_token	*tokenizer(char **cmd, int size, t_token *tokens)
 	i = -1;
     while (++i < size)
 	{
-        new_token_instance = create_token(cmd[i]);      
+        if (!cmd[i])
+            break;
+            
+        new_token_instance = create_token(cmd[i]);
         if (!new_token_instance)
 		{
             free_tokens(tokens);
             return (NULL);
         }      
-        add_token(&tokens, new_token_instance);  
-        if (!cmd[i])
-            break;        
+        add_token(&tokens, new_token_instance);        
     }
     return (tokens);
 }
@@ -71,13 +74,14 @@ static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
 	i = 0;
 	while (i < cmd_len && *tokens)
 	{
-		free(cmd[i]);
 		temp = ft_strdup((*tokens)->value);
 		if (!temp)
 		{
 			free_array(cmd);
 			return (NULL);
 		}
+		if (cmd[i])
+			free(cmd[i]);
 		cmd[i] = temp;
 		*tokens = (*tokens)->next;
 		i++;
@@ -85,6 +89,7 @@ static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
 	cmd[i] = NULL;
 	return (cmd);
 }
+
 
 char **master_lexer(char *buff)
 {
