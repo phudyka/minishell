@@ -15,16 +15,16 @@
 static t_token	*create_token(char *cmd)
 {
     t_token *new_token_instance;
-    
+     
     if (cmd[0] == '\'' || cmd[0] == '\"')
         new_token_instance = new_token(QOT, cmd);
     else if (ft_strcmp(cmd, ">") == 0 ||
 		ft_strcmp(cmd, "<") == 0 || ft_strcmp(cmd, ">>") == 0)
+    else if (ft_strcmp(cmd, ">") == 0 ||
+		ft_strcmp(cmd, "<") == 0 || ft_strcmp(cmd, ">>") == 0)
         new_token_instance = new_token(RDR, cmd);		
-    else if (ft_strcmp(cmd, "|") == 0)
-        new_token_instance = new_token(PIP, "|");
-	else if (ft_strcmp(cmd, "$") == 0)
-		new_token_instance = new_token(DOL, "$");
+    else if (ft_strcmp(cmd, " | ") == 0)
+        new_token_instance = new_token(PIP, " | ");
     else
         new_token_instance = new_token(STR, cmd);
     return (new_token_instance);
@@ -80,6 +80,8 @@ static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
 			free_array(cmd);
 			return (NULL);
 		}
+		if (cmd[i])
+			free(cmd[i]);
 		if (cmd[i])
 			free(cmd[i]);
 		cmd[i] = temp;

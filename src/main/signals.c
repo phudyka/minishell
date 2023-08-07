@@ -6,73 +6,53 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/05 18:53:56 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/07 11:04:19 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-static void	ft_sigint(int sig)
+void restore_termios(void)
 {
-	(void)sig;
-    if (g_shell.data->pid > 0)
-	{
-		kill(g_shell.data->pid, SIGINT);
-		ft_putstr_fd("\n", 1);
-	}
-	else
-	{
-		rl_replace_line("", 0);
-        rl_on_new_line();
-		ft_putstr_fd("\n", 1);
-        rl_redisplay();
+    tcsetattr(STDIN_FILENO, TCSAFLUSH, g_shell.termios);
+    free(g_shell.termios);
+}
+
+static void ft_sigint(int sig)
+{
+    (void)sig;
+    if (g_shell.pid > 0)
+    {
+        kill(g_shell.pid, SIGINT);
+        write(STDOUT_FILENO, "\n", 1);
     }
-}
-
-static void	ft_sigterm(int sig)
-{
-	(void)sig;
-	if (g_shell.data->pid > 0)
-		kill(g_shell.data->pid , SIGTERM);
-	exit(EXIT_SUCCESS);
-}
-
-static void	ft_sigquit(int sig)
-{
-	(void)sig;
-	pid_t shell_pgid;
-	pid_t terminal_pgid;
-	
-	shell_pgid = getpgrp();
-	terminal_pgid = tcgetpgrp(STDIN_FILENO);
-	if (shell_pgid != terminal_pgid)
-		return;
-	if (g_shell.data->pid > 0)
-	{
-		kill(g_shell.data->pid, SIGINT);
-		ft_putstr_fd("\n", 1);
-	}
-	else
+    else
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
+        write(STDOUT_FILENO, "\n", 1);
 		rl_redisplay();
 	}
 }
 
-void	ft_signals(void)
+static void ft_sigterm(int sig)
 {
-	struct sigaction	sa;
+    (void)sig;
+    if (g_shell.pid > 0)
+        kill(g_shell.pid, SIGTERM);
+    restore_termios();
+    exit(EXIT_SUCCESS);
+}
 
-	sa.sa_flags = SA_RESTART;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_handler = &ft_sigterm;
-	if (sigaction(SIGTERM, &sa, NULL) == -1)
-		ft_putstr_fd("Error!: [sigaction(SIGTERM)]\n", 2);
-	sa.sa_handler = &ft_sigint;
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		ft_putstr_fd("Error!: [sigaction(SIGINT)]\n", 2);
-	sa.sa_handler = &ft_sigquit;
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
-		ft_putstr_fd("Error!: [sigaction(SIGQUIT)]\n", 2);
+void ft_signals(void)
+{
+	g_shell.termios = (struct termios *)malloc(sizeof(struct termios));
+	if (tcgetattr(STDIN_FILENO, g_shell.termios) == -1)
+	{
+		perror("Error! [tcgetattr]");
+		exit(EXIT_FAILURE);
+	}
+    signal(SIGINT, ft_sigint);
+	signal(SIGTERM, ft_sigterm);
+	signal(SIGQUIT, SIG_IGN);
 }

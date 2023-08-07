@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 10:51:04 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/07 19:27:44 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,22 @@ int	is_builtin(t_data *data)
 	}
 	free_cmd(all);
 	return (res);
+}
+
+void handle_builtin(t_data *data, t_env *env)
+{
+    pid_t   pid;
+    int     status;
+
+    pid = fork();
+    if (pid == 0)
+    {
+        redirections(data->cmd);
+        exec_builtin(data, env);
+        exit(EXIT_SUCCESS);
+    }
+    else if (pid > 0)
+        waitpid(pid, &status, 0);
+    else
+        perror("fork");
 }

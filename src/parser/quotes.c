@@ -6,119 +6,110 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 16:17:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/05 19:22:45 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/07 11:56:12 phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static void ft_squote(size_t *j, size_t *i, char *parsed, const char *str)
+static void ft_squotes(char c, char *quote_type, char *new, int *j)
 {
-    (*j)++;
-    while (str[*j] && !is_squote(str[*j]))
-    {
-        parsed[(*i)++] = str[*j];
-        (*j)++;
-    }
-    if (is_squote(str[*j]))
-        (*j)++;
+    if (c == '\'')
+        *quote_type = '\0';
+    else
+        new[(*j)++] = c;
 }
 
-static void ft_dquote(size_t *i, size_t *j, char *parsed, const char *str)
+static void ft_dquotes(t_token *curr, int *i, int *j, char *quote_type, char *new)
 {
-    (*j)++;
-    while (str[*j] && !is_dquote(str[*j]))
+    int len;
+    char c;
+
+    len = ft_strlen(curr->value);
+    c = curr->value[*i + 1];
+    if (c == '\"')
+        *quote_type = '\0';
+    else if (c == '$' && *i < len - 1)
+        parse_dollar(i, j, new, curr);
+    else
+        new[(*j)++] = c;
+}
+
+void parse_end(t_token *curr, int j, char quote_type, char* new)
+{
+    t_shell *shell;
+
+    shell = &g_shell;
+    if (quote_type)
     {
-        // if (str[*j] == '$' && str[*j - 1] != '\\')
-        //     master_expander('$', parsed);
-        if (str[*j] == '\\' && is_dquote(str[*j + 1]))
+        if (j == 0)
         {
-            (*j)++;
-            if (str[*j])
-            {
-                parsed[(*i)++] = str[*j];
-                (*j)++;
-            }
-            else
-                break;
+            free(new);
+            shell->in_qot = 0;
+            return ;
         }
-        else
-        {
-            parsed[(*i)++] = str[*j];
-            (*j)++;
-        }
+        ft_error(QOT, 1);
+        free(new);
+        shell->in_qot = 1;
+        return ;
     }
-    if (is_dquote(str[*j]))
-        (*j)++;
-}
-
-static int is_odd(const char *str)
-{
-    size_t  j;
-    size_t  sqot;
-    size_t  dqot;
-
-    j = 0;
-    sqot = 0;
-    dqot = 0;
-    while (str[j])
+    if (j == 0 && curr->value[1] == '\0')
     {
-        if (is_squote(str[j]))
-            sqot++;
-        if (is_dquote(str[j]))
-            dqot++;
-        j++;
+        free(new);
+        shell->in_qot = 0;
+        return ;
     }
-    return (dqot % 2 && sqot % 2);
+    free(curr->value);
+    curr->value = new;
+    shell->in_qot = 0; 
 }
 
-static char *ft_sequence(size_t len, const char *str)
+static void ft_sequence(int *i, int *j, char *quote_type, char *new, t_token *curr)
 {
-    size_t  i = 0;
-    size_t  j = 0;
-    char    *parsed;
+    char c;
 
-    i = 0;
+    c = curr->value[*i + 1];
+    if (*quote_type == '\'')
+        ft_squotes(c, quote_type, new, j);
+    else if (*quote_type == '\"')
+        ft_dquotes(curr, i, j, quote_type, new);
+    else if (c == '\'')
+        *quote_type = '\'';
+    else if (c == '\"')
+        *quote_type = '\"';
+    else
+        new[(*j)++] = c;
+}
+
+void parse_quotes(t_token *curr)
+{
+    int i;
+    int j;
+    int len;
+    char quote_type;
+    char *new;
+    int odd;
+
+    i = -1;
     j = 0;
-    if (is_odd(str))
+    odd = 0;
+    quote_type = curr->value[0];
+    len = ft_strlen(curr->value);
+    new = (char *)malloc(len + 1);
+    if (!new)
+        ft_error(QOT, 1);
+    while (++i < len)
+    {
+        if (curr->value[i] == '\"')
+            odd++;
+        ft_sequence(&i, &j, &quote_type, new, curr);
+    }
+    new[j] = '\0';
+    if (odd % 2)
     {
         ft_error(QOT, 1);
-        return (NULL);
+        free(new);
+        return;
     }
-    parsed = (char *)malloc(sizeof(char) * (len + 1));
-    if (!parsed)
-        return (NULL);
-    while (str[j])
-    {
-        if (is_squote(str[j]))
-            ft_squote(&j, &i, parsed, str);
-        else if (is_dquote(str[j]))
-            ft_dquote(&i, &j, parsed, str);
-        else
-            parsed[i++] = str[j++];
-    }
-    parsed[i] = '\0';
-    return (parsed);
-}
-
-void    parse_quotes(t_token *tokens)
-{
-    size_t  len;
-    t_token *temp;
-    char    *parsed;
-
-    temp = tokens;
-    while (temp)
-    {
-        if (temp->type == QOT && temp->value)
-        {
-            len = ft_strlen(temp->value);
-            parsed = ft_sequence(len, temp->value);
-            if (!parsed)
-                return ;
-            free(temp->value);
-            temp->value = parsed;
-        }
-        temp = temp->next;
-    }
+    parse_end(curr, j, quote_type, new);
 }

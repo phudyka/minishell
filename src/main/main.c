@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/04 16:12:18 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/07 10:48:58 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,22 +83,33 @@ char	**list_to_array(t_env *head)
 	return (env);
 }
 
-int	main(int argc, char **argv, char **envp)
+static void	init_data(char **envp)
 {
-	(void)argc;
-	(void)argv;
-	g_shell.env = envp_to_list(envp);
 	g_shell.data = malloc(sizeof(t_data));
 	if (g_shell.data)
 	{
     	g_shell.data->buffer = NULL;
     	g_shell.data->cmd = NULL;
     	g_shell.data->cmd_parts = NULL;
+		g_shell.data->path = get_path(envp);
 	}
-    g_shell.data->path = get_path(envp);
+	else
+	{
+		perror("Error! [failed to init data]\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	g_shell.env = envp_to_list(envp);
+	init_data(envp);
 	ft_signals();
 	ft_prompt(g_shell.data, g_shell.env);
 	free_shell();
+	restore_termios();
 	ft_putstr_fd("exit\n", 1);
 	return (0);
 }

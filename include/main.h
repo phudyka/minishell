@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/07 09:49:38 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/07 19:25:52 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 #define GREEN "\x1b[32m"
 typedef enum
 {
-    DOL, // dollar sign $
     QOT, // quotes : /' and /"
     RDR, // input '<' and truncate '>'
     PIP, // pipe '|'
@@ -45,7 +44,6 @@ typedef enum
 }           token;
 typedef struct  s_data
 {
-    pid_t   pid;
 	int     fd[2];
     int     fd_in;
     char    **cmd;
@@ -76,11 +74,14 @@ typedef struct s_token
 
 typedef struct  s_shell
 {
-    int     status;
-    t_env   *env;
-    t_data  *data;
-    t_pipe  *pipes;
-    t_token *tokens;
+    int             status;
+    int             in_qot;
+    pid_t           pid;
+    t_env           *env;
+    t_data          *data;
+    t_pipe          *pipes;
+    t_token         *tokens;
+    struct termios  *termios;
 }               t_shell;
 
 extern t_shell g_shell;
@@ -93,6 +94,7 @@ void    builtin_env(t_env *env, char **cmd);
 void    builtin_pwd(void);
 int     is_builtin(t_data *data);
 void    exec_builtin(t_data *data, t_env *env);
+void    handle_builtin(t_data *data, t_env *env);
 void    builtin_cd(char **path, t_env *env);
 void    builtin_echo(t_data *data);
 void    builtin_exit(void);
@@ -113,12 +115,13 @@ t_token *tokenize_command(char **cmd, int cmd_len);
 t_token	*tokenizer(char **cmd, int size, t_token *tokens);
 void	add_token(t_token **tokens, t_token *new);
 void	parse_redir(t_token *tokens);
-void	parse_quotes(t_token *tokens);
-void    parse_dollar(t_token *tokens);
+void	parse_quotes(t_token *curr);
+void    parse_dollar(int *i, int *j, char *new, t_token *curr);
 void    master_parser(t_token *token);
 char    **master_lexer(char *buff);
 //---------AUTRES------------//
-
+int     ft_equal(const char *s);
+void    restore_termios(void);
 char	**ft_split_buff(char const *s);
 char	*allocatenate(char *cmd, char *path);
 char	**get_path(char **envp);
@@ -128,6 +131,7 @@ char    *ft_access(char **path, char **cmd);
 void     exec_cmd(char *path, char **cmd, char **envp);
 void    process_command(t_data *data, t_env *env);
 int     find_pipes(t_data *data);
+void    redirections(char **cmd);
 void	print_arguments(t_data *data, int start_index);
 void    free_array(char **tab);
 int     ft_pipex(char **cmd, char *path);
