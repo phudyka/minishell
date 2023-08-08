@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/07 19:25:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/08 09:59:16 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,6 @@ void	free_tokens(t_token *tokens);
 void	free_shell(void);
 int    ft_equal(const char *s);
 void    redirections(char **cmd);
+void    execute_builtin_with_redirection(t_data *data, t_env *env);
 
 #endif

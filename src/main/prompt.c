@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/08 03:19:09 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/08 10:36:21 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,25 @@ void execute_builtin_with_redirection(t_data *data, t_env *env)
     close(saved_stdout);
 }
 
-int	find_pipes(t_data *data)
+int	count_pipes(char *str)
 {
-	int i;
 	int pipes;
+	int i;
+	char q;
 
-	i = 0;
 	pipes = 0;
-	if (!data->buffer || !data->cmd || !*data->cmd)
-		return (0);
-	while (data->cmd[i])
+	i = 0;
+	q = 0;
+	while (str[i])
 	{
-		if (ft_strncmp(data->cmd[i], "|", ft_strlen(data->cmd[i])) == 0)
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			if (!q)
+				q = str[i];
+			else if (q == str[i])
+				q = 0;
+		}
+		else if (!q && str[i] == '|')
 			pipes++;
 		i++;
 	}
@@ -167,7 +174,7 @@ void	ft_prompt(t_data *data, t_env *env)
 			break ;
 		add_history(data->buffer);
 		data->cmd = master_lexer(data->buffer);
-		pipes = find_pipes(data);
+		pipes = count_pipes(data->buffer);
 		if (pipes > 0)
 			execute_pipeline(data, env);
 		else

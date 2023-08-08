@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/08 02:44:53 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/08 10:35:40 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,46 +28,25 @@ static t_pipe	*init_pipe_data(t_data *data, t_env *env, int i)
 
 static void exec_pipe_child(t_pipe *pipe_data)
 {
-    dup2(pipe_data->data->fd_in, 0);
-    close(pipe_data->data->fd_in);
+    if (pipe_data->i > 0)
+        dup2(pipe_data->data->fd_in, 0);
     if (pipe_data->data->cmd_parts[pipe_data->i + 1])
         dup2(pipe_data->data->fd[1], 1);
-    close(pipe_data->data->fd[1]);
     close(pipe_data->data->fd[0]);
-    process_command(pipe_data->data, pipe_data->env);
+    close(pipe_data->data->fd[1]);
+    if (pipe_data->data->fd_in != 0)
+        close(pipe_data->data->fd_in);
+    if (is_builtin(pipe_data->data) == 0)
+        execute_builtin_with_redirection(pipe_data->data, pipe_data->env);
+    else
+        process_command(pipe_data->data, pipe_data->env);
     exit(EXIT_SUCCESS);
-}
-
-static void	exec_pipe_parent(t_data *data)
-{
-	wait(NULL);
-	close(data->fd[1]);
-	data->fd_in = data->fd[0];
-}
-
-static void	start_fork(t_data *data, t_pipe *pipe_data)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-	{
-		free_data(data);
-		ft_error(PIP, 1);
-	}
-	else if (pid == 0)
-	{
-		exec_pipe_child(pipe_data);
-		exit(EXIT_FAILURE);
-	}
-	else
-		exec_pipe_parent(data);
 }
 
 void execute_pipeline(t_data *data, t_env *env)
 {
-    int i;
-    t_pipe *pipe_data;
+    int     i;
+    t_pipe  *pipe_data;
 
     i = 0;
     data->fd_in = 0;
@@ -80,9 +59,30 @@ void execute_pipeline(t_data *data, t_env *env)
         data->buffer = ft_strdup(data->cmd_parts[i]);
         free_array(data->cmd);
         data->cmd = ft_split(data->buffer, ' ');
-        pipe_data = init_pipe_data(data, env, i++);
-        start_fork(data, pipe_data);
+
+        pipe_data = init_pipe_data(data, env, i);
+        
+        pid_t pid = fork();
+        if (pid == -1)
+        {
+            free_data(data);
+            ft_error(PIP, 1);
+        }
+        else if (pid == 0)
+        {
+            exec_pipe_child(pipe_data);
+        }
+        else
+        {
+            if (data->fd_in != 0)
+                close(data->fd_in);
+
+            close(data->fd[1]);
+            data->fd_in = data->fd[0];
+        }
+        i++;
         free(pipe_data);
     }
+    while (wait(NULL) > 0);
     free_data(data);
 }
