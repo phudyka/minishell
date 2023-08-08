@@ -3,15 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 19:36:38 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/08 03:19:09 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
+
+void execute_builtin_with_redirection(t_data *data, t_env *env)
+{
+    int saved_stdin;
+    int saved_stdout;
+
+	saved_stdin = dup(STDIN_FILENO);
+	saved_stdout = dup(STDOUT_FILENO);
+    if (saved_stdin == -1 || saved_stdout == -1)
+    {
+        perror("dup");
+        return;
+    }
+    redirections(data->cmd);
+    exec_builtin(data, env);
+    if (dup2(saved_stdin, STDIN_FILENO) == -1 || dup2(saved_stdout, STDOUT_FILENO) == -1)
+    {
+        perror("dup2");
+        return;
+    }
+    close(saved_stdin);
+    close(saved_stdout);
+}
 
 int	find_pipes(t_data *data)
 {
@@ -62,6 +85,7 @@ void exec_cmd(char *path, char **cmd, char **envp)
         printf("%s: Command not found\n", cmd[0]);
         return ;
     }
+
     pid = fork();
     if (pid == -1)
     {
@@ -120,7 +144,7 @@ void process_command(t_data *data, t_env *env)
     }
     if (is_builtin(data) == 0)
     {
-        handle_builtin(data, env);
+        execute_builtin_with_redirection(data, env);
 		free_array(envp);
 		free_data(data);
         return;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/04 16:46:07 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/08 02:44:53 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ static t_pipe	*init_pipe_data(t_data *data, t_env *env, int i)
 	return (pipe_data);
 }
 
-static void	exec_pipe_child(t_pipe *pipe_data)
+static void exec_pipe_child(t_pipe *pipe_data)
 {
-	dup2(pipe_data->data->fd_in, 0);
-	close(pipe_data->data->fd_in);
-	if (pipe_data->data->cmd_parts[pipe_data->i + 1])
-		dup2(pipe_data->data->fd[1], 1);
-	close(pipe_data->data->fd[1]);
-	close(pipe_data->data->fd[0]);
-	process_command(pipe_data->data, pipe_data->env);
-	exit(EXIT_SUCCESS);
+    dup2(pipe_data->data->fd_in, 0);
+    close(pipe_data->data->fd_in);
+    if (pipe_data->data->cmd_parts[pipe_data->i + 1])
+        dup2(pipe_data->data->fd[1], 1);
+    close(pipe_data->data->fd[1]);
+    close(pipe_data->data->fd[0]);
+    process_command(pipe_data->data, pipe_data->env);
+    exit(EXIT_SUCCESS);
 }
 
 static void	exec_pipe_parent(t_data *data)
@@ -64,25 +64,25 @@ static void	start_fork(t_data *data, t_pipe *pipe_data)
 		exec_pipe_parent(data);
 }
 
-void	execute_pipeline(t_data *data, t_env *env)
+void execute_pipeline(t_data *data, t_env *env)
 {
-	int			i;
-	t_pipe		*pipe_data;
+    int i;
+    t_pipe *pipe_data;
 
-	i = 0;
-	data->fd_in = 0;
-	data->cmd_parts = ft_split(data->buffer, '|');
-	while (data->cmd_parts[i])
-	{
-		if (pipe(data->fd) == -1)
-			ft_error(PIP, 1);
-		free(data->buffer);
-		data->buffer = ft_strdup(data->cmd_parts[i]);
-		free_array(data->cmd);
-		data->cmd = ft_split(data->buffer, ' ');
-		pipe_data = init_pipe_data(data, env, i++);
-		start_fork(data, pipe_data);
-		free(pipe_data);
-	}
-	free_data(data);
+    i = 0;
+    data->fd_in = 0;
+    data->cmd_parts = ft_split(data->buffer, '|');
+    while (data->cmd_parts[i])
+    {
+        if (pipe(data->fd) == -1)
+            ft_error(PIP, 1);
+        free(data->buffer);
+        data->buffer = ft_strdup(data->cmd_parts[i]);
+        free_array(data->cmd);
+        data->cmd = ft_split(data->buffer, ' ');
+        pipe_data = init_pipe_data(data, env, i++);
+        start_fork(data, pipe_data);
+        free(pipe_data);
+    }
+    free_data(data);
 }
