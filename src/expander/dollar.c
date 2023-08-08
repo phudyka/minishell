@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:14:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 18:42:54 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/08 19:14:33 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void ft_strcpy(char *dest, const char *src)
     }
     dest[i] = '\0';
 }
-
 
 void parse_dollar(int *i, int *j, char *new, t_token *curr)
 {

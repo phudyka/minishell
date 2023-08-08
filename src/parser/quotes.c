@@ -28,18 +28,15 @@ void parse_quotes(t_token *tokens)
         perror("malloc");
         return ;
     }
-
     while (i < len)
     {
         if (tokens->value[i] == '"')
         {
-            i++;    // skip the opening quote
+            i++; 
             while (i < len && tokens->value[i] != '"')
             {
                 parsed[j++] = tokens->value[i++];
             }
-
-            // Ensure we don't go beyond string length and skip the closing quote
             if (i < len && tokens->value[i] == '"') 
                 i++;
         }
