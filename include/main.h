@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/08 17:08:08 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/08 19:58:45 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ t_token	*tokenizer(char **cmd, int size, t_token *tokens);
 void	add_token(t_token **tokens, t_token *new);
 void	parse_redir(t_token *tokens);
 void	parse_quotes(t_token *curr);
-void    parse_dollar(int *i, int *j, char *new, t_token *curr);
+char    *command_status(const char *input);
+char    *ft_dollar(const char *str, int sqot);
 void    master_parser(t_token *token);
 char    **master_lexer(char *buff);
 //---------AUTRES------------//
@@ -143,5 +144,6 @@ void	free_shell(void);
 int    ft_equal(const char *s);
 void    redirections(char **cmd);
 void    execute_builtin_with_redirection(t_data *data, t_env *env);
+char    *ft_strcpy(char *dest, const char *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/08 19:08:05 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/08 19:35:03 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ void exec_cmd(char *path, char **cmd, char **envp)
     if (!path)
     {
         printf("%s: Command not found\n", cmd[0]);
+        g_shell.status = 1;
         return ;
     }
-
     pid = fork();
     if (pid == -1)
     {
@@ -116,6 +116,8 @@ void exec_cmd(char *path, char **cmd, char **envp)
             exit(EXIT_FAILURE);
         }
         g_shell.pid = 0;
+        if (WIFEXITED(status))
+            g_shell.status = WEXITSTATUS(status);
     }
 }
 
@@ -167,6 +169,7 @@ void	ft_prompt(t_data *data, t_env *env)
 
 	pipes = 0;
 	g_shell.pid = 0;
+    g_shell.status = 0;
 	while (69)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/08 19:20:03 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/08 20:00:53 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,11 @@ static unsigned int count_words_buff(const char *str)
 
 char **ft_split_buff(char const *s)
 {
-    char **strs;
-    size_t i;
-    const char *start, *end;
-    char quote_char;
+    char        **strs;
+    size_t      i;
+    const char  *start, *end;
+    int         sqot;
+    char        quote_char;
 
     if (!s)
         return (NULL);
@@ -95,7 +96,7 @@ char **ft_split_buff(char const *s)
     strs = (char **)malloc(sizeof(char *) * (count_words_buff(s) + 1));
     if (!strs)
         return (NULL);
-
+        
     while (*s)
     {
         s = next_word_start(s);
@@ -103,12 +104,14 @@ char **ft_split_buff(char const *s)
         start = s;
         s = next_word_end(s, quote_char);
         end = s;
+        if (quote_char == '\'')
+            sqot = 1;
         if (start < end)
         {
             if (quote_char && start < end - 1 && *(end - 1) == quote_char)
-                strs[i++] = ft_substr(start, 0, end - start - 1);
+                strs[i++] = ft_dollar(ft_substr(start, 0, end - start - 1), sqot);
             else
-                strs[i++] = ft_substr(start, 0, end - start);
+                strs[i++] = ft_dollar(ft_substr(start, 0, end - start), sqot);
         }
     }
     strs[i] = NULL;
