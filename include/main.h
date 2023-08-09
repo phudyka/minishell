@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/09 12:59:15 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/09 21:22:16 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@ void    builtin_exit(void);
 //----------LIST--------------//
 t_env   *envp_to_list(char **envp);
 t_env   *create_node(char *var);
+char	**split_command(char *buff, int *len);
+size_t	output_size(const char *str);
+void    free_recmd(char **cmd, int start, int len);
+char	*ft_reassign(t_token **tokens, char *cmd);
 void    print_list_token(t_token *env);
 void    print_list(t_env *env);
 void	print_list_export(t_env *env);

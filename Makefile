@@ -6,7 +6,7 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/08/09 18:49:02 by phudyka          ###   ########.fr        #
+#    Updated: 2023/08/09 21:23:45 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,8 @@ NAME		=	minishell
 SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c	\
 				src/main/exec.c src/main/env.c src/main/exit.c 			\
 				src/main/signals.c	src/main/list.c src/main/pipes.c	\
+				src/main/utils_export.c src/main/utils_prompt.c 		\
+				src/main/utils_redir.c 									\
 				src/main/print.c src/main/utils.c		 				\
 				src/main/redir.c src/parser/lex.c src/parser/redir.c	\
 				src/parser/parse.c src/parser/quotes.c 					\
