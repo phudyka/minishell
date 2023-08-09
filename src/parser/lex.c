@@ -122,5 +122,6 @@ char **master_lexer(char *buff)
 		return (NULL);
 	}
 	free_tokens(start);
+	free_tokens(tokens);
 	return (cmd);
 }

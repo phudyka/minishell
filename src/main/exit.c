@@ -38,11 +38,20 @@ void	free_data(t_data *data)
 void	free_shell(void)
 {
 	if (g_shell.env)
+	{
 		free_env(g_shell.env);
+		g_shell.env = NULL;
+	}
 	if (g_shell.data)
+	{
 		free_data(g_shell.data);
+		g_shell.data = NULL;
+	}
 	if (g_shell.tokens)
+	{
 		free_tokens(g_shell.tokens);
+		g_shell.tokens = NULL;
+	}
 }
 
 void	builtin_exit(void)
