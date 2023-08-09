@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 11:47:15 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/09 22:49:25 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	ft_prompt(t_data *data, t_env *env)
 	pipes = 0;
 	g_shell.pid = 0;
 	g_shell.status = 0;
-	while (69)
+	while (!g_shell.exit_status)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);
 		if (!data->buffer)
@@ -109,8 +109,6 @@ void	ft_prompt(t_data *data, t_env *env)
 		add_history(data->buffer);
 		data->cmd = master_lexer(data->buffer);
 		pipes = count_pipes(data->buffer);
-		if (ft_strcmp(data->cmd[0], "exit") == 0)
-			builtin_exit();
 		if (pipes > 0)
 			execute_pipeline(data, env);
 		else

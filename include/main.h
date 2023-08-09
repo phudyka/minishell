@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 22:37:18 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 22:46:53 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	int				status;
+	bool			exit_status;
 	pid_t				pid;
 	t_env				*env;
 	t_data			*data;
