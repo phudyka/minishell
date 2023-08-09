@@ -3,42 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/08 17:16:53y phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:54:17 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-int    ft_equal(const char *s)
+int	ft_equal(const char *s)
 {
-    int    i;
+	int	i;
 
-    i = 0;
-    while (s[i])
-    {
-        if (s[i] == '=')
-            return (1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '=')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-void free_array(char **tab)
+void	free_array(char **tab)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!tab)
-        return;
-    while (tab[i])
-    {
-        free(tab[i]);
-        i++;
-    }
-    free(tab);
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 char	*allocatenate(char *cmd, char *path)

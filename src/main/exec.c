@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 19:27:44 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:02:47 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/error.h"
-
-t_shell shell;
 
 void	exec_builtin(t_data *data, t_env *env)
 {
@@ -84,20 +82,20 @@ int	is_builtin(t_data *data)
 	return (res);
 }
 
-void handle_builtin(t_data *data, t_env *env)
+void	handle_builtin(t_data *data, t_env *env)
 {
-    pid_t   pid;
-    int     status;
+	pid_t	pid;
+	int		status;
 
-    pid = fork();
-    if (pid == 0)
-    {
-        redirections(data->cmd);
-        exec_builtin(data, env);
-        exit(EXIT_SUCCESS);
-    }
-    else if (pid > 0)
-        waitpid(pid, &status, 0);
-    else
-        perror("fork");
+	pid = fork();
+	if (pid == 0)
+	{
+		redirections(data->cmd);
+		exec_builtin(data, env);
+		exit(EXIT_SUCCESS);
+	}
+	else if (pid > 0)
+		waitpid(pid, &status, 0);
+	else
+		perror("fork");
 }

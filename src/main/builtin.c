@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/07 19:26:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:54:54 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,34 +86,10 @@ void	builtin_cd(char **path, t_env *env)
 
 void	builtin_export(t_data *data, t_env *env)
 {
-	char	**variable;
-	t_env	*current;
-	t_env	*new_variable;
-
-	variable = NULL;
 	if (!data->cmd[1])
 	{
 		print_list_export(env);
-		return;
+		return ;
 	}
-	current = env;
-	if (!ft_equal(data->cmd[1]))
-		return;
-	variable = ft_split(data->cmd[1], '=');
-	while (current)
-	{
-		if (ft_strncmp(current->var,
-				variable[0], ft_strlen(variable[0])) == 0)
-		{
-			free(current->var);
-			free_array(variable);
-			current->var = strdup(data->cmd[1]);
-			return ;
-		}
-		current = current->next;
-	}
-	if (variable)
-		free_array(variable);
-	new_variable = create_node(data->cmd[1]);
-	add_node(&env, new_variable);
+	handle_variable(data, &env);
 }

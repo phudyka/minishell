@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 05:52:38 by kali              #+#    #+#             */
-/*   Updated: 2023/08/09 16:16:11 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:59:15 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,37 +33,42 @@
 # include "error.h"
 # include "../libft/libft.h"
 
-#define RESET "\x1b[0m"
-#define GREEN "\x1b[32m"
+# define RESET "\x1b[0m"
+# define GREEN "\x1b[32m"
+
 typedef enum
 {
-    QOT, // quotes : /' and /"
-    RDR, // input '<' and truncate '>'
-    PIP, // pipe '|'
-    STR, // commande
-}           token;
-typedef struct  s_data
+	QOT,
+	RDR,
+	PIP,
+	STR,
+}	token;
+
+typedef struct	s_data
 {
 	int     fd[2];
-    int     fd_in;
-    char    **cmd;
-    char    **path;
-    char    **redir;
-    char    *buffer;
+	int     fd_in;
+	char    **cmd;
+	char    **path;
+	char    **redir;
+	char    *buffer;
 	char    **cmd_parts;
 }               t_data;
-typedef struct  s_env
+
+typedef struct	s_env
 {
-    char            *var;
-    struct s_env   *next;
+	char            *var;
+	struct s_env   *next;
 }               t_env;
-typedef struct  s_pipe
+
+typedef struct	s_pipe
 {
-    int     i;
+	int     i;
 	t_env   *env;
 	t_data  *data;
 }               t_pipe;
-typedef struct s_token
+
+typedef struct	s_token
 {
 	int		type;
 	char	*value;
@@ -72,15 +77,15 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct  s_shell
+typedef struct	s_shell
 {
-    int             status;
-    pid_t           pid;
-    t_env           *env;
-    t_data          *data;
-    t_pipe          *pipes;
-    t_token         *tokens;
-    struct termios  *termios;
+	int             status;
+	pid_t           pid;
+	t_env           *env;
+	t_data          *data;
+	t_pipe          *pipes;
+	t_token         *tokens;
+	struct termios  *termios;
 }               t_shell;
 
 extern t_shell g_shell;
@@ -145,5 +150,22 @@ int    ft_equal(const char *s);
 void    redirections(char **cmd);
 void    execute_builtin_with_redirection(t_data *data, t_env *env);
 char    *ft_strcpy(char *dest, const char *src);
+void    parent_process(pid_t pid);
+void	child_process(char *path, char **cmd, char **envp);
+void	check_path_and_set_status(char *path, char **cmd);
+char	**make_env(char **env, t_env *current);
+char	*ft_access(char **path, char **cmd);
+void	handle_variable(t_data *data, t_env **env);
+int		update_variable_if_exists(t_env *env, char **variable, char *cmd_arg);
+char	**get_variable(char *cmd_arg);
+void	create_tmp_file(char *delimiter);
+void	handle_heredoc_line(char *line, ssize_t read, int fd, char *delimiter);
+void	set_tmp_file_as_stdin(void);
+void	exit_error(char *msg);
+void	check_and_apply_redirection(char **cmd, int *i);
+void	remove_redirection(char **cmd, int start);
+int		redirect_output(char **cmd, int i, int append);
+int		redirect_input(char **cmd, int i);
+void	redirect_here_doc(char **cmd, int i);
 
 #endif

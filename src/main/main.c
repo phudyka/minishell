@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/07 10:48:58 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 11:43:08 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ char	**get_path(char **envp)
 	free(path);
 	while (final_path[++i])
 		final_path[i] = ft_strjoin(final_path[i], "/");
-	return (final_path); 
+	return (final_path);
 }
 
-static char	**make_env(char **env, t_env *current)
+char	**make_env(char **env, t_env *current)
 {
 	int	i;
 
@@ -62,35 +62,14 @@ static char	**make_env(char **env, t_env *current)
 	return (env);
 }
 
-char	**list_to_array(t_env *head)
-{
-	int		count;
-	char	**env;
-	t_env	*current;
-
-	count = 0;
-	current = head;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	env = (char **)ft_calloc(count + 1, sizeof(char *));
-	if (!env)
-		exit(EXIT_FAILURE);
-	current = head;
-	env = make_env(env, current);
-	return (env);
-}
-
 static void	init_data(char **envp)
 {
 	g_shell.data = malloc(sizeof(t_data));
 	if (g_shell.data)
 	{
-    	g_shell.data->buffer = NULL;
-    	g_shell.data->cmd = NULL;
-    	g_shell.data->cmd_parts = NULL;
+		g_shell.data->buffer = NULL;
+		g_shell.data->cmd = NULL;
+		g_shell.data->cmd_parts = NULL;
 		g_shell.data->path = get_path(envp);
 	}
 	else

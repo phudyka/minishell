@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:09:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 02:09:23 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/09 12:56:05 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include "parser.h"
 # include "main.h"
 # include "../libft/libft.h"
-
-
-
 
 void	parse_redir(t_token *tokens);
 void	parse_quotes(t_token *tokens);

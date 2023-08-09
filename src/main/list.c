@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 21:08:24 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/06 11:24:22 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/09 12:04:34 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_env	*create_node(char *var)
 	else
 	{
 		perror("malloc");
-		return(NULL);
+		return (NULL);
 	}
 	return (node);
 }
@@ -37,7 +37,7 @@ void	add_node(t_env **head, t_env *node)
 
 	if (!*head)
 		*head = node;
-	else 
+	else
 	{
 		current = *head;
 		while (current->next)
@@ -53,7 +53,7 @@ void	unset_list(t_env **env, char *var)
 
 	prev = NULL;
 	if (!var)
-		return;
+		return ;
 	current = *env;
 	while (current && ft_strncmp(current->var, var, ft_strlen(var)) != 0)
 	{
@@ -70,4 +70,25 @@ void	unset_list(t_env **env, char *var)
 	current->var = NULL;
 	free (current);
 	current = NULL;
+}
+
+char	**list_to_array(t_env *head)
+{
+	int		count;
+	char	**env;
+	t_env	*current;
+
+	count = 0;
+	current = head;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	env = (char **)ft_calloc(count + 1, sizeof(char *));
+	if (!env)
+		exit(EXIT_FAILURE);
+	current = head;
+	env = make_env(env, current);
+	return (env);
 }

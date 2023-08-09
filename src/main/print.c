@@ -6,11 +6,11 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:08:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 03:38:38 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/09 12:27:49 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../include/main.h"
+#include "../../include/main.h"
 
 void	print_list_export(t_env *env)
 {
@@ -45,7 +45,7 @@ void	print_arguments(t_data *data, int start_index)
 	while (data->cmd[i])
 	{
 		arg_len = ft_strlen(data->cmd[i]);
-		if (arg_len >= 2 && data->cmd[i][0] == '"' && 
+		if (arg_len >= 2 && data->cmd[i][0] == '"' &&
 				data->cmd[i][arg_len - 1] == '"')
 			write(1, data->cmd[i] + 1, arg_len - 2);
 		else
