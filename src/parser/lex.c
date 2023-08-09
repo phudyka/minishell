@@ -64,8 +64,8 @@ static char	**split_command(char *buff, int *cmd_len)
 
 static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
 {
-	int i;
-	char *temp;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (i < cmd_len && *tokens)

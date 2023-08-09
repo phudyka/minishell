@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/07 19:39:20 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 17:16:28 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,9 @@ int redirect_output(char **cmd, int i, int append)
 
 void remove_redirection(char **cmd, int start)
 {
-    if (cmd[start + 2] == NULL)
+    free(cmd[start]);
+    free(cmd[start + 1]);
+    if (!cmd[start + 2])
         cmd[start] = NULL;
     else
     {
@@ -123,22 +125,22 @@ void redirections(char **cmd)
     i = 0;
     while (cmd[i])
     {
-        if (strcmp(cmd[i], "<") == 0)
+        if (ft_strcmp(cmd[i], "<") == 0)
         {
             redirect_input(cmd, i);
             remove_redirection(cmd, i);
         }
-        else if (strcmp(cmd[i], ">") == 0)
+        else if (ft_strcmp(cmd[i], ">") == 0)
         {
             redirect_output(cmd, i, 0);
             remove_redirection(cmd, i);
         }
-        else if (strcmp(cmd[i], ">>") == 0)
+        else if (ft_strcmp(cmd[i], ">>") == 0)
         {
             redirect_output(cmd, i, 1);
             remove_redirection(cmd, i);
         }
-        else if (strcmp(cmd[i], "<<") == 0)
+        else if (ft_strcmp(cmd[i], "<<") == 0)
         {
             redirect_here_doc(cmd, i);
             remove_redirection(cmd, i);
