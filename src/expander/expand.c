@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:53:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 17:55:51 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 22:39:09 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	process_variable(const char *str, size_t *i, size_t *size)
 	if (env)
 		*size += ft_strlen(env);
 	else
-		*size += strlen(var);
+		*size += ft_strlen(var);
 	free(var);
 }
 

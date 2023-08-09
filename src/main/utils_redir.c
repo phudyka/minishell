@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:32:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/09 12:52:56 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/09 22:29:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void	create_tmp_file(char *delimiter)
 	read = getline(&line, &len, stdin);
 	while (read != -1)
 	{
-		handle_heredoc_line(line, read, fd, delimiter);
+		heredoc_line(line, read, fd, delimiter);
 		read = getline(&line, &len, stdin);
 	}
 	close(fd);
 	free(line);
 }
 
-void	handle_heredoc_line(char *line, ssize_t read, int fd, char *delimiter)
+void	heredoc_line(char *line, ssize_t read, int fd, char *delimiter)
 {
 	if (read > 0 && line[read - 1] == '\n')
 	{

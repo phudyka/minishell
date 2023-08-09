@@ -6,15 +6,15 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 10:41:21 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 18:19:44 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 22:32:50 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-t_token *tokenize_command(char **cmd, int cmd_len)
+t_token	*tokenize_command(char **cmd, int cmd_len)
 {
-	t_token *tokens;
+	t_token	*tokens;
 
 	tokens = NULL;
 	tokens = tokenizer(cmd, cmd_len, tokens);
@@ -26,10 +26,10 @@ t_token *tokenize_command(char **cmd, int cmd_len)
 	return (tokens);
 }
 
-t_token	*new_token(token type, char *value)
+t_token	*new_token(t_enum_token type, char *value)
 {
 	t_token	*token;
-	
+
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
@@ -44,7 +44,7 @@ t_token	*new_token(token type, char *value)
 void	add_token(t_token **tokens, t_token *new)
 {
 	t_token	*tmp;
-	
+
 	if (!tokens || !new)
 		return ;
 	if (!*tokens)
@@ -58,22 +58,20 @@ void	add_token(t_token **tokens, t_token *new)
 	tmp->next = new;
 }
 
-void free_tokens(t_token *tokens)
+void	free_tokens(t_token *tokens)
 {
 	t_token	*tmp;
 
-    while (tokens)
-    {
+	while (tokens)
+	{
 		tmp = tokens;
 		tokens = tokens->next;
-
 		if (tmp->value)
 			free(tmp->value);
 		if (tmp->redir)
 			free(tmp->redir);
 		if (tmp->file)
 			free(tmp->file);
-
 		free(tmp);
-    }
+	}
 }
