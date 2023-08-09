@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/08 19:35:03 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/09 15:29:52 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,23 +140,20 @@ void process_command(t_data *data, t_env *env)
     char **envp;
 
     envp = list_to_array(env);
-    if (data->path)
-    {
-        free_array(data->path);
-        data->path = get_path(envp);
-    }
+    free_array(data->path);
+    data->path = get_path(envp);
     if (!data->cmd || !data->cmd[0])
     {
         free_array(envp);
         free_buff(data);
-        return;
+        return ;
     }
     if (is_builtin(data) == 0)
     {
         execute_builtin_with_redirection(data, env);
 		free_array(envp);
 		free_data(data);
-        return;
+        return ;
     }
     execute_command(data, envp);
     free_array(envp);

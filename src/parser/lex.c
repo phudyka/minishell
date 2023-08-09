@@ -70,10 +70,10 @@ static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
 	i = 0;
 	while (i < cmd_len && *tokens)
 	{
-        // Si la valeur du token est déjà un pointeur vers une commande existante, nous n'avons pas besoin de la dupliquer.
-        if ((*tokens)->value == cmd[i]) {
+        if ((*tokens)->value == cmd[i])
             temp = cmd[i];
-        } else {
+        else
+		{
             temp = ft_strdup((*tokens)->value);
             if (!temp)
             {
@@ -87,7 +87,7 @@ static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
 		*tokens = (*tokens)->next;
 		i++;
 	}
-	while (i < cmd_len) // Assurez-vous de libérer tout ce qui reste
+	while (i < cmd_len)
 	{
 		free(cmd[i]);
 		cmd[i] = NULL;
@@ -95,8 +95,6 @@ static char **reassign_cmd(t_token **tokens, char **cmd, int cmd_len)
 	}
 	return (cmd);
 }
-
-
 
 char **master_lexer(char *buff)
 {

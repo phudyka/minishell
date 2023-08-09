@@ -46,6 +46,14 @@ void parse_quotes(t_token *tokens)
             if (i < len && tokens->value[i] == '"') 
                 i++;
         }
+        else if (tokens->value[i] == '\'')
+        {
+            i++;
+            while (i < len && tokens->value[i] != '\'')
+                parsed[j++] = tokens->value[i++];
+            if (i < len && tokens->value[i] == '\'') 
+                i++;
+        }
         else
             parsed[j++] = tokens->value[i++];
     }
