@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 17:42:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 17:50:08 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	builtin_pwd(void)
 {
 	char	*cwd;
 
-	cwd = malloc(sizeof(char) * PATH_MAX);
+	cwd = (char *)malloc(sizeof(char) * PATH_MAX);
 	if ((getcwd(cwd, PATH_MAX)))
 		printf("%s\n", cwd);
 	else
