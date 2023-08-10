@@ -12,26 +12,27 @@
 
 #include "../../include/parser.h"
 
-static char **sub_start_to_end(const char *start, const char *end, char **strs, size_t *i)
+static char	**sub_start_to_end(const char *start, const char *end,
+		char **strs, size_t *i)
 {
-    char *sub;
+	char	*sub;
 
-    if (*start == '\'' || *start == '"')
-    {
-        start++;
-        end--;
-    }
-    sub = ft_substr(start, 0, end - start);
-    if (!sub)
-    {
-        while (*i > 0)
-            free(strs[--(*i)]);
-        free(strs);
-        return (NULL);
-    }
-    strs[(*i)++] = ft_dollar(sub, (*start == '\''));
-    free(sub);
-    return (strs);
+	if (*start == '\'' || *start == '"')
+	{
+		start++;
+		end--;
+	}
+	sub = ft_substr(start, 0, end - start); 
+	if (!sub)
+	{
+		while (*i > 0)
+			free(strs[--(*i)]);
+		free(strs);
+		return (NULL);
+	}
+	strs[(*i)++] = ft_dollar(sub, (*start == '\''));
+	free(sub);
+	return (strs);
 }
 
 static void	process_with_quote(const char **s, char qot, char **strs, size_t *i)

@@ -46,7 +46,6 @@ char	*extract_variable(const char *str, size_t *index)
 	return (var);
 }
 
-
 void	process_variable(const char *str, size_t *i, size_t *size)
 {
 	char	*env;

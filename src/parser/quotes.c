@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:55:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 21:55:52 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 15:53:34 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,48 +47,48 @@ static void	ft_squote(char *parsed, int *j, const char *value)
 		parsed[(*j)++] = value[i++];
 }
 
-static void	ft_sequence(int *i, int *j, int len,
-		char *parsed, const char *value)
+static void	ft_sequence(int *i, int len, char *parsed, const char *value)
 {
+	int		j;
+
+	j = 0;
 	while (*i < len)
 	{
 		if (value[*i] == '"')
 		{
 			(*i)++;
-			ft_dquote(parsed, j, value + *i);
+			ft_dquote(parsed, &j, value + *i);
 			if (value[*i] == '"')
 				(*i)++;
 		}
 		else if (value[*i] == '\'')
 		{
 			(*i)++;
-			ft_squote(parsed, j, value + *i);
+			ft_squote(parsed, &j, value + *i);
 			if (value[*i] == '\'')
 				(*i)++;
 		}
 		else
-			parsed[(*j)++] = value[(*i)++];
+			parsed[(j)++] = value[(*i)++];
 	}
-	parsed[*j] = '\0';
+	parsed[j] = '\0';
 }
 
 void	parse_quotes(t_token *tokens)
 {
 	int		i;
-	int		j;
 	int		len;
 	char	*parsed;
 
 	i = 0;
-	j = 0;
 	len = ft_strlen(tokens->value);
 	parsed = (char *)malloc(sizeof(char) * (len + 1));
 	if (!parsed)
 	{
-		perror("malloc");
+		ft_putstr_fd("Error ! [malloc]", 2);
 		return ;
 	}
-	ft_sequence(&i, &j, len, parsed, tokens->value);
+	ft_sequence(&i, len, parsed, tokens->value);
 	free(tokens->value);
 	tokens->value = parsed;
 }

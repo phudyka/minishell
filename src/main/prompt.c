@@ -66,10 +66,10 @@ static void	execute_command(t_data *data, char **envp)
 	else
 		data->buffer = ft_access(data->path, data->cmd);
 	if (!data->buffer)
-	{	
-    	printf("%s : Command not found\n", data->cmd[0]);
+	{
+		printf("%s : Command not found\n", data->cmd[0]);
 		g_shell.status = 127;
-    	return;
+		return ;
 	}
 	exec_cmd(data->buffer, data->cmd, envp);
 }
