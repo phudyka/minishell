@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/08/09 12:45:32 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 04:09:20 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	check_path_and_set_status(char *path, char **cmd)
 	{
 		printf("%s: Command not found\n", cmd[0]);
 		g_shell.status = 1;
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 }
 
@@ -54,7 +54,7 @@ void	child_process(char *path, char **cmd, char **envp)
 	if (execve(path, cmd, envp) == -1)
 	{
 		perror("execve");
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 }
 

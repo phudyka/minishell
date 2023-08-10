@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:14:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 19:06:46 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 03:59:52 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*ft_qmark(const char *str, size_t *i, char *output, size_t *j)
 		snprintf(status_str, sizeof(status_str), "%d", g_shell.status);
 		ft_strcpy(output + *j, status_str);
 		*j += ft_strlen(status_str);
-		*i += 2;
+		(*i)++; // Just increase by one
 		return (output);
 	}
 	return (NULL);
@@ -45,12 +45,11 @@ static char	*ft_incr_dol(const char *str, size_t *i, char *output, size_t *j)
 		{
 			ft_strcpy(output + *j, env_value);
 			*j += ft_strlen(env_value);
+			free(env_value);
 		}
 	}
 	else
 		output[(*j)++] = str[(*i)++];
-	if (env_value)
-		free(env_value);
 	return (output);
 }
 
@@ -69,7 +68,7 @@ char	*ft_dollar(const char *str, int sqot)
 		return (NULL);
 	while (str[i])
 	{
-		if (str[i] == '$' && !sqot && ft_strcmp(str, "\'") == 0)
+		if (str[i] == '$' && !sqot)
 		{
 			if (ft_qmark(str, &i, output, &j))
 				continue ;

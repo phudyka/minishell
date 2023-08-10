@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 12:43:31 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 03:20:12 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	restore_termios(void)
 {
 	tcsetattr(STDIN_FILENO, TCSAFLUSH, g_shell.termios);
 	free(g_shell.termios);
+	g_shell.termios = NULL;
 }
 
 static void	ft_sigint(int sig)

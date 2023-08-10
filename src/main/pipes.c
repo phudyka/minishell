@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 12:27:03 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 03:38:07 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,22 @@ void	execute_pipeline(t_data *data, t_env *env)
 	int		status;
 	pid_t	pid;
 
-	i = 0;
 	data->fd_in = 0;
 	data->cmd_parts = ft_split(data->buffer, '|');
+	i = 0;
 	while (data->cmd_parts[i])
 	{
+		if (is_exit_command(data->cmd_parts[i]))
+		{
+			g_shell.exit_status = TRUE;
+			free_data(data);
+			return ;
+		}
 		handle_pipe_execution(data, env, i);
 		i++;
 	}
 	pid = waitpid(-1, &status, 0);
 	while (pid > 0)
-	{
 		pid = waitpid(-1, &status, 0);
-	}
 	free_data(data);
 }

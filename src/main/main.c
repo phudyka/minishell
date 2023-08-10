@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/09 22:48:27 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 03:27:33 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ char	**get_path(char **envp)
 	final_path = ft_split(path, ':');
 	free(path);
 	while (final_path[++i])
+	{
 		final_path[i] = ft_strjoin(final_path[i], "/");
+	}
 	return (final_path);
 }
 
@@ -88,7 +90,6 @@ int	main(int argc, char **argv, char **envp)
 	init_data(envp);
 	ft_signals();
 	ft_prompt(g_shell.data, g_shell.env);
-	free_shell();
 	restore_termios();
 	ft_putstr_fd("exit\n", 1);
 	return (0);

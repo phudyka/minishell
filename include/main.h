@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 22:46:53 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 03:36:39 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,17 @@ typedef struct s_env
 
 typedef struct s_pipe
 {
-	int		i;
+	int			i;
 	t_env		*env;
-	t_data	*data;
+	t_data		*data;
 }	t_pipe;
 
 typedef struct s_token
 {
 	int				type;
-	char				*value;
-	char				*redir;
-	char				*file;
+	char			*value;
+	char			*redir;
+	char			*file;
 	struct s_token	*next;
 }	t_token;
 
@@ -81,8 +81,8 @@ typedef struct s_shell
 {
 	int				status;
 	bool			exit_status;
-	pid_t				pid;
-	t_env				*env;
+	pid_t			pid;
+	t_env			*env;
 	t_data			*data;
 	t_pipe			*pipes;
 	t_token			*tokens;
@@ -167,5 +167,6 @@ void		remove_redirection(char **cmd, int start);
 int			redirect_output(char **cmd, int i, int append);
 int			redirect_input(char **cmd, int i);
 void		redirect_here_doc(char **cmd, int i);
+int			is_exit_command(char *cmd_part);
 
 #endif

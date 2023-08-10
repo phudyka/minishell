@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:10:27 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 22:47:29 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 03:39:33 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+int	is_exit_command(char *cmd_part)
+{
+	int j;
+
+	j = 0;
+	while (cmd_part[j] && (cmd_part[j] == ' ' || cmd_part[j] == '\t'))
+		j++;
+	return (!ft_strncmp(cmd_part + j, "exit", 4));
+}
 
 void	free_env(t_env *env)
 {
@@ -56,6 +66,5 @@ void	free_shell(void)
 
 void	builtin_exit(void)
 {
-	free_shell();
-	exit (g_shell.exit_status = TRUE);
+	g_shell.exit_status = TRUE;
 }
