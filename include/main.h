@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 07:11:46 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 15:19:00 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef enum token
 
 typedef struct s_data
 {
-	int		fd[2];
-	int		fd_in;
+	int			fd[2];
+	int			fd_in;
 	char		**cmd;
 	char		**path;
 	char		**redir;
@@ -57,7 +57,7 @@ typedef struct s_data
 
 typedef struct s_env
 {
-	char				*var;
+	char			*var;
 	struct s_env	*next;
 }	t_env;
 
@@ -80,6 +80,7 @@ typedef struct s_token
 typedef struct s_shell
 {
 	int				status;
+	char			**strs;
 	bool			exit_status;
 	pid_t			pid;
 	t_env			*env;
@@ -95,7 +96,7 @@ void		ft_signals(void);
 void		builtin_export(t_data *data, t_env *env);
 void		builtin_env(t_env *env, char **cmd);
 void		builtin_pwd(void);
-int         is_builtin(t_data *data);
+int			is_builtin(t_data *data);
 void		exec_builtin(t_data *data, t_env *env);
 void		handle_builtin(t_data *data, t_env *env);
 void		builtin_cd(char **path, t_env *env);
@@ -112,7 +113,7 @@ void		print_list(t_env *env);
 void		print_list_export(t_env *env);
 void		unset_list(t_env **env, char *var);
 void		add_node(t_env **head, t_env *node);
-int		search_in_env(t_env *env, char *variable);
+int			search_in_env(t_env *env, char *variable);
 char		*get_from_env(char *variable, t_env *env);
 char		**list_to_array(t_env *head);
 t_token		*new_token(t_enum_token type, char *value);

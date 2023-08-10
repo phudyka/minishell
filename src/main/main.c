@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 05:33:07 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 15:25:27 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,7 @@ char	**get_path(char **envp)
 	final_path = ft_split(path, ':');
 	free(path);
 	while (final_path[++i])
-	{
 		final_path[i] = ft_strjoin(final_path[i], "/");
-	}
 	return (final_path);
 }
 

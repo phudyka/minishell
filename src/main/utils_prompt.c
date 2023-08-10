@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 04:34:14 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 15:27:47 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,6 @@ void	execute_builtin_with_redirection(t_data *data, t_env *env)
 	close(saved_stdin);
 	close(saved_stdout);
 }
-
-/*void	check_path_and_set_status(char *path, char **cmd)
-{
-	if (!path)
-	{
-		printf("%s: Command not found\n", cmd[0]);
-		g_shell.status = 127;
-	}
-}*/
 
 void	child_process(char *path, char **cmd, char **envp)
 {

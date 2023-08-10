@@ -60,4 +60,3 @@ char	**ft_split(char const *s, char c)
 	strs[i] = NULL;
 	return (strs);
 }
-

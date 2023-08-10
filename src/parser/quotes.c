@@ -41,7 +41,7 @@ static void	ft_dquote(char *parsed, int *j, const char *value)
 static void	ft_squote(char *parsed, int *j, const char *value)
 {
 	int	i;
-	
+
 	i = 0;
 	while (value[i] != '\'' && value[i])
 		parsed[(*j)++] = value[i++];
@@ -74,9 +74,9 @@ static void	ft_sequence(int *i, int *j, int len,
 
 void	parse_quotes(t_token *tokens)
 {
-	int	i;
-	int	j;
-	int	len;
+	int		i;
+	int		j;
+	int		len;
 	char	*parsed;
 
 	i = 0;

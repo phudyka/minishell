@@ -18,9 +18,10 @@ t_token	*create_token(char *cmd)
 
 	if (cmd[0] == '\'' || cmd[0] == '\"')
 		new_token_instance = new_token(QOT, cmd);
-	else if (!ft_strcmp(cmd, ">") || !ft_strcmp(cmd, "<") || !ft_strcmp(cmd, ">>"))
+	else if ((ft_strcmp(cmd, ">") == 0) || (ft_strcmp(cmd, "<") == 0)
+		|| (ft_strcmp(cmd, ">>") == 0))
 		new_token_instance = new_token(RDR, cmd);
-	else if (!ft_strcmp(cmd, "|"))
+	else if (ft_strcmp(cmd, "|") == 0)
 		new_token_instance = new_token(PIP, "|");
 	else
 		new_token_instance = new_token(STR, cmd);

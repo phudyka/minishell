@@ -14,7 +14,7 @@
 
 int	is_exit_command(char *cmd_part)
 {
-	int j;
+	int	j;
 
 	j = 0;
 	while (cmd_part[j] && (cmd_part[j] == ' ' || cmd_part[j] == '\t'))
