@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 10:36:36 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 18:54:19 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	**sub_start_to_end(const char *start, const char *end,
 		start++;
 		end--;
 	}
-	sub = ft_substr(start, 0, end - start); 
+	sub = ft_substr(start, 0, end - start);
 	if (!sub)
 	{
 		while (*i > 0)
