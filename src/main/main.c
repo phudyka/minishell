@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 03:27:33 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 05:33:07 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
+	g_shell.status = 0;
 	g_shell.exit_status = FALSE;
 	g_shell.env = envp_to_list(envp);
 	init_data(envp);

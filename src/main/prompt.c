@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 03:37:46 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 05:33:38 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	exec_cmd(char *path, char **cmd, char **envp)
 {
 	pid_t	pid;
 
-	check_path_and_set_status(path, cmd);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -66,6 +65,12 @@ static void	execute_command(t_data *data, char **envp)
 		data->buffer = ft_strdup(data->cmd[0]);
 	else
 		data->buffer = ft_access(data->path, data->cmd);
+	if (!data->buffer)
+	{	
+    	printf("%s : Command not found\n", data->cmd[0]);
+		g_shell.status = 127;
+    	return;
+	}
 	exec_cmd(data->buffer, data->cmd, envp);
 }
 

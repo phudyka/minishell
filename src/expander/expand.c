@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:53:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 22:39:09 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 07:04:32 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+void	update_values(char *output, size_t *j, char *value)
+{
+	ft_strcpy(output + *j, value);
+	*j += ft_strlen(value);
+}
 
 char	*ft_strcpy(char *dest, const char *src)
 {
@@ -28,19 +34,15 @@ char	*ft_strcpy(char *dest, const char *src)
 
 char	*extract_variable(const char *str, size_t *index)
 {
-	size_t	j;
+	size_t	start;
 	char	*var;
 
-	j = 0;
-	var = (char *)malloc(sizeof(char) * 256 + 1);
-	if (!var)
-	{
-		perror("Error! : [Malloc Failure]");
-		return (NULL);
-	}
+	start = *index;
 	while (ft_isalnum(str[*index]) || str[*index] == '_')
-		var[j++] = str[(*index)++];
-	var[j] = '\0';
+		(*index)++;
+	var = ft_substr(str, start, *index - start);
+	if (!var)
+		perror("Error! : [Malloc Failure]");
 	return (var);
 }
 
@@ -51,15 +53,12 @@ void	process_variable(const char *str, size_t *i, size_t *size)
 
 	var = extract_variable(str, i);
 	if (!var)
-	{
-		*size = 0;
 		return ;
-	}
 	env = getenv(var);
 	if (env)
 		*size += ft_strlen(env);
 	else
-		*size += ft_strlen(var);
+		*size += ft_strlen(var) + 1;
 	free(var);
 }
 

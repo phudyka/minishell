@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 21:42:49 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 09:11:47 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char **ft_split_buff(char const *s)
             char *substr_result = (quote_char && start < end - 1 && *(end - 1) == quote_char) ? ft_substr(start, 0, end - start - 1) : ft_substr(start, 0, end - start);
             if (!substr_result)
             {
-                free(strs); // Free the memory allocated for strs
+                free(strs);
                 return NULL;
             }
             strs[i++] = ft_dollar(substr_result, sqot);

@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 03:36:39 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 07:11:46 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,5 +168,8 @@ int			redirect_output(char **cmd, int i, int append);
 int			redirect_input(char **cmd, int i);
 void		redirect_here_doc(char **cmd, int i);
 int			is_exit_command(char *cmd_part);
+void		update_values(char *output, size_t *j, char *value);
+char		*handle_mark(const char *str, size_t *i, char *output, size_t *j);
+size_t		get_var_len(const char *str, size_t i);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
+#    By: kali <kali@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/08/09 21:23:45 by phudyka          ###   ########.fr        #
+#    Updated: 2023/08/10 07:05:58 by kali             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c	\
 				src/parser/parse_utils.c src/parser/token.c	 			\
 				src/parser/split.c src/expander/expand.c				\
 				src/expander/dollar.c src/error/error.c 				\
+				src/expander/utils_dollar.c                             \
 
 INCLUDE		=	include/main.h include/parse.h		\
 				include/error.h	include/expander.h 	\
