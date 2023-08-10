@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 10:13:52 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 17:42:15 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	handle_builtin(t_data *data, t_env *env)
 		waitpid(pid, &status, 0);
 	else
 	{
-		ft_putstr_fd("fork", 2);
+		ft_putstr_fd("Error ! [fork]\n", 2);
 		g_shell.status = 35;
 	}
 }

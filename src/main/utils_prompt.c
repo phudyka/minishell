@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 10:23:07 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 17:48:40 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	execute_builtin_with_redirection(t_data *data, t_env *env)
 	saved_stdout = dup(STDOUT_FILENO);
 	if (saved_stdin == -1 || saved_stdout == -1)
 	{
-		ft_putstr_fd("dup", 2);
+		ft_putstr_fd("Error! [dup]\n", 2);
 		g_shell.status = 35;
 		return ;
 	}
@@ -31,7 +31,7 @@ void	execute_builtin_with_redirection(t_data *data, t_env *env)
 	if (dup2(saved_stdin, STDIN_FILENO) == -1
 		|| dup2(saved_stdout, STDOUT_FILENO) == -1)
 	{
-		ft_putstr_fd("dup2", 2);
+		ft_putstr_fd("Error! [dup2]\n", 2);
 		g_shell.status = 35;
 		return ;
 	}
@@ -45,8 +45,9 @@ void	child_process(char *path, char **cmd, char **envp)
 	redirections(cmd);
 	if (execve(path, cmd, envp) == -1)
 	{
-		ft_putstr_fd("execve", 2);
+		ft_putstr_fd("Error [execve]\n", 2);
 		g_shell.status = 127;
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -57,7 +58,7 @@ void	parent_process(pid_t pid)
 	g_shell.pid = pid;
 	if (waitpid(pid, &status, 0) == -1)
 	{
-		ft_putstr_fd("waitpid", 2);
+		ft_putstr_fd("Error [waitpid]\n", 2);
 		g_shell.status = 128;
 		exit(EXIT_FAILURE);
 	}

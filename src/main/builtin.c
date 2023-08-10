@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 10:13:35 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 17:42:52 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	builtin_pwd(void)
 	if ((getcwd(cwd, PATH_MAX)))
 		printf("%s\n", cwd);
 	else
-		perror ("pwd");
+		ft_putstr_fd("Error [pwd]\n", 2);
 	if (cwd)
 	{
 		free (cwd);

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:32:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/09 22:29:35 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 17:46:05 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	create_tmp_file(char *delimiter)
 
 	fd = open("/tmp/minishell_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		exit_error("open");
+		exit_error("Error [open]\n");
 	len = 0;
 	line = NULL;
 	read = getline(&line, &len, stdin);
@@ -60,9 +60,9 @@ void	set_tmp_file_as_stdin(void)
 
 	fd = open("/tmp/minishell_heredoc", O_RDONLY);
 	if (fd < 0)
-		exit_error("open");
+		exit_error("Error! [open]\n");
 	if (dup2(fd, STDIN_FILENO) < 0)
-		exit_error("dup2");
+		exit_error("Error[dup2]\n");
 	close(fd);
 }
 

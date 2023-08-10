@@ -15,7 +15,7 @@
 static void ft_dquote(char *parsed, int *j, const char *value)
 {
     int		i;
-	char *env_var;
+	char	*env_var;
 
 	i = 0;
     while (value[i])
@@ -52,7 +52,7 @@ static void	ft_sequence(int *i, int len, char *parsed, const char *value)
 	int		j;
 
 	j = 0;
-	while (*i < len)
+	while (*i < len && value[*i])
 	{
 		if (value[*i] && value[*i] == '"')
 		{
@@ -83,7 +83,7 @@ void	parse_quotes(t_token *tokens)
 	parsed = (char *)malloc(sizeof(char) * (len + 1));
 	if (!parsed)
 	{
-		ft_putstr_fd("Error ! [malloc]", 2);
+		ft_putstr_fd("Error! [malloc]\n", 2);
 		g_shell.status = 12;
 		return ;
 	}

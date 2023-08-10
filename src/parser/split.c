@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 10:35:45 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 17:46:42 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	**ft_split_buff(const char *s)
 	i = 0;
 	if (!s || !is_valid_quote(s))
 	{
-		ft_putstr_fd("Error! : [Open Quotes]\n", 2);
+		ft_putstr_fd("Error! [Open Quotes]\n", 2);
 		g_shell.status = 2;
 		return (NULL);
 	}
