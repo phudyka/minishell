@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:55:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 10:24:11 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 10:36:16 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,13 @@ static void	ft_sequence(int *i, int len, char *parsed, const char *value)
 	{
 		if (value[*i] == '"')
 		{
-			(*i)++;
-			ft_dquote(parsed, &j, value + *i);
+			ft_dquote(parsed, &j, value + ++(*i));
 			if (value[*i] == '"')
 				(*i)++;
 		}
 		else if (value[*i] == '\'')
 		{
-			(*i)++;
-			ft_squote(parsed, &j, value + *i);
+			ft_squote(parsed, &j, value + ++(*i));
 			if (value[*i] == '\'')
 				(*i)++;
 		}

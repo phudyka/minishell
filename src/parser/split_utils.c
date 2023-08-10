@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 15:13:35 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:36:36 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_process(const char *s, char **strs, size_t *i)
 		s = next_word_start(s);
 		if (*s == '\'' || *s == '"')
 		{
-			qot = *s++;
+			qot = *s;
 			process_with_quote(&s, qot, strs, i);
 		}
 		else
