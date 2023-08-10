@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 17:07:09 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 10:19:05 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@ int	redirect_input(char **cmd, int i)
 	fd = open(cmd[i + 1], O_RDONLY);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_putstr_fd("open", 2);
+		g_shell.status = 2;
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
-		perror("dup2");
+		ft_putstr_fd("dup2", 2);
+		g_shell.status = 35;
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
@@ -42,12 +44,14 @@ int	redirect_output(char **cmd, int i, int append)
 		fd = open(cmd[i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
-		perror("open");
+		ft_putstr_fd("open", 2);
+		g_shell.status = 2;
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
-		perror("dup2");
+		ft_putstr_fd("dup2", 2);
+		g_shell.status = 35;
 		exit(EXIT_FAILURE);
 	}
 	close(fd);

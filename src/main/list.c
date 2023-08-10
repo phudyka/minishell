@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 21:08:24 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 12:04:34 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 10:14:35 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ t_env	*create_node(char *var)
 	}
 	else
 	{
-		perror("malloc");
+		ft_putstr_fd("malloc", 2);
+		g_shell.status = 12;
 		return (NULL);
 	}
 	return (node);

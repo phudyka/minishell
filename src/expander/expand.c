@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:53:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 15:23:27 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:11:56 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ char	*extract_variable(const char *str, size_t *index)
 		(*index)++;
 	var = ft_substr(str, start, *index - start);
 	if (!var)
-		perror("Error! : [Malloc Failure]");
+	{
+		ft_putstr_fd("Error! : [Malloc Failure]", 2);
+		g_shell.status = 12;
+	}
 	return (var);
 }
 

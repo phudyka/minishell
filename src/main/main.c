@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 15:25:27 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:15:08 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	init_data(char **envp)
 	}
 	else
 	{
-		perror("Error! [failed to init data]\n");
+		ft_putstr_fd("Error! [failed to init data]\n", 2);
 		exit(EXIT_FAILURE);
 	}
 }

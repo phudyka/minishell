@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 15:00:04 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:25:56 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,15 @@ char	**ft_split_buff(const char *s)
 	i = 0;
 	if (!s || !is_valid_quote(s))
 	{
-		perror("Error! : [Open Quotes]\n");
+		ft_putstr_fd("Error! : [Open Quotes]\n", 2);
+		g_shell.status = 2;
 		return (NULL);
 	}
 	strs = (char **)malloc(sizeof(char *) * (count_words_buff(s) + 1));
 	if (!strs)
 	{
-		perror("Error! [Malloc Split]\n");
+		ft_putstr_fd("Error! [Malloc Split]\n", 2);
+		g_shell.status = 12;
 		return (NULL);
 	}
 	ft_process(s, strs, &i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 15:32:22 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:16:16 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	exec_cmd(char *path, char **cmd, char **envp)
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("fork");
+		ft_putstr_fd("fork", 2);
+		g_shell.status = 35;
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)

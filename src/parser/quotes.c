@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:55:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 15:53:34 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:24:11 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	parse_quotes(t_token *tokens)
 	if (!parsed)
 	{
 		ft_putstr_fd("Error ! [malloc]", 2);
+		g_shell.status = 12;
 		return ;
 	}
 	ft_sequence(&i, len, parsed, tokens->value);

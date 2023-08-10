@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 03:20:12 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 10:19:40 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	ft_signals(void)
 	g_shell.termios = (struct termios *)malloc(sizeof(struct termios));
 	if (tcgetattr(STDIN_FILENO, g_shell.termios) == -1)
 	{
-		perror("Error! [tcgetattr]");
+		ft_putstr_fd("Error! [tcgetattr]", 2);
+		g_shell.status = 2;
 		exit(EXIT_FAILURE);
 	}
 	signal(SIGINT, ft_sigint);

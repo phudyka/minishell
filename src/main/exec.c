@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 12:02:47 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/10 10:13:52 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,8 @@ void	handle_builtin(t_data *data, t_env *env)
 	else if (pid > 0)
 		waitpid(pid, &status, 0);
 	else
-		perror("fork");
+	{
+		ft_putstr_fd("fork", 2);
+		g_shell.status = 35;
+	}
 }
