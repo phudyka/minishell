@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 19:55:04 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/10 20:40:04 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_sigquit(int sig)
 	if (g_shell.pid > 0)
 	{
 		kill(g_shell.pid, SIGQUIT);
-		ft_putstr_fd("^\\Quit (core dumped)", 2);
+		ft_putstr_fd("^\\Quit (core dumped)\n", 2);
 	}
 	else
 	{
