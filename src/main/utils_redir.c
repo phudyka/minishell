@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:32:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/11 04:12:50 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/11 04:17:54 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	create_tmp_file(char *delimiter)
 	while (read != -1)
 	{
 		if (heredoc_line(line, read, fd, delimiter))
-			break;
+			break ;
 		read = getline(&line, &len, stdin);
 	}
 	close(fd);
