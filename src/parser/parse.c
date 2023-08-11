@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 18:51:21 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/11 03:36:45 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	master_parser(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == QOT)
-			parse_quotes(tokens);
-		else if (tokens->type == PIP)
+		/*if (tokens->type == QOT)
+			parse_quotes(tokens);*/
+		if (tokens->type == PIP)
 			parse_pipes(tokens);
 		else if (tokens->type == RDR)
 			parse_redir(tokens);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:24:06 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 18:39:51 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/11 03:35:22 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_dquote(int *i, int *j, char *parsed, const char *value)
 		if (value[(*i)] == '$')
 		{
 			(*i)++;
-			env_var = ft_dollar(value + (*i), 0);
+			env_var = ft_dollar(value + (*i), 1);
 			if (env_var)
 			{
 				ft_strcpy(parsed + *j, env_var);
