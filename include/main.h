@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 15:19:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/11 04:14:16 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void		handle_variable(t_data *data, t_env **env);
 int			update_var(t_env *env, char **variable, char *cmd_arg);
 char		**get_variable(char *cmd_arg);
 void		create_tmp_file(char *delimiter);
-void		heredoc_line(char *line, ssize_t read, int fd, char *delimiter);
+int			heredoc_line(char *line, ssize_t read, int fd, char *delimiter);
 void		set_tmp_file_as_stdin(void);
 void		exit_error(char *msg);
 void		check_and_apply_redirection(char **cmd, int *i);

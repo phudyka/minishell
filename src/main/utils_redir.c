@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:32:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 17:46:05 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/11 04:12:50 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ void	create_tmp_file(char *delimiter)
 	read = getline(&line, &len, stdin);
 	while (read != -1)
 	{
-		heredoc_line(line, read, fd, delimiter);
+		if (heredoc_line(line, read, fd, delimiter))
+			break;
 		read = getline(&line, &len, stdin);
 	}
 	close(fd);
 	free(line);
 }
 
-void	heredoc_line(char *line, ssize_t read, int fd, char *delimiter)
+int	heredoc_line(char *line, ssize_t read, int fd, char *delimiter)
 {
 	if (read > 0 && line[read - 1] == '\n')
 	{
@@ -49,9 +50,10 @@ void	heredoc_line(char *line, ssize_t read, int fd, char *delimiter)
 		read--;
 	}
 	if (ft_strcmp(line, delimiter) == 0)
-		return ;
+		return (1);
 	line[read] = '\n';
 	write(fd, line, read + 1);
+	return (0);
 }
 
 void	set_tmp_file_as_stdin(void)
