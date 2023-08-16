@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 17:48:40 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:42:44 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	execute_builtin_with_redirection(t_data *data, t_env *env)
 	if (saved_stdin == -1 || saved_stdout == -1)
 	{
 		ft_putstr_fd("Error! [dup]\n", 2);
-		g_shell.status = 35;
+		//g_shell.status = 35;
 		return ;
 	}
 	redirections(data->cmd);
@@ -32,7 +32,7 @@ void	execute_builtin_with_redirection(t_data *data, t_env *env)
 		|| dup2(saved_stdout, STDOUT_FILENO) == -1)
 	{
 		ft_putstr_fd("Error! [dup2]\n", 2);
-		g_shell.status = 35;
+		//g_shell.status = 35;
 		return ;
 	}
 	close(saved_stdin);
@@ -46,25 +46,25 @@ void	child_process(char *path, char **cmd, char **envp)
 	if (execve(path, cmd, envp) == -1)
 	{
 		ft_putstr_fd("Error [execve]\n", 2);
-		g_shell.status = 127;
+		//g_shell.status = 127;
 		exit(EXIT_FAILURE);
 	}
 }
 
-void	parent_process(pid_t pid)
+void	parent_process(t_data *data, pid_t pid)
 {
 	int	status;
 
-	g_shell.pid = pid;
+	data->pid = pid;
 	if (waitpid(pid, &status, 0) == -1)
 	{
 		ft_putstr_fd("Error [waitpid]\n", 2);
-		g_shell.status = 128;
+		//g_shell.status = 128;
 		exit(EXIT_FAILURE);
 	}
-	g_shell.pid = 0;
+	data->pid = 0;
 	if (WIFEXITED(status))
-		g_shell.status = WEXITSTATUS(status);
+		data->status = WEXITSTATUS(status);
 }
 
 char	*ft_access(char **path, char **cmd)

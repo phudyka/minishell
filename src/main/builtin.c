@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 17:50:08 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:21:43 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	builtin_cd(char **path, t_env *env)
 		if (!home)
 		{
 			ft_putstr_fd("cd: $HOME not set\n", 2);
-			g_shell.status = 1;
+			//g_shell.status = 1;
 			return ;
 		}
 		chdir(home);
@@ -80,7 +80,7 @@ void	builtin_cd(char **path, t_env *env)
 		if (chdir(path[1]))
 		{
 			printf("cd: %s: No such file or directory\n", path[1]);
-			g_shell.status = 127;
+			//g_shell.status = 127;
 			return ;
 		}
 	}

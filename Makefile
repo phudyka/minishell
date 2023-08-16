@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
+#    By: kali <kali@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/08/10 15:31:34 by phudyka          ###   ########.fr        #
+#    Updated: 2023/08/16 03:58:24 by kali             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJS		=	$(SRCS:%.c=%.o)
 
 LIBFT		=	libft/libft.a
 
-CC			=	gcc
+CC			=	gcc -g
 ifeq ($(shell uname), Darwin)
 CFLAGS		=	-g -Wall -Werror -Wextra -I /Users/$(USER)/.brew/opt/readline/include
 LDFLAGS		=	-L /Users/$(USER)/.brew/opt/readline/lib -lreadline

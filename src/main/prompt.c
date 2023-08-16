@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 17:43:49 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/16 11:32:00 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	count_pipes(char *str)
 	return (pipes);
 }
 
-void	exec_cmd(char *path, char **cmd, char **envp)
+void	exec_cmd(t_data *data, char **envp)
 {
 	pid_t	pid;
 
@@ -46,13 +46,13 @@ void	exec_cmd(char *path, char **cmd, char **envp)
 	if (pid == -1)
 	{
 		ft_putstr_fd("Error [fork]\n", 2);
-		g_shell.status = 35;
+		data->status = 35;
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-		child_process(path, cmd, envp);
+		child_process(data->buffer, data->cmd, envp);
 	else
-		parent_process(pid);
+		parent_process(data, pid);
 }
 
 static void	execute_command(t_data *data, char **envp)
@@ -69,10 +69,10 @@ static void	execute_command(t_data *data, char **envp)
 	if (!data->buffer)
 	{
 		printf("%s : Command not found\n", data->cmd[0]);
-		g_shell.status = 127;
+		//g_shell.status = 127;
 		return ;
 	}
-	exec_cmd(data->buffer, data->cmd, envp);
+	exec_cmd(data, envp);
 }
 
 void	process_command(t_data *data, t_env *env)
@@ -100,25 +100,25 @@ void	process_command(t_data *data, t_env *env)
 	free_data(data);
 }
 
-void	ft_prompt(t_data *data, t_env *env)
+void	ft_prompt(t_data *data)
 {
 	int	pipes;
 
 	pipes = 0;
-	g_shell.pid = 0;
-	g_shell.status = 0;
-	while (!g_shell.exit_status)
+	data->pid = 0;
+	data->status = 0;
+	while (!data->exit_status)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);
 		if (!data->buffer)
 			break ;
 		add_history(data->buffer);
-		data->cmd = master_lexer(data->buffer);
+		data->cmd = master_lexer(data);
 		pipes = count_pipes(data->buffer);
 		if (pipes > 0)
-			execute_pipeline(data, env);
+			execute_pipeline(data, data->env);
 		else
-			process_command(data, env);
+			process_command(data, data->env);
 	}
 	clear_history();
 	if (data->path)

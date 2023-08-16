@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:14:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/11 03:36:14 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 04:31:50 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static size_t	calc_output_size(const char *str)
 	return (size);
 }
 
-char	*handle_dollar(const char *str, size_t *i, char *output, size_t *j)
+char	*handle_dollar(t_data *data, const char *str, size_t *i, char *output, size_t *j)
 {
 	char	*var_name;
 	size_t	k;
@@ -72,7 +72,7 @@ char	*handle_dollar(const char *str, size_t *i, char *output, size_t *j)
 	(*i)++;
 	k = get_var_len(str, *i);
 	var_name = ft_substr(str, *i, k);
-	env_value = get_from_env(var_name, g_shell.env);
+	env_value = get_from_env(var_name, data->env);
 	if (env_value)
 	{
 		update_values(output, j, env_value);
@@ -83,7 +83,7 @@ char	*handle_dollar(const char *str, size_t *i, char *output, size_t *j)
 	return (output);
 }
 
-char	*ft_dollar(const char *str, int sqot)
+char	*ft_dollar(t_data *data, const char *str, int sqot)
 {
 	size_t	output_size;
 	char	*output;
@@ -100,9 +100,9 @@ char	*ft_dollar(const char *str, int sqot)
 	{
 		if (str[i] == '$' && !sqot)
 		{
-			if (handle_mark(str, &i, output, &j))
+			if (handle_mark(data, str, &i, output, &j))
 				continue ;
-			handle_dollar(str, &i, output, &j);
+			handle_dollar(data, str, &i, output, &j);
 		}
 		else
 			output[j++] = str[i++];

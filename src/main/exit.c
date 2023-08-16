@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:10:27 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 03:39:33 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 11:34:23 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,29 @@ void	free_env(t_env *env)
 
 void	free_data(t_data *data)
 {
-	free(data->buffer);
-	free_array(data->cmd);
-	free_array(data->cmd_parts);
-	data->buffer = NULL;
-	data->cmd = NULL;
-	data->cmd_parts = NULL;
+    if (data->buffer)
+    {
+        free(data->buffer);
+        data->buffer = NULL;
+    }
+    if (data->cmd)
+    {
+        free_array(data->cmd);
+        data->cmd = NULL;
+    }
+    if (data->cmd_parts)
+    {
+        free_array(data->cmd_parts);
+        data->cmd_parts = NULL;
+    }
+    if (data->path)
+    {
+        free_array(data->path);
+        data->path = NULL;
+    }
 }
 
-void	free_shell(void)
+void	builtin_exit(t_data *data)
 {
-	if (g_shell.env)
-	{
-		free_env(g_shell.env);
-		g_shell.env = NULL;
-	}
-	if (g_shell.data)
-	{
-		free_data(g_shell.data);
-		g_shell.data = NULL;
-	}
-	if (g_shell.tokens)
-	{
-		free_tokens(g_shell.tokens);
-		g_shell.tokens = NULL;
-	}
-}
-
-void	builtin_exit(void)
-{
-	g_shell.exit_status = TRUE;
+	data->exit_status = TRUE;
 }

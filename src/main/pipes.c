@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 03:38:07 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 02:23:52 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	execute_pipeline(t_data *data, t_env *env)
 	{
 		if (is_exit_command(data->cmd_parts[i]))
 		{
-			g_shell.exit_status = TRUE;
+			//g_shell.exit_status = TRUE;
 			free_data(data);
 			return ;
 		}

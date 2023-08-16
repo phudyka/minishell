@@ -6,13 +6,13 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/11 03:41:00 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 11:31:27 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static char	**sub_start_to_end(const char *start, const char *end,
+static char	**sub_start_to_end(t_data *data, char *start, const char *end,
 		char **strs, size_t *i)
 {
 	char	*sub;
@@ -34,33 +34,34 @@ static char	**sub_start_to_end(const char *start, const char *end,
 		strs[(*i)++] = sub;
 	else
 	{
-		strs[(*i)++] = ft_dollar(sub, false);
+		strs[(*i)++] = ft_dollar(data, sub, false);
 		free(sub);
 	}
 	return (strs);
 }
 
-static void	process_without_quote(const char **s, char **strs, size_t *i)
+static void	process_without_quote(t_data *data, char **s, char **strs, size_t *i)
 {
-	const char	*start;
-	const char	*end;
+	char	*start;
+	char	*end;
 
 	start = *s;
 	*s = next_word_end(*s, 0);
 	end = *s;
 	if (start < end)
-		sub_start_to_end(start, end, strs, i);
+		sub_start_to_end(data, start, end, strs, i);
 }
 
-static void	process_single_quote(const char *start, char **strs, size_t *i)
+static void	process_single_quote(t_data *data, char *start, char **strs, size_t *i)
 {
 	const char	*end;
 
+	(void)data;
 	end = next_word_end(start, '\'') - 1;
 	strs[(*i)++] = ft_substr(start, 0, end - start);
 }
 
-static void	process_double_quote(const char *start, char **strs, size_t *i)
+static void	process_double_quote(t_data *data, char *start, char **strs, size_t *i)
 {
 	const char	*end;
 	char		*intermediate_sub;
@@ -69,30 +70,32 @@ static void	process_double_quote(const char *start, char **strs, size_t *i)
 	intermediate_sub = ft_substr(start, 0, end - start);
 	if (strchr(intermediate_sub, '$'))
 	{
-		strs[(*i)++] = ft_dollar(intermediate_sub, 0);
+		strs[(*i)++] = ft_dollar(data, intermediate_sub, 0);
 		free(intermediate_sub);
 	}
 	else
 		strs[(*i)++] = intermediate_sub;
 }
 
-void	ft_process(const char *s, char **strs, size_t *i)
+void	ft_process(t_data *data, char **strs, size_t *i)
 {
 	char	qot;
+    char    *buffer_copy;
 
-	while (*s)
+    buffer_copy = data->buffer;
+	while (*buffer_copy)
 	{
-		s = next_word_start(s);
-		if (*s == '\'' || *s == '"')
+		buffer_copy = next_word_start(buffer_copy);
+		if (*buffer_copy == '\'' || *buffer_copy == '"')
 		{
-			qot = *s++;
+			qot = *buffer_copy++;
 			if (qot == '\'')
-				process_single_quote(s, strs, i);
+				process_single_quote(data, buffer_copy, strs, i);
 			else
-				process_double_quote(s, strs, i);
-			s = next_word_end(s, qot);
+				process_double_quote(data, buffer_copy, strs, i);
+			buffer_copy = next_word_end(buffer_copy, qot);
 		}
 		else
-			process_without_quote(&s, strs, i);
+			process_without_quote(data, &buffer_copy, strs, i);
 	}
 }

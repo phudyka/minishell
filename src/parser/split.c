@@ -6,20 +6,20 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/11 04:19:10 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 03:09:14 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-const char	*next_word_start(const char *s)
+char	*next_word_start(char *s)
 {
 	while (*s && (*s == ' ' || *s == '\t' || *s == '\n'))
 		s++;
 	return (s);
 }
 
-const char	*next_word_end(const char *s, char qot_c)
+char	*next_word_end(char *s, char qot_c)
 {
 	if (qot_c)
 	{
@@ -36,7 +36,7 @@ const char	*next_word_end(const char *s, char qot_c)
 	return (s);
 }
 
-static int	is_valid_quote(const char *s)
+static int	is_valid_quote(char *s)
 {
 	char	qot_c;
 
@@ -52,7 +52,7 @@ static int	is_valid_quote(const char *s)
 	return (qot_c == 0);
 }
 
-static unsigned int	count_words_buff(const char *str)
+static unsigned int	count_words_buff(char *str)
 {
 	int		i;
 	char	qot_c;
@@ -71,26 +71,26 @@ static unsigned int	count_words_buff(const char *str)
 	return (i);
 }
 
-char	**ft_split_buff(const char *s)
+char	**ft_split_buff(t_data *data)
 {
 	size_t	i;
 	char	**strs;
 
 	i = 0;
-	if (!s || !is_valid_quote(s))
+	if (!data->buffer || !is_valid_quote(data->buffer))
 	{
 		ft_putstr_fd("Error! [Open Quotes]\n", 2);
-		g_shell.status = 2;
+		//g_shell.status = 2;
 		return (NULL);
 	}
-	strs = (char **)malloc(sizeof(char *) * (count_words_buff(s) + 1));
+	strs = (char **)malloc(sizeof(char *) * (count_words_buff(data->buffer) + 1));
 	if (!strs)
 	{
 		ft_putstr_fd("Error! [Malloc Split]\n", 2);
-		g_shell.status = 12;
+		//g_shell.status = 12;
 		return (NULL);
 	}
-	ft_process(s, strs, &i);
+	ft_process(data, strs, &i);
 	strs[i] = NULL;
 	return (strs);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 20:40:04 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/16 11:39:24 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	ft_sigquit(int sig)
 {
 	(void)sig;
-	if (g_shell.pid > 0)
+	if (received_signal > 0)
 	{
-		kill(g_shell.pid, SIGQUIT);
+		kill(received_signal, SIGQUIT);
 		ft_putstr_fd("^\\Quit (core dumped)\n", 2);
 	}
 	else
@@ -28,19 +28,19 @@ static void	ft_sigquit(int sig)
 	}
 }
 
-void	restore_termios(void)
+void	restore_termios(t_data *data)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, g_shell.termios);
-	free(g_shell.termios);
-	g_shell.termios = NULL;
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, data->termios);
+	free(data->termios);
+	data->termios = NULL;
 }
 
 static void	ft_sigint(int sig)
 {
 	(void)sig;
-	if (g_shell.pid > 0)
+	if (received_signal > 0)
 	{
-		kill(g_shell.pid, SIGINT);
+		kill(received_signal, SIGINT);
 		write(STDOUT_FILENO, "\n", 1);
 	}
 	else
@@ -55,29 +55,28 @@ static void	ft_sigint(int sig)
 static void	ft_sigterm(int sig)
 {
 	(void)sig;
-	if (g_shell.pid > 0)
-		kill(g_shell.pid, SIGTERM);
-	restore_termios();
+	if (received_signal > 0)
+		kill(received_signal, SIGTERM);
 	exit(EXIT_SUCCESS);
 }
 
-void	ft_signals(void)
+void	ft_signals(t_data *data)
 {
 	struct termios	new_termios;
 
-	g_shell.termios = (struct termios *)malloc(sizeof(struct termios));
-	if (tcgetattr(STDIN_FILENO, g_shell.termios) == -1)
+	data->termios = (struct termios *)malloc(sizeof(struct termios));
+	if (tcgetattr(STDIN_FILENO, data->termios) == -1)
 	{
 		ft_putstr_fd("Error! [tcgetattr]\n", 2);
-		g_shell.status = 2;
+		data->status = 2;
 		exit(EXIT_FAILURE);
 	}
-	new_termios = *g_shell.termios;
+	new_termios = *data->termios;
 	new_termios.c_lflag &= ~ECHOCTL;
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &new_termios) == -1)
 	{
 		ft_putstr_fd("Error! [tcsetattr]\n", 2);
-		g_shell.status = 2;
+		data->status = 2;
 		exit(EXIT_FAILURE);
 	}
 	signal(SIGINT, ft_sigint);

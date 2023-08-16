@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 17:42:15 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/16 04:45:36 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	exec_builtin(t_data *data, t_env *env)
 	else if ((ft_strcmp(data->cmd[0], "unset")) == 0)
 		unset_list(&env, data->cmd[1]);
 	else if ((ft_strcmp(data->cmd[0], "exit")) == 0)
-		builtin_exit();
+		builtin_exit(data);
 	else if ((ft_strcmp(data->cmd[0], "export")) == 0)
 		builtin_export(data, env);
 	else if ((ft_strcmp(data->cmd[0], "echo") == 0)
@@ -99,6 +99,6 @@ void	handle_builtin(t_data *data, t_env *env)
 	else
 	{
 		ft_putstr_fd("Error ! [fork]\n", 2);
-		g_shell.status = 35;
+		//g_shell.status = 35;
 	}
 }

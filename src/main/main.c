@@ -6,13 +6,13 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/10 10:15:08 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 11:15:59 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-t_shell	g_shell;
+int	received_signal = 0;
 
 static char	*ft_path(char **envp)
 {
@@ -62,15 +62,18 @@ char	**make_env(char **env, t_env *current)
 	return (env);
 }
 
-static void	init_data(char **envp)
+static void	init_data(t_data *data, char **envp)
 {
-	g_shell.data = malloc(sizeof(t_data));
-	if (g_shell.data)
+	//data = malloc(sizeof(t_data));
+	if (data)
 	{
-		g_shell.data->buffer = NULL;
-		g_shell.data->cmd = NULL;
-		g_shell.data->cmd_parts = NULL;
-		g_shell.data->path = get_path(envp);
+		data->status = 0;
+		data->exit_status = FALSE;
+		data->env = envp_to_list(envp);
+		data->buffer = NULL;
+		data->cmd = NULL;
+		data->cmd_parts = NULL;
+		data->path = get_path(envp);
 	}
 	else
 	{
@@ -81,15 +84,18 @@ static void	init_data(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_data	*data;
+
 	(void)argc;
 	(void)argv;
-	g_shell.status = 0;
-	g_shell.exit_status = FALSE;
-	g_shell.env = envp_to_list(envp);
-	init_data(envp);
-	ft_signals();
-	ft_prompt(g_shell.data, g_shell.env);
-	restore_termios();
+	data = malloc(sizeof(t_data));
+	init_data(data, envp);
+	ft_signals(data);
+	ft_prompt(data);
+	restore_termios(data);
+	free_env(data->env);
+	free_data(data);
+	free(data);
 	ft_putstr_fd("exit\n", 1);
 	return (0);
 }

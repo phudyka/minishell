@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:24:06 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/11 03:35:22 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 02:47:04 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parse_quotes(t_token *tokens)
 	if (!parsed)
 	{
 		ft_putstr_fd("Error! [malloc]\n", 2);
-		g_shell.status = 12;
+		//g_shell.status = 12;
 		return ;
 	}
 	ft_sequence(len, parsed, tokens->value);

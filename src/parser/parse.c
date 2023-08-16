@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/11 04:17:37 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/11 06:36:29 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ void	master_parser(t_token *tokens)
 {
 	while (tokens)
 	{
-		if (tokens->type == PIP)
+		if (tokens->type == QOT)
+			parse_quotes(tokens);
+		else if (tokens->type == PIP)
 			parse_pipes(tokens);
 		else if (tokens->type == RDR)
 			parse_redir(tokens);

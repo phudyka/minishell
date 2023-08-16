@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/11 04:14:16 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/16 06:11:28 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,7 @@
 # define RESET "\x1b[0m"
 # define GREEN "\x1b[32m"
 
-typedef enum token
-{
-	QOT,
-	RDR,
-	PIP,
-	STR,
-}	t_enum_token;
-
-typedef struct s_data
-{
-	int			fd[2];
-	int			fd_in;
-	char		**cmd;
-	char		**path;
-	char		**redir;
-	char		*buffer;
-	char		**cmd_parts;
-}	t_data;
+typedef struct s_data	t_data;
 
 typedef struct s_env
 {
@@ -77,22 +60,36 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_shell
+typedef struct s_data
 {
+	int				fd[2];
+	int				fd_in;
+	char			**cmd;
+	char			**path;
+	char			**redir;
+	char			*buffer;
+	char			**cmd_parts;
 	int				status;
 	char			**strs;
 	bool			exit_status;
 	pid_t			pid;
-	t_env			*env;
-	t_data			*data;
 	t_pipe			*pipes;
 	t_token			*tokens;
+	t_env			*env;
 	struct termios	*termios;
-}	t_shell;
+}	t_data;
 
-extern t_shell	g_shell;
+typedef enum token
+{
+	QOT,
+	RDR,
+	PIP,
+	STR,
+}	t_enum_token;
 
-void		ft_signals(void);
+extern int	received_signal;
+
+void		ft_signals(t_data *data);
 void		builtin_export(t_data *data, t_env *env);
 void		builtin_env(t_env *env, char **cmd);
 void		builtin_pwd(void);
@@ -101,10 +98,10 @@ void		exec_builtin(t_data *data, t_env *env);
 void		handle_builtin(t_data *data, t_env *env);
 void		builtin_cd(char **path, t_env *env);
 void		builtin_echo(t_data *data);
-void		builtin_exit(void);
+void		builtin_exit(t_data *data);
 t_env		*envp_to_list(char **envp);
 t_env		*create_node(char *var);
-char		**split_command(char *buff, int *len);
+char		**split_command(t_data *data, int *len);
 size_t		output_size(const char *str);
 void		free_recmd(char **cmd, int start, int len);
 char		*ft_reassign(t_token **tokens, char *cmd_arg);
@@ -123,18 +120,18 @@ void		add_token(t_token **tokens, t_token *new);
 void		parse_redir(t_token *tokens);
 void		parse_quotes(t_token *curr);
 char		*command_status(const char *input);
-char		*ft_dollar(const char *str, int sqot);
+char		*ft_dollar(t_data *data, const char *str, int sqot);
 void		master_parser(t_token *token);
-char		**master_lexer(char *buff);
+char		**master_lexer(t_data *data);
 int			ft_equal(const char *s);
-void		restore_termios(void);
-char		**ft_split_buff(char const *s);
+void		restore_termios(t_data *data);
+char		**ft_split_buff(t_data *data);
 char		*allocatenate(char *cmd, char *path);
 char		**get_path(char **envp);
-void		ft_prompt(t_data *data, t_env *env);
+void		ft_prompt(t_data *data);
 void		execute_pipeline(t_data *data, t_env *env);
 char		*ft_access(char **path, char **cmd);
-void		exec_cmd(char *path, char **cmd, char **envp);
+void		exec_cmd(t_data *data, char **envp);
 void		process_command(t_data *data, t_env *env);
 int			find_pipes(t_data *data);
 void		redirections(char **cmd);
@@ -151,7 +148,7 @@ int			ft_equal(const char *s);
 void		redirections(char **cmd);
 void		execute_builtin_with_redirection(t_data *data, t_env *env);
 char		*ft_strcpy(char *dest, const char *src);
-void		parent_process(pid_t pid);
+void		parent_process(t_data *data, pid_t pid);
 void		child_process(char *path, char **cmd, char **envp);
 void		check_path_and_set_status(char *path, char **cmd);
 char		**make_env(char **env, t_env *current);
@@ -170,7 +167,7 @@ int			redirect_input(char **cmd, int i);
 void		redirect_here_doc(char **cmd, int i);
 int			is_exit_command(char *cmd_part);
 void		update_values(char *output, size_t *j, char *value);
-char		*handle_mark(const char *str, size_t *i, char *output, size_t *j);
+char		*handle_mark(t_data *data, const char *str, size_t *i, char *output, size_t *j);
 size_t		get_var_len(const char *str, size_t i);
 
 #endif

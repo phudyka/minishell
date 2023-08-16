@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 11:58:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 18:52:58 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:59:36 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	free_recmd(char **cmd, int start, int len)
 	}
 }
 
-char	**split_command(char *buff, int *len)
+char	**split_command(t_data *data, int *len)
 {
 	char	**cmd;
 
 	*len = 0;
-	cmd = ft_split_buff(buff);
+	cmd = ft_split_buff(data);
 	if (!cmd)
 		return (NULL);
 	while (cmd[*len])

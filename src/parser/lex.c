@@ -74,14 +74,14 @@ static char	**reassign_cmd(t_token **tokens, char **cmd, int len)
 	return (cmd);
 }
 
-char	**master_lexer(char *buff)
+char	**master_lexer(t_data *data)
 {
 	int		len;
 	char	**cmd;
 	t_token	*tokens;
 	t_token	*start;
 
-	cmd = split_command(buff, &len);
+	cmd = split_command(data, &len);
 	if (!cmd)
 		return (NULL);
 	tokens = tokenize_command(cmd, len);

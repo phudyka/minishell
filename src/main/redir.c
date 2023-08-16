@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/10 17:44:41 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/16 02:24:26 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	redirect_input(char **cmd, int i)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error! [open]\n", 2);
-		g_shell.status = 2;
+		//g_shell.status = 2;
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		ft_putstr_fd("Error! [dup2]\n", 2);
-		g_shell.status = 35;
+		//g_shell.status = 35;
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
@@ -45,13 +45,13 @@ int	redirect_output(char **cmd, int i, int append)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error ![open]\n", 2);
-		g_shell.status = 2;
+		//g_shell.status = 2;
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		ft_putstr_fd("Error! [dup2]\n", 2);
-		g_shell.status = 35;
+		//g_shell.status = 35;
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
