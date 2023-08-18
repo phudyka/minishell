@@ -6,13 +6,13 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 18:24:06 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 02:47:04 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/18 02:26:35 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static void	ft_dquote(int *i, int *j, char *parsed, const char *value)
+/*static void	ft_dquote(int *i, int *j, char *parsed, const char *value)
 {
 	char	*env_var;
 
@@ -77,4 +77,4 @@ void	parse_quotes(t_token *tokens)
 	ft_sequence(len, parsed, tokens->value);
 	free(tokens->value);
 	tokens->value = parsed;
-}
+}*/
