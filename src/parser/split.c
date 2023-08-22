@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 03:09:14 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 03:52:28 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ char	*next_word_end(char *s, char qot_c)
 	{
 		while (*s && *s != qot_c)
 			s++;
+		if (*s == qot_c && qot_c == '\'')
+			return (s);
 		if (*s == qot_c)
 			s++;
 	}
 	else
-	{
 		while (*s && *s != ' ' && *s != '\t' && *s != '\'' && *s != '"')
 			s++;
-	}
 	return (s);
 }
 
@@ -74,20 +74,22 @@ static unsigned int	count_words_buff(char *str)
 char	**ft_split_buff(t_data *data)
 {
 	size_t	i;
+	size_t	word_count;
 	char	**strs;
 
 	i = 0;
 	if (!data->buffer || !is_valid_quote(data->buffer))
 	{
 		ft_putstr_fd("Error! [Open Quotes]\n", 2);
-		//g_shell.status = 2;
+		data->status = 2;
 		return (NULL);
 	}
-	strs = (char **)malloc(sizeof(char *) * (count_words_buff(data->buffer) + 1));
+	word_count = count_words_buff(data->buffer) + 1;
+	strs = (char **)malloc(sizeof(char *) * word_count);
 	if (!strs)
 	{
 		ft_putstr_fd("Error! [Malloc Split]\n", 2);
-		//g_shell.status = 12;
+		data->status = 12;
 		return (NULL);
 	}
 	ft_process(data, strs, &i);

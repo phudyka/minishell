@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/16 11:15:59 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/20 04:34:47 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_prompt(data);
 	restore_termios(data);
 	free_env(data->env);
-	free_data(data);
 	free(data);
 	ft_putstr_fd("exit\n", 1);
 	return (0);
