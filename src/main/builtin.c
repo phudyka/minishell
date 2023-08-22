@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/16 02:21:43 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 11:33:56 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,18 @@ void	builtin_pwd(void)
 	}
 }
 
-void	builtin_cd(char **path, t_env *env)
+void	builtin_cd(t_data *data, t_env *env)
 {
 	char	*home;
 
 	home = NULL;
-	if (!path[1])
+	if (!data->path[1])
 	{
 		home = get_from_env("HOME", env);
 		if (!home)
 		{
 			ft_putstr_fd("cd: $HOME not set\n", 2);
-			//g_shell.status = 1;
+			data->error->status = 1;
 			return ;
 		}
 		chdir(home);
@@ -77,10 +77,10 @@ void	builtin_cd(char **path, t_env *env)
 	}
 	else
 	{
-		if (chdir(path[1]))
+		if (chdir(data->path[1]))
 		{
-			printf("cd: %s: No such file or directory\n", path[1]);
-			//g_shell.status = 127;
+			printf("cd: %s: No such file or directory\n", data->path[1]);
+			data->error->status = 127;
 			return ;
 		}
 	}

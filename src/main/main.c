@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/20 04:34:47 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 16:11:15 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-int	received_signal = 0;
+int	g_signal = 0;
 
 static char	*ft_path(char **envp)
 {
@@ -64,12 +64,9 @@ char	**make_env(char **env, t_env *current)
 
 static void	init_data(t_data *data, char **envp)
 {
-	//data = malloc(sizeof(t_data));
 	if (data)
 	{
-		data->status = 0;
-		data->exit_status = FALSE;
-		data->env = envp_to_list(envp);
+		data->env = envp_to_list(data, envp);
 		data->buffer = NULL;
 		data->cmd = NULL;
 		data->cmd_parts = NULL;
@@ -85,16 +82,20 @@ static void	init_data(t_data *data, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
+	t_error	*error;
 
 	(void)argc;
 	(void)argv;
 	data = malloc(sizeof(t_data));
+	error = malloc(sizeof(t_error));
 	init_data(data, envp);
+	init_error(error);
 	ft_signals(data);
 	ft_prompt(data);
 	restore_termios(data);
 	free_env(data->env);
 	free(data);
+	free(error);
 	ft_putstr_fd("exit\n", 1);
 	return (0);
 }

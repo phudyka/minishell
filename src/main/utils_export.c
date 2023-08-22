@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:51:04 by kali              #+#    #+#             */
-/*   Updated: 2023/08/16 02:24:39 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 11:24:58 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-static void	add_new_variable(t_env **env, char *cmd_arg)
+static void	add_new_variable(t_data *data, t_env **env, char *cmd_arg)
 {
 	t_env	*new_variable;
 
-	new_variable = create_node(cmd_arg);
+	new_variable = create_node(data, cmd_arg);
 	add_node(env, new_variable);
 }
 
@@ -53,9 +53,9 @@ void	handle_variable(t_data *data, t_env **env)
 	if (variable)
 	{
 		if (!update_var(*env, variable, data->cmd[1]))
-			add_new_variable(env, data->cmd[1]);
+			add_new_variable(data, env, data->cmd[1]);
 		free_array(variable);
 	}
 	else
-		add_new_variable(env, data->cmd[1]);
+		add_new_variable(data, env, data->cmd[1]);
 }

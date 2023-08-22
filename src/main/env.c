@@ -6,13 +6,13 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:19:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/07/13 09:25:04 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/22 11:24:13 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-t_env	*envp_to_list(char **envp)
+t_env	*envp_to_list(t_data *data, char **envp)
 {
 	int		i;
 	t_env	*head;
@@ -21,7 +21,7 @@ t_env	*envp_to_list(char **envp)
 	head = NULL;
 	while (envp[i])
 	{
-		add_node(&head, create_node(envp[i]));
+		add_node(&head, create_node(data, envp[i]));
 		i++;
 	}
 	return (head);

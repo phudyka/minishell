@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kali <kali@student.42.fr>                  +#+  +:+       +#+         #
+#    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/08/16 03:58:24 by kali             ###   ########.fr        #
+#    Updated: 2023/08/22 12:13:41 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,7 @@ SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c	\
 				src/expander/utils_dollar.c src/expander/expand.c 		\
 				src/expander/dollar.c src/error/error.c 				\
 
-INCLUDE		=	include/main.h include/parse.h		\
-				include/error.h	include/expander.h 	\
+INCLUDE		=	include/main.h include/parse.h include/expander.h 		\
 
 OBJS		=	$(SRCS:%.c=%.o)	
 

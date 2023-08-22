@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:32:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/11 04:17:54 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 15:39:59 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,21 @@ void	set_tmp_file_as_stdin(void)
 	close(fd);
 }
 
-void	check_and_apply_redirection(char **cmd, int *i)
+void	check_and_apply_redirection(t_data *data, char **cmd, int *i)
 {
 	if (ft_strcmp(cmd[*i], "<") == 0)
 	{
-		redirect_input(cmd, *i);
+		redirect_input(data, cmd, *i);
 		remove_redirection(cmd, *i);
 	}
 	else if (ft_strcmp(cmd[*i], ">") == 0)
 	{
-		redirect_output(cmd, *i, 0);
+		redirect_output(data, cmd, *i, 0);
 		remove_redirection(cmd, *i);
 	}
 	else if (ft_strcmp(cmd[*i], ">>") == 0)
 	{
-		redirect_output(cmd, *i, 1);
+		redirect_output(data, cmd, *i, 1);
 		remove_redirection(cmd, *i);
 	}
 	else if (ft_strcmp(cmd[*i], "<<") == 0)

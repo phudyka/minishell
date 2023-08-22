@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:53:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 06:15:02 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 14:33:24 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*extract_variable(t_data *data, const char *str, size_t *index)
 	if (!var)
 	{
 		ft_putstr_fd("Error! : [Malloc Failure]\n", 2);
-		data->status = 12;
+		data->error->status = 12;
 	}
 	return (var);
 }
@@ -60,7 +60,7 @@ void	process_variable(t_data *data, const char *str, size_t *i, size_t *size)
 		*size = 0;
 		return ;
 	}
-	env = get_from_env(var, data->env);
+	env = getenv(var);
 	if (env)
 		*size += ft_strlen(env);
 	else

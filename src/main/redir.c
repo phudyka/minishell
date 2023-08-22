@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 02:24:26 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 15:40:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-int	redirect_input(char **cmd, int i)
+int	redirect_input(t_data *data, char **cmd, int i)
 {
 	int	fd;
 
@@ -21,20 +21,20 @@ int	redirect_input(char **cmd, int i)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error! [open]\n", 2);
-		//g_shell.status = 2;
+		data->error->status = 2;
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		ft_putstr_fd("Error! [dup2]\n", 2);
-		//g_shell.status = 35;
+		data->error->status = 35;
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
 	return (fd);
 }
 
-int	redirect_output(char **cmd, int i, int append)
+int	redirect_output(t_data *data, char **cmd, int i, int append)
 {
 	int	fd;
 
@@ -45,13 +45,13 @@ int	redirect_output(char **cmd, int i, int append)
 	if (fd < 0)
 	{
 		ft_putstr_fd("Error ![open]\n", 2);
-		//g_shell.status = 2;
+		data->error->status = 2;
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		ft_putstr_fd("Error! [dup2]\n", 2);
-		//g_shell.status = 35;
+		data->error->status = 35;
 		exit(EXIT_FAILURE);
 	}
 	close(fd);
@@ -84,11 +84,11 @@ void	redirect_here_doc(char **cmd, int i)
 	set_tmp_file_as_stdin();
 }
 
-void	redirections(char **cmd)
+void	redirections(t_data *data, char **cmd)
 {
 	int	i;
 
 	i = 0;
 	while (cmd[i])
-		check_and_apply_redirection(cmd, &i);
+		check_and_apply_redirection(data, cmd, &i);
 }

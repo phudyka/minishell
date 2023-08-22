@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 11:32:00 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 16:10:19 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ void	exec_cmd(t_data *data, char **envp)
 	if (pid == -1)
 	{
 		ft_putstr_fd("Error [fork]\n", 2);
-		data->status = 35;
+		data->error->status = 35;
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
-		child_process(data->buffer, data->cmd, envp);
+		child_process(data, envp);
 	else
 		parent_process(data, pid);
 }
@@ -69,7 +69,7 @@ static void	execute_command(t_data *data, char **envp)
 	if (!data->buffer)
 	{
 		printf("%s : Command not found\n", data->cmd[0]);
-		//g_shell.status = 127;
+		data->error->status = 127;
 		return ;
 	}
 	exec_cmd(data, envp);
@@ -106,8 +106,7 @@ void	ft_prompt(t_data *data)
 
 	pipes = 0;
 	data->pid = 0;
-	data->status = 0;
-	while (!data->exit_status)
+	while (!data->error->exit)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);
 		if (!data->buffer)

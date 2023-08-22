@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_dollar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 15:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 06:02:08 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 14:39:09 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*handle_mark(t_data *data, const char *str, char *output,
 
 	if (str[indices[0] + 1] == '?')
 	{
-		status_str = ft_itoa(data->status);
+		status_str = ft_itoa(data->error->status);
 		if (!status_str)
 			return (NULL);
 		ft_strcpy(output + indices[1], status_str);

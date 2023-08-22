@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 11:42:55 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 03:46:01 by kali             ###   ########.fr       */
+/*   Created: 2023/08/22 15:22:27 by phudyka           #+#    #+#             */
+/*   Updated: 2023/08/22 15:22:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/error.h"
+#include "../../include/main.h"
 
-static void	redir_error(int code)
+static void	redir_error(t_error *error, int code)
 {
 	if (code == 1)
 		perror("Error! [parse error near `\n']\n");
@@ -21,42 +21,53 @@ static void	redir_error(int code)
 	if (code == 3)
 	{
 		ft_putstr_fd("Error! [dup2 failed]\n", 2);
-		//g_shell.status = 37;
+		error->status = 37;
 	}
 	return ;
 }
 
-static void	quote_error(int code)
+static void	quote_error(t_error *error, int code)
 {
 	if (code)
 	{
 		ft_putstr_fd("Error! [quotes open]\n", 2);
-		//g_shell.status = 2;
+		error->status = 2;
 	}
 	return ;
 }
 
-static void	pipe_error(int code)
+static void	pipe_error(t_error *error, int code)
 {
 	if (code)
 	{
 		ft_putstr_fd("Error! [pipe]\n", 2);
-		//g_shell.status = 32;
+		error->status = 32;
 	}
 	return ;
 }
 
-void	ft_error(int token, int code)
+void	ft_error(t_error *error, int token, int code)
 {
 	if (token == PIP)
-		pipe_error(code);
+		pipe_error(error, code);
 	else if (token == RDR)
-		redir_error(code);
+		redir_error(error, code);
 	else if (token == QOT)
-		quote_error(code);
+		quote_error(error, code);
+	else if (token == MLC)
+	{
+		ft_putstr_fd("Error! [Malloc]\n", 2);
+		error->status = 12;
+	}
 	else
 	{
 		ft_putstr_fd("Error! [An unexpected behavior has occured]\n", 2);
-		//g_shell.status = 1;
+		error->status = 1;
 	}
+}
+
+void	init_error(t_error *error)
+{
+	error->status = 0;
+	error->exit = FALSE;
 }

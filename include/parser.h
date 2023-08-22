@@ -31,7 +31,7 @@ int				is_squote(char c);
 int				is_dquote(char c);
 void			free_array(char **tab);
 void			ft_process(t_data *data, char **strs, size_t *i);
-char		*next_word_start(char *s);
-char		*next_word_end(char *s, char qot_c);
+char			*next_word_start(char *s);
+char			*next_word_end(char *s, char qot_c);
 
 #endif

@@ -91,7 +91,7 @@ char	**master_lexer(t_data *data)
 		return (NULL);
 	}
 	start = tokens;
-	master_parser(tokens);
+	master_parser(data, tokens);
 	cmd = reassign_cmd(&tokens, cmd, len);
 	free_tokens(start);
 	if (!cmd)

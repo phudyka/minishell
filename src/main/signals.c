@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 11:39:24 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 15:37:14 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	ft_sigquit(int sig)
 {
 	(void)sig;
-	if (received_signal > 0)
+	if (g_signal > 0)
 	{
-		kill(received_signal, SIGQUIT);
+		kill(g_signal, SIGQUIT);
 		ft_putstr_fd("^\\Quit (core dumped)\n", 2);
 	}
 	else
@@ -38,9 +38,9 @@ void	restore_termios(t_data *data)
 static void	ft_sigint(int sig)
 {
 	(void)sig;
-	if (received_signal > 0)
+	if (g_signal > 0)
 	{
-		kill(received_signal, SIGINT);
+		kill(g_signal, SIGINT);
 		write(STDOUT_FILENO, "\n", 1);
 	}
 	else
@@ -55,8 +55,8 @@ static void	ft_sigint(int sig)
 static void	ft_sigterm(int sig)
 {
 	(void)sig;
-	if (received_signal > 0)
-		kill(received_signal, SIGTERM);
+	if (g_signal > 0)
+		kill(g_signal, SIGTERM);
 	exit(EXIT_SUCCESS);
 }
 
@@ -68,7 +68,7 @@ void	ft_signals(t_data *data)
 	if (tcgetattr(STDIN_FILENO, data->termios) == -1)
 	{
 		ft_putstr_fd("Error! [tcgetattr]\n", 2);
-		data->status = 2;
+		data->error->status = 2;
 		exit(EXIT_FAILURE);
 	}
 	new_termios = *data->termios;
@@ -76,7 +76,7 @@ void	ft_signals(t_data *data)
 	if (tcsetattr(STDIN_FILENO, TCSANOW, &new_termios) == -1)
 	{
 		ft_putstr_fd("Error! [tcsetattr]\n", 2);
-		data->status = 2;
+		data->error->status = 2;
 		exit(EXIT_FAILURE);
 	}
 	signal(SIGINT, ft_sigint);

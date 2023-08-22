@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 04:45:36 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 15:41:22 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void	exec_builtin(t_data *data, t_env *env)
 {
 	if ((ft_strcmp(data->cmd[0], "cd")) == 0)
-		builtin_cd(data->cmd, env);
+		builtin_cd(data, env);
 	else if ((ft_strcmp(data->cmd[0], "pwd")) == 0)
 		builtin_pwd();
 	else if ((ft_strcmp(data->cmd[0], "env")) == 0)
@@ -70,7 +70,7 @@ int	is_builtin(t_data *data)
 	all = set_cmd();
 	if (!all)
 	{
-		ft_error(MALLOC, 0);
+		ft_error(data->error, MLC, 0);
 		return (0);
 	}
 	while (all[++i])
@@ -90,7 +90,7 @@ void	handle_builtin(t_data *data, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
-		redirections(data->cmd);
+		redirections(data, data->cmd);
 		exec_builtin(data, env);
 		exit(EXIT_SUCCESS);
 	}
@@ -99,6 +99,6 @@ void	handle_builtin(t_data *data, t_env *env)
 	else
 	{
 		ft_putstr_fd("Error ! [fork]\n", 2);
-		//g_shell.status = 35;
+		data->error->status = 35;
 	}
 }

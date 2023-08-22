@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 21:08:24 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 02:23:10 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 11:23:21 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
 
-t_env	*create_node(char *var)
+t_env	*create_node(t_data *data, char *var)
 {
 	t_env	*node;
 
@@ -26,7 +26,7 @@ t_env	*create_node(char *var)
 	else
 	{
 		ft_putstr_fd("Error! [malloc]\n", 2);
-		//g_shell.status = 12;
+		data->error->status = 12;
 		return (NULL);
 	}
 	return (node);

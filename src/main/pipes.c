@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 02:23:52 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 11:50:11 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	handle_pipe_execution(t_data *data, t_env *env, int i)
 	t_pipe	*pipe_data;
 
 	if (pipe(data->fd) == -1)
-		ft_error(PIP, 1);
+		ft_error(data->error, PIP, 0);
 	free(data->buffer);
 	data->buffer = ft_strdup(data->cmd_parts[i]);
 	free_array(data->cmd);
@@ -70,7 +70,7 @@ static void	handle_pipe_execution(t_data *data, t_env *env, int i)
 			free_data(data);
 		if (pid == 0)
 			exec_pipe_child(pipe_data);
-		ft_error(PIP, 1);
+		ft_error(data->error, PIP, 0);
 	}
 	handle_parent_process(data);
 	free(pipe_data);
@@ -89,7 +89,7 @@ void	execute_pipeline(t_data *data, t_env *env)
 	{
 		if (is_exit_command(data->cmd_parts[i]))
 		{
-			//g_shell.exit_status = TRUE;
+			data->error->exit = TRUE;
 			free_data(data);
 			return ;
 		}

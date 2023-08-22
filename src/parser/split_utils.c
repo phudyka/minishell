@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 08:16:42 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 14:31:53 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	**sub_start_to_end(char *start, const char *end,
 	return (strs);
 }
 
-static void	process_without_quote(t_data *data, char **s,
+static void	no_quote(t_data *data, char **s,
 	char **strs, size_t *i)
 {
 	char	*start;
@@ -54,7 +54,7 @@ static void	process_without_quote(t_data *data, char **s,
 	*s = end;
 }
 
-static void	process_single_quote(char **s, char **strs, size_t *i)
+static void	s_quote(char **s, char **strs, size_t *i)
 {
 	char	*start;
 	char	*end;
@@ -65,7 +65,7 @@ static void	process_single_quote(char **s, char **strs, size_t *i)
 	*s = end;
 }
 
-static void	process_double_quote(t_data *data, char **s, char **strs, size_t *i)
+static void	d_quote(t_data *data, char **s, char **strs, size_t *i)
 {
 	char	*start;
 	char	*end;
@@ -95,10 +95,10 @@ void	ft_process(t_data *data, char **strs, size_t *i)
 	{
 		s = next_word_start(s);
 		if (*s == '\'')
-			process_single_quote(&s, strs, i);
+			s_quote(&s, strs, i);
 		else if (*s == '"')
-			process_double_quote(data, &s, strs, i);
+			d_quote(data, &s, strs, i);
 		else
-			process_without_quote(data, &s, strs, i);
+			no_quote(data, &s, strs, i);
 	}
 }

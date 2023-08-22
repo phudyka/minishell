@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:10:27 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 11:34:23 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 16:04:57 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,31 @@ void	free_env(t_env *env)
 
 void	free_data(t_data *data)
 {
-    if (data->buffer)
-    {
-        free(data->buffer);
-        data->buffer = NULL;
-    }
-    if (data->cmd)
-    {
-        free_array(data->cmd);
-        data->cmd = NULL;
-    }
-    if (data->cmd_parts)
-    {
-        free_array(data->cmd_parts);
-        data->cmd_parts = NULL;
-    }
-    if (data->path)
-    {
-        free_array(data->path);
-        data->path = NULL;
-    }
+	if (data->buffer)
+	{
+		free(data->buffer);
+		data->buffer = NULL;
+	}
+	if (data->cmd)
+	{
+		free_array(data->cmd);
+		data->cmd = NULL;
+	}
+	if (data->cmd_parts)
+	{
+		free_array(data->cmd_parts);
+		data->cmd_parts = NULL;
+	}
+	if (data->path)
+	{
+		free_array(data->path);
+		data->path = NULL;
+	}
+	free(data->error);
+	data->error = NULL;
 }
 
 void	builtin_exit(t_data *data)
 {
-	data->exit_status = TRUE;
+	data->error->exit = TRUE;
 }
