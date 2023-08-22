@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:10:27 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 16:04:57 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/22 11:58:08 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	free_data(t_data *data)
 		free_array(data->path);
 		data->path = NULL;
 	}
-	free(data->error);
-	data->error = NULL;
 }
 
 void	builtin_exit(t_data *data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/22 16:11:15 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/22 11:59:06 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ static void	init_data(t_data *data, char **envp)
 		data->cmd = NULL;
 		data->cmd_parts = NULL;
 		data->path = get_path(envp);
+		data->error = malloc(sizeof(t_error));
+		data->error->status = 0;
+		data->error->exit = 0;
 	}
 	else
 	{
@@ -82,20 +85,17 @@ static void	init_data(t_data *data, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	t_error	*error;
 
 	(void)argc;
 	(void)argv;
 	data = malloc(sizeof(t_data));
-	error = malloc(sizeof(t_error));
 	init_data(data, envp);
-	init_error(error);
 	ft_signals(data);
 	ft_prompt(data);
 	restore_termios(data);
 	free_env(data->env);
+	free(data->error);
 	free(data);
-	free(error);
 	ft_putstr_fd("exit\n", 1);
 	return (0);
 }
