@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:14:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 06:08:58 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 08:17:58 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static size_t	add_variable_size(t_data *data, const char *str, size_t *i)
 		size = 0;
 	*i += k;
 	free(var_name);
+	free(env_value);
 	return (size);
 }
 

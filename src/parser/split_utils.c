@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 05:02:43 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 08:16:42 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	process_single_quote(char **s, char **strs, size_t *i)
 	char	*end;
 
 	start = *s;
-	end = next_word_end(start + 1, '\'') + 1;
+	end = next_word_end(start + 1, '\'');
 	sub_start_to_end(start, end, strs, i);
 	*s = end;
 }
@@ -73,7 +73,7 @@ static void	process_double_quote(t_data *data, char **s, char **strs, size_t *i)
 	char	*expanded;
 
 	start = *s;
-	end = next_word_end(start + 1, '"') + 1;
+	end = next_word_end(start + 1, '"');
 	sub = ft_substr(start, 0, end - start);
 	if (ft_strchr(sub, '$'))
 	{
