@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:53:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 02:50:54 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 06:15:02 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_strcpy(char *dest, const char *src)
 	return (dest);
 }
 
-char	*extract_variable(const char *str, size_t *index)
+char	*extract_variable(t_data *data, const char *str, size_t *index)
 {
 	size_t	start;
 	char	*var;
@@ -44,23 +44,23 @@ char	*extract_variable(const char *str, size_t *index)
 	if (!var)
 	{
 		ft_putstr_fd("Error! : [Malloc Failure]\n", 2);
-		//g_shell.status = 12;
+		data->status = 12;
 	}
 	return (var);
 }
 
-void	process_variable(const char *str, size_t *i, size_t *size)
+void	process_variable(t_data *data, const char *str, size_t *i, size_t *size)
 {
 	char	*env;
 	char	*var;
 
-	var = extract_variable(str, i);
+	var = extract_variable(data, str, i);
 	if (!var)
 	{
 		*size = 0;
 		return ;
 	}
-	env = getenv(var);
+	env = get_from_env(var, data->env);
 	if (env)
 		*size += ft_strlen(env);
 	else
@@ -68,7 +68,7 @@ void	process_variable(const char *str, size_t *i, size_t *size)
 	free(var);
 }
 
-size_t	output_size(const char *str)
+size_t	output_size(t_data *data, const char *str)
 {
 	size_t	i;
 	size_t	size;
@@ -80,7 +80,7 @@ size_t	output_size(const char *str)
 		if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '_'))
 		{
 			i++;
-			process_variable(str, &i, &size);
+			process_variable(data, str, &i, &size);
 		}
 		else
 		{

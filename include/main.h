@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 22:21:15 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 05:03:11 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 06:11:56 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void		builtin_exit(t_data *data);
 t_env		*envp_to_list(char **envp);
 t_env		*create_node(char *var);
 char		**split_command(t_data *data, int *len);
-size_t		output_size(const char *str);
+size_t		output_size(t_data *data, const char *str);
 void		free_recmd(char **cmd, int start, int len);
 char		*ft_reassign(t_token **tokens, char *cmd_arg);
 void		print_list_token(t_token *env);
@@ -167,7 +167,6 @@ int			redirect_input(char **cmd, int i);
 void		redirect_here_doc(char **cmd, int i);
 int			is_exit_command(char *cmd_part);
 void		update_values(char *output, size_t *j, char *value);
-char		*handle_mark(t_data *data, const char *str, size_t *i, char *output, size_t *j);
-size_t		get_var_len(const char *str, size_t i);
+char		*handle_mark(t_data *data, const char *str, char *output, size_t indices[2]);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:14:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 05:01:26 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/22 06:08:58 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t	get_var_len(const char *str, size_t i)
 	return (len);
 }
 
-static size_t	add_variable_size(const char *str, size_t *i)
+static size_t	add_variable_size(t_data *data, const char *str, size_t *i)
 {
 	size_t	k;
 	char	*var_name;
@@ -31,7 +31,7 @@ static size_t	add_variable_size(const char *str, size_t *i)
 
 	k = get_var_len(str, *i + 1);
 	var_name = ft_substr(str, *i + 1, k);
-	env_value = getenv(var_name);
+	env_value = get_from_env(var_name, data->env);
 	if (env_value)
 		size = ft_strlen(env_value);
 	else
@@ -41,7 +41,7 @@ static size_t	add_variable_size(const char *str, size_t *i)
 	return (size);
 }
 
-static size_t	calc_output_size(const char *str)
+static size_t	calc_output_size(t_data *data, const char *str)
 {
 	size_t	i;
 	size_t	size;
@@ -51,7 +51,7 @@ static size_t	calc_output_size(const char *str)
 	while (str[i])
 	{
 		if (str[i] == '$' && (isalnum(str[i + 1]) || str[i + 1] == '_'))
-			size += add_variable_size(str, &i);
+			size += add_variable_size(data, str, &i);
 		else
 		{
 			size++;
@@ -61,25 +61,26 @@ static size_t	calc_output_size(const char *str)
 	return (size);
 }
 
-char	*handle_dollar(t_data *data, const char *str, size_t *i, char *output, size_t *j)
+char	*handle_dollar(t_data *data, const char *str,
+						char *output, size_t indices[2])
 {
 	char	*var_name;
 	size_t	k;
 	char	*env_value;
 
-	if (!(ft_isalnum(str[*i + 1]) || str[*i + 1] == '_'))
-		return (output[(*j)++] = str[(*i)++], output);
-	(*i)++;
-	k = get_var_len(str, *i);
-	var_name = ft_substr(str, *i, k);
+	if (!(ft_isalnum(str[indices[0] + 1]) || str[indices[0] + 1] == '_'))
+		return (output[indices[1]++] = str[indices[0]++], output);
+	indices[0]++;
+	k = get_var_len(str, indices[0]);
+	var_name = ft_substr(str, indices[0], k);
 	env_value = get_from_env(var_name, data->env);
 	if (env_value)
 	{
-		update_values(output, j, env_value);
+		update_values(output, &indices[1], env_value);
 		free(env_value);
 	}
 	free(var_name);
-	*i += k;
+	indices[0] += k;
 	return (output);
 }
 
@@ -87,26 +88,25 @@ char	*ft_dollar(t_data *data, const char *str, int sqot)
 {
 	size_t	output_size;
 	char	*output;
-	size_t	i;
-	size_t	j;
+	size_t	indices[2];
 
-	output_size = calc_output_size(str);
+	indices[0] = 0;
+	indices[1] = 0;
+	output_size = calc_output_size(data, str);
 	output = (char *)malloc(output_size + PATH_MAX);
 	if (!output)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i])
+	while (str[indices[0]])
 	{
-		if (str[i] == '$' && !sqot)
+		if (str[indices[0]] == '$' && !sqot)
 		{
-			if (handle_mark(data, str, &i, output, &j))
+			if (handle_mark(data, str, output, indices))
 				continue ;
-			handle_dollar(data, str, &i, output, &j);
+			handle_dollar(data, str, output, indices);
 		}
 		else
-			output[j++] = str[i++];
+			output[indices[1]++] = str[indices[0]++];
 	}
-	output[j] = '\0';
+	output[indices[1]] = '\0';
 	return (output);
 }
