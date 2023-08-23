@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/23 04:05:19 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/23 05:42:48 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,21 @@ static char	**sub_start_to_end(char *start, const char *end,
 	return (strs);
 }
 
-static void	no_quote(t_data *data, char **s, char **strs, size_t *i)
+static void no_quote(t_data *data, char **s, char **strs, size_t *i)
 {
-	char	*start;
-	char	*end;
-	char	*sub;
-	char	*expanded;
+	char *start;
+	char *end;
+	char *sub;
+	char *expanded;
 
 	start = *s;
-	end = next_word_end(*s, 0);
+	while (*start == ' ')
+		start++;
+	end = next_word_end(start, 0);
+	while (end > start && *(end - 1) == ' ')
+		end--;
+	if (start == end)
+		return;
 	sub = ft_substr(start, 0, end - start);
 	if (sub[0] == '$')
 	{
@@ -55,26 +61,26 @@ static void	no_quote(t_data *data, char **s, char **strs, size_t *i)
 	*s = end;
 }
 
-static void	s_quote(char **s, char **strs, size_t *i)
+static void s_quote(char **s, char **strs, size_t *i)
 {
-	char	*start;
-	char	*end;
+	char *start;
+	char *end;
 
-	start = *s;
-	end = next_word_end(start + 1, '\'');
+	start = *s + 1;
+	end = next_word_end(start, '\'');
 	sub_start_to_end(start, end, strs, i);
-	*s = end;
+	*s = end + 1;
 }
 
-static void	d_quote(t_data *data, char **s, char **strs, size_t *i)
+static void d_quote(t_data *data, char **s, char **strs, size_t *i)
 {
-	char	*start;
-	char	*end;
-	char	*sub;
-	char	*expanded;
+	char *start;
+	char *end;
+	char *sub;
+	char *expanded;
 
-	start = *s;
-	end = next_word_end(start + 1, '"');
+	start = *s + 1;
+	end = next_word_end(start, '"');
 	sub = ft_substr(start, 0, end - start);
 	if (ft_strchr(sub, '$'))
 	{
@@ -84,7 +90,7 @@ static void	d_quote(t_data *data, char **s, char **strs, size_t *i)
 	}
 	else
 		strs[(*i)++] = sub;
-	*s = end;
+	*s = end + 1;
 }
 
 void	ft_process(t_data *data, char **strs, size_t *i)

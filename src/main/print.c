@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:08:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 03:03:34 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/23 05:42:10 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,7 @@ void	print_arguments(t_data *data, int start_index)
 	while (data->cmd[i])
 	{
 		arg_len = ft_strlen(data->cmd[i]);
-		if (arg_len >= 2 && data->cmd[i][0] == '"'
-				&& data->cmd[i][arg_len - 1] == '"')
-			write(1, data->cmd[i] + 1, arg_len - 2);
-		else if (arg_len >= 2 && data->cmd[i][0] == '\''
-				&& data->cmd[i][arg_len - 1] == '\'')
-			write(1, data->cmd[i] + 1, arg_len - 2);
-		else
-			write(1, data->cmd[i], arg_len);
+		write(1, data->cmd[i], arg_len);
 		i++;
 		if (data->cmd[i])
 			write(1, " ", 1);

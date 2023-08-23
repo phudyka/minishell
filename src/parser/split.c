@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 12:05:26 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/23 05:45:04 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,15 @@ char	*next_word_start(char *s)
 	return (s);
 }
 
-char	*next_word_end(char *s, char qot_c)
+char *next_word_end(char *s, char qot_c)
 {
 	if (qot_c)
 	{
+		s++;
 		while (*s && *s != qot_c)
 			s++;
-		if (*s == qot_c && qot_c == '\'')
-			return (s);
 		if (*s == qot_c)
-			s++;
+			return (s);
 	}
 	else
 		while (*s && *s != ' ' && *s != '\t' && *s != '\'' && *s != '"')
@@ -52,21 +51,20 @@ static int	is_valid_quote(char *s)
 	return (qot_c == 0);
 }
 
-static unsigned int	count_words_buff(char *str)
+static unsigned int count_words_buff(char *str)
 {
-	int		i;
-	char	qot_c;
+	int i;
 
 	i = 0;
 	while (*str)
 	{
 		str = next_word_start(str);
+		if (*str)
+			i++;
 		if (*str == '\'' || *str == '"')
-			qot_c = *str++;
+			str = next_word_end(str, *str);
 		else
-			qot_c = 0;
-		str = next_word_end(str, qot_c);
-		i++;
+			str = next_word_end(str, 0);
 	}
 	return (i);
 }
@@ -94,5 +92,6 @@ char	**ft_split_buff(t_data *data)
 	}
 	ft_process(data, strs, &i);
 	strs[i] = NULL;
+	i = 0;
 	return (strs);
 }
