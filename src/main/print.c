@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:08:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/23 05:42:10 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/23 12:04:36 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	print_arguments(t_data *data, int start_index)
 		if (data->cmd[i])
 			write(1, " ", 1);
 	}
+	data->error->status = 0;
 }

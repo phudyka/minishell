@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/22 11:59:06 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/23 12:08:51 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-int	g_signal = 0;
+int	g_signal;
 
 static char	*ft_path(char **envp)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 11:55:18 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/23 12:09:09 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	ft_prompt(t_data *data)
 
 	pipes = 0;
 	data->pid = 0;
+	g_signal = 0;
 	while (!data->error->exit)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);
