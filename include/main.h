@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 16:09:16 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/23 04:03:51 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ typedef enum token
 	MLC,
 }	t_enum_token;
 
-extern int		g_signal;
+extern int			g_signal;
 
 void			ft_signals(t_data *data);
 void			builtin_export(t_data *data, t_env *env);
@@ -173,8 +173,8 @@ void			redirect_here_doc(char **cmd, int i);
 void			init_error(t_error *error);
 int				is_exit_command(char *cmd_part);
 void			update_values(char *output, size_t *j, char *value);
-char			*handle_mark(t_data *data, const char *str,
-					char *output, size_t indices[2]);
+bool			handle_mark(t_data *data, const char *str,
+					char *output, size_t *indices);
 size_t			get_var_len(const char *str, size_t i);
 
 #endif

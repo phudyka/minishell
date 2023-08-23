@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 14:31:53 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/23 04:05:19 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,27 @@ static char	**sub_start_to_end(char *start, const char *end,
 	return (strs);
 }
 
-static void	no_quote(t_data *data, char **s,
-	char **strs, size_t *i)
+static void	no_quote(t_data *data, char **s, char **strs, size_t *i)
 {
 	char	*start;
 	char	*end;
+	char	*sub;
 	char	*expanded;
 
 	start = *s;
 	end = next_word_end(*s, 0);
-	if (start[0] == '$')
+	sub = ft_substr(start, 0, end - start);
+	if (sub[0] == '$')
 	{
-		expanded = ft_dollar(data, start, 0);
+		expanded = ft_dollar(data, sub, 0);
 		if (expanded)
 		{
 			strs[(*i)++] = expanded;
-			*s += ft_strlen(start);
+			free(sub);
 		}
 	}
-	else if (start < end)
-		sub_start_to_end(start, end, strs, i);
+	else
+		strs[(*i)++] = sub;
 	*s = end;
 }
 

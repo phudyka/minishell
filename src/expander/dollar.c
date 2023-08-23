@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dollar.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 16:14:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 14:29:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/23 04:07:07 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static size_t	calc_output_size(t_data *data, const char *str)
 }
 
 char	*handle_dollar(t_data *data, const char *str,
-						char *output, size_t indices[2])
+						char *output, size_t *indices)
 {
 	char	*var_name;
 	size_t	k;
