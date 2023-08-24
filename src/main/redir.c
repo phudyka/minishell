@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 15:40:35 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/23 14:16:22 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,11 @@ void	redirections(t_data *data, char **cmd)
 	int	i;
 
 	i = 0;
+	if (is_exit_command(cmd[i]))
+	{
+		data->error->exit = TRUE;
+		return ;
+	}
 	while (cmd[i])
 		check_and_apply_redirection(data, cmd, &i);
 }

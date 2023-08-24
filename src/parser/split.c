@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/23 05:45:04 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/24 15:55:33 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,10 @@ char	*next_word_start(char *s)
 	return (s);
 }
 
-char *next_word_end(char *s, char qot_c)
+char	*next_word_end(char *s, char qot_c)
 {
 	if (qot_c)
 	{
-		s++;
 		while (*s && *s != qot_c)
 			s++;
 		if (*s == qot_c)
@@ -51,20 +50,21 @@ static int	is_valid_quote(char *s)
 	return (qot_c == 0);
 }
 
-static unsigned int count_words_buff(char *str)
+static unsigned int	count_words_buff(char *str)
 {
-	int i;
+	int		i;
+	char	qot_c;
 
 	i = 0;
 	while (*str)
 	{
 		str = next_word_start(str);
-		if (*str)
-			i++;
 		if (*str == '\'' || *str == '"')
-			str = next_word_end(str, *str);
+			qot_c = *str++;
 		else
-			str = next_word_end(str, 0);
+			qot_c = 0;
+		str = next_word_end(str, qot_c);
+		i++;
 	}
 	return (i);
 }
@@ -92,6 +92,5 @@ char	**ft_split_buff(t_data *data)
 	}
 	ft_process(data, strs, &i);
 	strs[i] = NULL;
-	i = 0;
 	return (strs);
 }

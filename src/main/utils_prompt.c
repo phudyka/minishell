@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/08/22 15:41:49 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/23 14:14:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ void	parent_process(t_data *data, pid_t pid)
 {
 	int	status;
 
-	data->pid = pid;
+	g_signal = pid;
 	if (waitpid(pid, &status, 0) == -1)
 	{
 		ft_putstr_fd("Error [waitpid]\n", 2);
 		data->error->status = 128;
 		exit(EXIT_FAILURE);
 	}
-	data->pid = 0;
+	g_signal = 0;
 	if (WIFEXITED(status))
 		data->error->status = WEXITSTATUS(status);
 }

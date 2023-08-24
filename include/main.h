@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/23 04:03:51 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/24 15:59:58 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 
 # define RESET "\x1b[0m"
 # define GREEN "\x1b[32m"
+
+extern int				g_signal;
 
 typedef struct s_data	t_data;
 
@@ -92,89 +94,87 @@ typedef enum token
 	MLC,
 }	t_enum_token;
 
-extern int			g_signal;
-
-void			ft_signals(t_data *data);
-void			builtin_export(t_data *data, t_env *env);
-void			builtin_env(t_env *env, char **cmd);
-void			builtin_pwd(void);
-int				is_builtin(t_data *data);
-void			exec_builtin(t_data *data, t_env *env);
-void			handle_builtin(t_data *data, t_env *env);
-void			builtin_cd(t_data *data, t_env *env);
-void			builtin_echo(t_data *data);
-void			builtin_exit(t_data *data);
-t_env			*envp_to_list(t_data *data, char **envp);
-t_env			*create_node(t_data *data, char *var);
-char			**split_command(t_data *data, int *len);
-size_t			output_size(t_data *data, const char *str);
-void			free_recmd(char **cmd, int start, int len);
-char			*ft_reassign(t_token **tokens, char *cmd_arg);
-void			print_list_token(t_token *env);
-void			print_list(t_env *env);
-void			print_list_export(t_env *env);
-void			unset_list(t_env **env, char *var);
-void			add_node(t_env **head, t_env *node);
-int				search_in_env(t_env *env, char *variable);
-char			*get_from_env(char *variable, t_env *env);
-char			**list_to_array(t_env *head);
-t_token			*new_token(t_enum_token type, char *value);
-t_token			*tokenize_command(char **cmd, int cmd_len);
-t_token			*tokenizer(char **cmd, int size, t_token *tokens);
-void			add_token(t_token **tokens, t_token *new);
-void			parse_redir(t_data *data, t_token *tokens);
-void			parse_quotes(t_data *data, t_token *curr);
-char			*command_status(const char *input);
-char			*ft_dollar(t_data *data, const char *str, int sqot);
-void			master_parser(t_data *data, t_token *token);
-char			**master_lexer(t_data *data);
-int				ft_equal(const char *s);
-void			restore_termios(t_data *data);
-char			**ft_split_buff(t_data *data);
-char			*allocatenate(char *cmd, char *path);
-char			**get_path(char **envp);
-void			ft_prompt(t_data *data);
-void			execute_pipeline(t_data *data, t_env *env);
-char			*ft_access(char **path, char **cmd);
-void			exec_cmd(t_data *data, char **envp);
-void			process_command(t_data *data, t_env *env);
-int				find_pipes(t_data *data);
-void			print_arguments(t_data *data, int start_index);
-void			free_array(char **tab);
-int				ft_pipex(char **cmd, char *path);
-void			free_env(t_env *env);
-void			free_data(t_data *data);
-void			free_pipe(t_pipe *pipe_data);
-void			free_buff(t_data *data);
-void			free_tokens(t_token *tokens);
-void			free_shell(void);
-int				ft_equal(const char *s);
-void			redirections(t_data *data, char **cmd);
-void			execute_builtin_with_redirection(t_data *data, t_env *env);
-char			*ft_strcpy(char *dest, const char *src);
-void			parent_process(t_data *data, pid_t pid);
-void			child_process(t_data *data, char **envp);
-void			check_path_and_set_status(char *path, char **cmd);
-char			**make_env(char **env, t_env *current);
-char			*ft_access(char **path, char **cmd);
-void			handle_variable(t_data *data, t_env **env);
-int				update_var(t_env *env, char **variable, char *cmd_arg);
-char			**get_variable(char *cmd_arg);
-void			create_tmp_file(char *delimiter);
-int				heredoc_line(char *line, ssize_t read, int fd, char *delimiter);
-void			set_tmp_file_as_stdin(void);
-void			exit_error(char *msg);
-void			ft_error(t_error *error, int token, int code);
-void			check_and_apply_redirection(t_data *data, char **cmd, int *i);
-void			remove_redirection(char **cmd, int start);
-int				redirect_output(t_data *data, char **cmd, int i, int append);
-int				redirect_input(t_data *data, char **cmd, int i);
-void			redirect_here_doc(char **cmd, int i);
-void			init_error(t_error *error);
-int				is_exit_command(char *cmd_part);
-void			update_values(char *output, size_t *j, char *value);
-bool			handle_mark(t_data *data, const char *str,
-					char *output, size_t *indices);
-size_t			get_var_len(const char *str, size_t i);
+void	ft_signals(t_data *data);
+void	builtin_export(t_data *data, t_env *env);
+void	builtin_env(t_env *env, char **cmd);
+void	builtin_pwd(void);
+int		is_builtin(t_data *data);
+void	exec_builtin(t_data *data, t_env *env);
+void	handle_builtin(t_data *data, t_env *env);
+void	builtin_cd(t_data *data, t_env *env);
+void	builtin_echo(t_data *data);
+void	builtin_exit(t_data *data);
+t_env	*envp_to_list(t_data *data, char **envp);
+t_env	*create_node(t_data *data, char *var);
+char	**split_command(t_data *data, int *len);
+size_t	output_size(t_data *data, const char *str);
+void	free_recmd(char **cmd, int start, int len);
+char	*ft_reassign(t_token **tokens, char *cmd_arg);
+void	print_list_token(t_token *env);
+void	print_list(t_env *env);
+void	print_list_export(t_env *env);
+void	unset_list(t_env **env, char *var);
+void	add_node(t_env **head, t_env *node);
+int		search_in_env(t_env *env, char *variable);
+char	*get_from_env(char *variable, t_env *env);
+char	**list_to_array(t_env *head);
+t_token	*new_token(t_enum_token type, char *value);
+t_token	*tokenize_command(char **cmd, int cmd_len);
+t_token	*tokenizer(char **cmd, int size, t_token *tokens);
+void	add_token(t_token **tokens, t_token *new);
+void	parse_redir(t_data *data, t_token *tokens);
+void	parse_quotes(t_data *data, t_token *curr);
+char	*command_status(const char *input);
+char	*ft_dollar(t_data *data, const char *str, int sqot);
+void	master_parser(t_data *data, t_token *token);
+char	**master_lexer(t_data *data);
+int		ft_equal(const char *s);
+void	restore_termios(t_data *data);
+char	**ft_split_buff(t_data *data);
+char	*allocatenate(char *cmd, char *path);
+char	**get_path(char **envp);
+void	ft_prompt(t_data *data);
+void	execute_pipeline(t_data *data, t_env *env);
+char	*ft_access(char **path, char **cmd);
+void	exec_cmd(t_data *data, char **envp);
+void	process_command(t_data *data, t_env *env);
+int		find_pipes(t_data *data);
+void	print_arguments(t_data *data, int start_index);
+void	free_array(char **tab);
+int		ft_pipex(char **cmd, char *path);
+void	free_env(t_env *env);
+void	free_data(t_data *data);
+void	free_pipe(t_pipe *pipe_data);
+void	free_buff(t_data *data);
+void	free_tokens(t_token *tokens);
+void	free_shell(void);
+int		ft_equal(const char *s);
+void	redirections(t_data *data, char **cmd);
+void	execute_builtin_with_redirection(t_data *data, t_env *env);
+char	*ft_strcpy(char *dest, const char *src);
+void	parent_process(t_data *data, pid_t pid);
+void	child_process(t_data *data, char **envp);
+void	check_path_and_set_status(char *path, char **cmd);
+char	**make_env(char **env, t_env *current);
+char	*ft_access(char **path, char **cmd);
+void	handle_variable(t_data *data, t_env **env);
+int		update_var(t_env *env, char **variable, char *cmd_arg);
+char	**get_variable(char *cmd_arg);
+void	create_tmp_file(char *delimiter);
+int		heredoc_line(char *line, ssize_t read, int fd, char *delimiter);
+void	set_tmp_file_as_stdin(void);
+void	exit_error(char *msg);
+void	ft_error(t_error *error, int token, int code);
+void	check_and_apply_redirection(t_data *data, char **cmd, int *i);
+void	remove_redirection(char **cmd, int start);
+int		redirect_output(t_data *data, char **cmd, int i, int append);
+int		redirect_input(t_data *data, char **cmd, int i);
+void	redirect_here_doc(char **cmd, int i);
+void	init_error(t_error *error);
+int		is_exit_command(char *cmd_part);
+void	update_values(char *output, size_t *j, char *value);
+bool	handle_mark(t_data *data, const char *str,
+			char *output, size_t *indices);
+size_t	get_var_len(const char *str, size_t i);
 
 #endif
