@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/10 12:25:33 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/24 16:01:52y phudyka          ###   ########.fr       */
+/*   Created: 2023/08/24 16:20:34 by phudyka           #+#    #+#             */
+/*   Updated: 2023/08/29 15:30:30 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,12 @@ static char	**sub_start_to_end(char *start, const char *end,
 	return (strs);
 }
 
-static void no_quote(t_data *data, char **s, char **strs, size_t *i)
+static void	no_quote(t_data *data, char **s, char **strs, size_t *i)
 {
-	char	*start;
-	char	*end;
 	char	*sub;
 	char	*expanded;
 
-	start = *s;
-	while (*start == ' ')
-		start++;
-	end = next_word_end(start, 0);
-	while (end > start && *(end - 1) == ' ')
-		end--;
-	if (start == end)
-		return;
-	sub = ft_substr(start, 0, end - start);
+	sub = get_trimmed_word(*s);
 	if (sub[0] == '$')
 	{
 		expanded = ft_dollar(data, sub, 0);
@@ -56,7 +46,7 @@ static void no_quote(t_data *data, char **s, char **strs, size_t *i)
 	}
 	else
 		strs[(*i)++] = sub;
-	*s = end;
+	*s = next_word_end(*s, 0);
 }
 
 static void	s_quote(char **s, char **strs, size_t *i)

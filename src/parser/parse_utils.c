@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:56:39 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/24 15:57:00 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/29 15:30:36 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,18 @@ void	free_recmd(char **cmd, int start, int len)
 		cmd[start] = NULL;
 		start++;
 	}
+}
+
+char	*get_trimmed_word(char *start)
+{
+	char	*end;
+
+	while (*start == ' ')
+		start++;
+	end = next_word_end(start, 0);
+	while (end > start && *(end - 1) == ' ')
+		end--;
+	return (ft_substr(start, 0, end - start));
 }
 
 char	**split_command(t_data *data, int *len)

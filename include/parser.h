@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:35:44 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/16 03:09:21 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/29 15:31:23 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int				is_space(char c);
 int				is_squote(char c);
 int				is_dquote(char c);
 void			free_array(char **tab);
+char			*get_trimmed_word(char *start);
 void			ft_process(t_data *data, char **strs, size_t *i);
 char			*next_word_start(char *s);
 char			*next_word_end(char *s, char qot_c);
