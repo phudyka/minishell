@@ -6,11 +6,29 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:08:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/24 16:19:18 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/30 16:22:31 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
+
+int	check_absolute(t_data *data)
+{
+	if (!ft_isalpha(data->cmd[0][1]))
+	{
+		printf("%s : Command not found\n", data->cmd[0]);
+		data->error->status = 127;
+		return (1);
+	}
+	if (access(data->cmd[0], F_OK | X_OK) == -1)
+	{
+		printf("%s : No such file or directory\n", data->cmd[0]);
+		data->error->status = 127;
+		return (1);
+	}
+	data->buffer = ft_strdup(data->cmd[0]);
+	return (0);
+}
 
 void	print_list_export(t_env *env)
 {

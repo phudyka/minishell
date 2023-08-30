@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 18:47:20 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/30 01:36:35 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/30 08:00:12 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static unsigned int	count_words_buff(char *str)
 	}
 	return (i);
 }
-
 
 char	**ft_split_buff(t_data *data)
 {

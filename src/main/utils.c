@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 10:18:00 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/09 12:54:17 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/30 08:05:12 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,25 @@ char	*allocatenate(char *cmd, char *path)
 	ft_strlcpy(exe, path, ft_strlen(path) + 1);
 	ft_strlcat(exe, cmd, len + ft_strlen(cmd) + 1);
 	return (exe);
+}
+
+void	process_words(char *s, char **strs, size_t *i, char **temp)
+{
+	char	*merged;
+
+	if (*temp)
+	{
+		merged = ft_strjoin(*temp, strs[*i - 1]);
+		free(strs[*i - 1]);
+		strs[*i - 1] = merged;
+		*temp = NULL;
+	}
+	if (*s && *s != ' ' && *s != '\t')
+	{
+		*temp = strs[*i - 1];
+		strs[*i - 1] = NULL;
+		(*i)--;
+	}
 }
 
 void	free_buff(t_data *data)

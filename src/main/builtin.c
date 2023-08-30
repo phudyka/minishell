@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/30 01:39:55 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/30 16:45:22 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	builtin_env(t_env *env, char **cmd)
 {
 	if (!cmd[1])
 		print_list(env);
-	else
+	else if (cmd[1])
 		printf("env: invalid option -- '%s'\n", cmd[1]);
 }
 
@@ -63,7 +63,7 @@ void	builtin_cd(t_data *data, t_env *env)
 	char	*home;
 
 	home = NULL;
-	if (!data->path[1])
+	if (!data->path || !data->path[1])
 	{
 		home = get_from_env("HOME", env);
 		if (!home)

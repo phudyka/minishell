@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   split_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 16:20:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/30 01:36:19 by kali             ###   ########.fr       */
+/*   Updated: 2023/08/30 08:18:36 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static void process_substring(char **s, char **strs, char **sub, size_t *i)
+static void	process_substring(char **s, char **strs, char **sub, size_t *i)
 {
-	char *end;
-	char *temp_sub;
-	char *merged_str;
+	char	*end;
+	char	*temp_sub;
+	char	*merged_str;
 
 	end = next_word_end(*s, 0);
 	temp_sub = ft_substr(*s, 0, end - *s);
@@ -29,7 +29,6 @@ static void process_substring(char **s, char **strs, char **sub, size_t *i)
 	}
 	strs[(*i)++] = *sub;
 }
-
 
 static void	no_quote(t_data *data, char **s, char **strs, size_t *i)
 {
@@ -69,18 +68,20 @@ static void	s_quote(char **s, char **strs, size_t *i)
 
 static void	d_quote(t_data *data, char **s, char **strs, size_t *i)
 {
+	char	*sub;
 	char	*start;
 	char	*end;
-	char	*sub;
+	char	*expanded;
 
 	start = *s + 1;
 	end = next_word_end(start, '"');
 	sub = ft_substr(start, 0, end - start);
 	if (ft_strchr(sub, '$'))
 	{
-		char *expanded = ft_dollar(data, sub, 0);
+		expanded = ft_dollar(data, sub, 0);
 		free(sub);
-		sub = expanded ? expanded : sub;
+		if (expanded)
+			sub = expanded;
 	}
 	*s = end + 1;
 	if (sub && **s && **s != ' ' && **s != '\t')
@@ -89,32 +90,13 @@ static void	d_quote(t_data *data, char **s, char **strs, size_t *i)
 		strs[(*i)++] = sub;
 }
 
-static void	process_words(char *s, char **strs, size_t *i, char **temp)
-{
-	char *merged;
-
-	if (*temp)
-	{
-		merged = ft_strjoin(*temp, strs[*i - 1]);
-		free(strs[*i - 1]);
-		strs[*i - 1] = merged;
-		*temp = NULL;
-	}
-	if (*s && *s != ' ' && *s != '\t')
-	{
-		*temp = strs[*i - 1];
-		strs[*i - 1] = NULL;
-		(*i)--;
-	}
-}
-
-void		ft_process(t_data *data, char **strs, size_t *i)
+void	ft_process(t_data *data, char **strs, size_t *i)
 {
 	char	*s;
 	char	*temp;
 
-	s = data->buffer;
 	temp = NULL;
+	s = data->buffer;
 	while (*s)
 	{
 		s = next_word_start(s);

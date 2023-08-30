@@ -6,11 +6,36 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 11:59:49 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/30 11:17:10 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
+
+int	count_pipes(char *str)
+{
+	int		pipes;
+	int		i;
+	char	q;
+
+	pipes = 0;
+	i = 0;
+	q = 0;
+	while (str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			if (!q)
+				q = str[i];
+			else if (q == str[i])
+				q = 0;
+		}
+		else if (!q && str[i] == '|')
+			pipes++;
+		i++;
+	}
+	return (pipes);
+}
 
 static int	next_tokens(t_data *data, t_token *prev, t_token *curr)
 {

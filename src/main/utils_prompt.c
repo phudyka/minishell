@@ -6,12 +6,26 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/08/23 14:14:17 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/30 10:35:11 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
+
+int	is_only_space(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] && cmd[i] != ' ' && cmd[i] != '\t' && cmd[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 void	execute_builtin_with_redirection(t_data *data, t_env *env)
 {

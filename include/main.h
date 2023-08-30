@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/24 15:59:58 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/30 15:46:44 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct s_data
 	char			*buffer;
 	char			**cmd_parts;
 	char			**strs;
-	pid_t			pid;
 	t_pipe			*pipes;
 	t_token			*tokens;
 	t_env			*env;
@@ -98,6 +97,8 @@ void	ft_signals(t_data *data);
 void	builtin_export(t_data *data, t_env *env);
 void	builtin_env(t_env *env, char **cmd);
 void	builtin_pwd(void);
+int		is_only_space(char *cmd);
+int		check_absolute(t_data *data);
 int		is_builtin(t_data *data);
 void	exec_builtin(t_data *data, t_env *env);
 void	handle_builtin(t_data *data, t_env *env);
