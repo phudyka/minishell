@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/24 15:56:39 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/29 15:30:36 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 01:54:19 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,15 @@ char	*get_trimmed_word(char *start)
 char	**split_command(t_data *data, int *len)
 {
 	char	**cmd;
+	char	*temp;
 
 	*len = 0;
+	temp = ft_strtrim(data->buffer, " ", "\t");
+	if (temp)
+	{
+		free(data->buffer);
+		data->buffer = temp;
+	}
 	cmd = ft_split_buff(data);
 	if (!cmd)
 		return (NULL);
