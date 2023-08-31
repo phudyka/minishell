@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:32:23 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 11:58:15 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 15:47:02 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	parse_redir(t_data *data, t_token *tokens)
 			if (!is_str_type(prev) || !is_str_type(next))
 			{
 				handle_error(data, !is_str_type(prev));
+				printf("syntax error near unexpected token `newline'\n");
 				return ;
 			}
 			set_redir_file(prev, tokens, next);

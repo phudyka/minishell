@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/08/31 14:44:22 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 15:25:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	builtin_cd(t_data *data, t_env *env)
 	char	*home;
 
 	home = NULL;
-	if (!data->path[1])
+	if (!data->cmd || !data->cmd[1])
 	{
 		home = get_from_env("HOME", env);
 		if (!home)
@@ -77,9 +77,9 @@ void	builtin_cd(t_data *data, t_env *env)
 	}
 	else
 	{
-		if (chdir(data->path[1]))
+		if (chdir(data->cmd[1]))
 		{
-			printf("cd: %s: No such file or directory\n", data->path[1]);
+			printf("cd: %s: No such file or directory\n", data->cmd[1]);
 			data->error->status = 127;
 			return ;
 		}

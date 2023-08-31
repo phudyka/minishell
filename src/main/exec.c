@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 15:41:22 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 15:19:34 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 void	exec_builtin(t_data *data, t_env *env)
 {
 	if ((ft_strcmp(data->cmd[0], "cd")) == 0)
-		builtin_cd(data, env);
-	else if ((ft_strcmp(data->cmd[0], "pwd")) == 0)
+	 	builtin_cd(data, env);
+	 else if ((ft_strcmp(data->cmd[0], "pwd")) == 0)
 		builtin_pwd();
 	else if ((ft_strcmp(data->cmd[0], "env")) == 0)
 		builtin_env(env, data->cmd);

@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/31 13:58:59 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 15:36:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,11 @@ static void	execute_command(t_data *data, char **envp)
 		data->buffer = ft_access(data->path, data->cmd);
 	if (!data->buffer)
 	{
-		printf("%s : Command not found\n", data->cmd[0]);
-		data->error->status = 127;
+		if (data->error->status != 1)
+		{
+			printf("%s : Command not found\n", data->cmd[0]);
+			data->error->status = 127;
+		}
 		return ;
 	}
 	exec_cmd(data, envp);
