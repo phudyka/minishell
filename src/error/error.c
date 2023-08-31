@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:22:27 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 15:22:30 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 11:50:49 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 static void	redir_error(t_error *error, int code)
 {
 	if (code == 1)
-		perror("Error! [parse error near `\n']\n");
+	{
+		perror("Error! [parse error near `newline']\n");
+		error->status = 2;
+	}
 	if (code == 2)
+	{
 		perror("Error! [open failed]\n");
+		error->status = 1;
+	}
 	if (code == 3)
 	{
 		ft_putstr_fd("Error! [dup2 failed]\n", 2);

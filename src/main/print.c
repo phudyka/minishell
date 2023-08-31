@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:08:50 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/30 16:22:31 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 12:01:08 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	check_absolute(t_data *data)
 {
 	if (!ft_isalpha(data->cmd[0][1]))
 	{
-		printf("%s : Command not found\n", data->cmd[0]);
-		data->error->status = 127;
+		printf("/: Is a directory\n");
+		data->error->status = 126;
 		return (1);
 	}
 	if (access(data->cmd[0], F_OK | X_OK) == -1)

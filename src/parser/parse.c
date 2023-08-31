@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/30 11:17:10 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 11:48:43 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,11 @@ static void	parse_pipes(t_data *data, t_token *tokens)
 		if (tokens->type == PIP)
 		{
 			if (!next_tokens(data, prev, tokens->next))
+			{
+				printf("syntax error near unexpected token `|'\n");
+				data->error->status = 2;
 				return ;
+			}
 			str_token(data, tokens);
 		}
 		prev = tokens;

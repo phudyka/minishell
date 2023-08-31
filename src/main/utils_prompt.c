@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/08/30 10:35:11 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 11:51:40 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	execute_builtin_with_redirection(t_data *data, t_env *env)
 	if (saved_stdin == -1 || saved_stdout == -1)
 	{
 		ft_putstr_fd("Error! [dup]\n", 2);
-		data->error->status = 35;
+		data->error->status = 1;
 		return ;
 	}
 	redirections(data, data->cmd);
@@ -46,7 +46,7 @@ void	execute_builtin_with_redirection(t_data *data, t_env *env)
 		|| dup2(saved_stdout, STDOUT_FILENO) == -1)
 	{
 		ft_putstr_fd("Error! [dup2]\n", 2);
-		data->error->status = 35;
+		data->error->status = 1;
 		return ;
 	}
 	close(saved_stdin);
@@ -59,7 +59,7 @@ void	child_process(t_data *data, char **envp)
 	redirections(data, data->cmd);
 	if (execve(data->buffer, data->cmd, envp) == -1)
 	{
-		ft_putstr_fd("Error [execve]\n", 2);
+		printf("%s : Command not found\n", data->cmd[0]);
 		data->error->status = 127;
 		exit(EXIT_FAILURE);
 	}
