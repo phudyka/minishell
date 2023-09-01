@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/31 15:48:26 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/01 01:23:24 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ int	redirect_output(t_data *data, char **cmd, int i, int append)
 {
 	int	fd;
 
+	if (!cmd[i + 1])
+	{
+		data->error->status = 2;
+		return (0);
+	}
 	if (append)
 		fd = open(cmd[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
@@ -60,19 +65,31 @@ int	redirect_output(t_data *data, char **cmd, int i, int append)
 
 void	remove_redirection(char **cmd, int start)
 {
-	free(cmd[start]);
-	free(cmd[start + 1]);
-	if (!cmd[start + 2])
-		cmd[start] = NULL;
-	else
+	int	i;
+	int	len;
+
+	if (cmd[start])
 	{
-		while (cmd[start + 2])
-		{
-			cmd[start] = cmd[start + 2];
-			start++;
-		}
+		free(cmd[start]);
 		cmd[start] = NULL;
 	}
+	if (cmd[start + 1])
+	{
+		free(cmd[start + 1]);
+		cmd[start + 1] = NULL;
+	}
+	len = 0;
+	while (cmd[len])
+		len++;
+	if (start + 2 >= len)
+		return ;
+	i = start;
+	while (cmd[i + 2])
+	{
+		cmd[i] = cmd[i + 2];
+		i++;
+	}
+	cmd[i] = NULL;
 }
 
 void	redirect_here_doc(char **cmd, int i)
