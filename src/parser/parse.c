@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/31 16:27:01 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/02 06:59:16 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ int	count_pipes(char *str)
 	return (pipes);
 }
 
-static int	next_tokens(t_data *data, t_token *prev, t_token *curr)
+static int	next_tokens(t_data *data, t_token *curr)
 {
-	if (!prev || prev->type == PIP || !curr || curr->type == PIP)
+	if (!curr || curr->type == PIP)
 	{
 		ft_error(data->error, PIP, 0);
 		return (0);
@@ -71,13 +71,14 @@ static void	parse_pipes(t_data *data, t_token *tokens)
 	{
 		if (tokens->type == PIP)
 		{
-			if (!next_tokens(data, prev, tokens->next))
+			if (!next_tokens(data, tokens->next))
 			{
 				printf("syntax error near unexpected token `|'\n");
 				data->error->status = 2;
 				return ;
 			}
-			str_token(data, tokens);
+			else if (prev)
+				str_token(data, tokens);
 		}
 		prev = tokens;
 		tokens = tokens->next;
