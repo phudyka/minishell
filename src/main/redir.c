@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/01 01:23:24 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/02 04:58:26 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	redirect_input(t_data *data, char **cmd, int i)
 {
 	int	fd;
 
+	if (!cmd[i + 1])
+	{
+		data->error->status = 2;
+		return (0);
+	}
 	fd = open(cmd[i + 1], O_RDONLY);
 	if (fd < 0)
 	{
@@ -96,6 +101,11 @@ void	redirect_here_doc(char **cmd, int i)
 {
 	char	*delimiter;
 
+	if (!cmd[i + 1])
+	{
+		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+		return ;
+	}
 	delimiter = cmd[i + 1];
 	create_tmp_file(delimiter);
 	set_tmp_file_as_stdin();
