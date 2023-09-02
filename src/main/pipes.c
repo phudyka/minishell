@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 11:50:11 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/02 09:19:18 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	execute_pipeline(t_data *data, t_env *env)
 	pid_t	pid;
 
 	data->fd_in = 0;
-	data->cmd_parts = ft_split(data->buffer, '|');
+	data->cmd_parts = group_by_pipes(data->cmd);
 	i = 0;
 	while (data->cmd_parts[i])
 	{

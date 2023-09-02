@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/31 15:41:25 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/02 09:19:39 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,5 +177,9 @@ void	update_values(char *output, size_t *j, char *value);
 bool	handle_mark(t_data *data, const char *str,
 			char *output, size_t *indices);
 size_t	get_var_len(const char *str, size_t i);
+void	handle_segment(char **input, char **result, int *i, int *j);
+void	add_result(char **result, char *temp, int *j);
+char	*concat_strings(char *s1, char *s2);
+char	**group_by_pipes(char **input);
 
 #endif

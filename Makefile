@@ -6,7 +6,7 @@
 #    By: kali <kali@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/08/23 05:43:39 by kali             ###   ########.fr        #
+#    Updated: 2023/09/02 09:18:38 by kali             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c	\
 				src/parser/split.c src/parser/split_utils.c 			\
 				src/expander/utils_dollar.c src/expander/expand.c 		\
 				src/expander/dollar.c src/error/error.c 				\
+				src/main/utils_pipes.c                                  \
 
 INCLUDE		=	include/main.h include/parse.h include/expander.h 		\
 
