@@ -3,15 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/02 09:15:20 by kali              #+#    #+#             */
-/*   Updated: 2023/09/02 09:23:39 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/02 15:32:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
+
+static char	*ft_strcat(char *dest, const char *src)
+{
+	char	*result;
+
+	result = dest;
+	while (*dest)
+		dest++;
+	while (*src)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
+	return (result);
+}
 
 char	*concat_strings(char *s1, char *s2)
 {
@@ -21,8 +38,8 @@ char	*concat_strings(char *s1, char *s2)
 	if (!new_str)
 		return (NULL);
 	ft_strcpy(new_str, s1);
-	strcat(new_str, " ");
-	strcat(new_str, s2);
+	ft_strcat(new_str, " ");
+	ft_strcat(new_str, s2);
 	free(s1);
 	return (new_str);
 }

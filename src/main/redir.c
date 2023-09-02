@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/02 04:58:26 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/02 16:01:24 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	redirect_input(t_data *data, char **cmd, int i)
 	{
 		ft_putstr_fd("Error! [open]\n", 2);
 		data->error->status = 2;
-		exit(EXIT_FAILURE);
+		return (0);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
 	{
 		ft_putstr_fd("Error! [dup2]\n", 2);
 		data->error->status = 35;
-		exit(EXIT_FAILURE);
+		return (0);
 	}
 	close(fd);
 	return (fd);
