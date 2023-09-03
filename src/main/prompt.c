@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/31 15:36:37 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/03 09:51:47 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ static void	master_commander(t_data *data)
 
 	pipes = 0;
 	data->cmd = master_lexer(data);
+	if (data->cmd == NULL)
+	{
+		free_array(data->cmd);
+		free(data->buffer);
+		return ;
+	}
 	pipes = count_pipes(data->buffer);
 	if (pipes > 0)
 		execute_pipeline(data, data->env);

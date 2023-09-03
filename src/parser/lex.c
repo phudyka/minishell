@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:37:44 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/02 16:14:33 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/03 09:49:11 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,31 +74,40 @@ static char	**reassign_cmd(t_token **tokens, char **cmd, int len)
 	return (cmd);
 }
 
+char	**finalize_cmd(t_token **tokens, t_token *start, char **cmd, int len)
+{
+	char	**new_cmd;
+
+	new_cmd = reassign_cmd(tokens, cmd, len);
+	free_tokens(start);
+	if (!new_cmd)
+		free_array(cmd);
+	return (new_cmd);
+}
+
 char	**master_lexer(t_data *data)
 {
 	int		len;
 	char	**cmd;
 	t_token	*tokens;
 	t_token	*start;
+	char	**result;
 
 	cmd = split_command(data, &len);
-	if (!cmd)
-		return (NULL);
 	tokens = tokenize_command(cmd, len);
-	if (!tokens)
-	{
-		free_array(cmd);
-		return (NULL);
-	}
 	start = tokens;
-	master_parser(data, tokens);
-	cmd = reassign_cmd(&tokens, cmd, len);
-	free_tokens(start);
-	if (!cmd)
+	if (!cmd || !tokens)
 	{
 		free_array(cmd);
+		free_tokens(start);
 		return (NULL);
 	}
-	free_tokens(tokens);
-	return (cmd);
+	if (master_parser(data, tokens) != 0)
+	{
+		free_array(cmd);
+		free_tokens(start);
+		return (NULL);
+	}
+	result = finalize_cmd(&tokens, start, cmd, len);
+	return (result);
 }

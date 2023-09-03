@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/02 09:19:18 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/03 10:25:48 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ static void	exec_pipe_child(t_pipe *pipe_data)
 	if (is_builtin(pipe_data->data) == 0)
 		execute_builtin_with_redirection(pipe_data->data, pipe_data->env);
 	else
+	{
 		process_command(pipe_data->data, pipe_data->env);
-	exit(EXIT_SUCCESS);
+		exit(EXIT_SUCCESS);
+	}
 }
 
 static void	handle_parent_process(t_data *data)

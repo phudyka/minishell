@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/02 16:29:05 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/03 08:25:05 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,11 +123,11 @@ t_token	*new_token(t_enum_token type, char *value);
 t_token	*tokenize_command(char **cmd, int cmd_len);
 t_token	*tokenizer(char **cmd, int size, t_token *tokens);
 void	add_token(t_token **tokens, t_token *new);
-void	parse_redir(t_data *data, t_token *tokens);
+int		parse_redir(t_data *data, t_token *tokens);
 void	parse_quotes(t_data *data, t_token *curr);
 char	*command_status(const char *input);
 char	*ft_dollar(t_data *data, const char *str, int sqot);
-void	master_parser(t_data *data, t_token *token);
+int		master_parser(t_data *data, t_token *token);
 char	**master_lexer(t_data *data);
 int		ft_equal(const char *s);
 void	restore_termios(t_data *data);

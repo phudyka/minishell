@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/27 10:34:40 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/02 16:29:03 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/03 10:01:20 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,6 @@ static int	next_tokens(t_data *data, t_token *prev, t_token *curr)
 	return (1);
 }
 
-static void	str_token(t_data *data, t_token *curr)
-{
-	t_token	*next;
-
-	next = curr->next;
-	while (next && next->type != PIP)
-	{
-		if (next->type == STR)
-			break ;
-		next = next->next;
-	}
-	if (!next || next->type != STR)
-		ft_error(data->error, PIP, 1);
-}
-
 static void	parse_pipes(t_data *data, t_token *tokens)
 {
 	t_token	*prev;
@@ -71,27 +56,27 @@ static void	parse_pipes(t_data *data, t_token *tokens)
 	{
 		if (tokens->type == PIP)
 		{
-			if (!next_tokens(data, prev, tokens->next))
+			if (!next_tokens(data, prev, tokens->next) && tokens->next)
 			{
-				printf("syntax error near unexpected token `|'\n");
+				printf("syntax error near unexpected token`|'\n");
 				data->error->status = 2;
 				return ;
 			}
-			str_token(data, tokens);
 		}
 		prev = tokens;
 		tokens = tokens->next;
 	}
 }
 
-void	master_parser(t_data *data, t_token *tokens)
+int	master_parser(t_data *data, t_token *tokens)
 {
+	parse_pipes(data, tokens);
 	while (tokens)
 	{
-		if (tokens->type == PIP)
-			parse_pipes(data, tokens);
-		else if (tokens->type == RDR)
-			parse_redir(data, tokens);
+		if (tokens->type == RDR)
+			if (parse_redir(data, tokens) != 0)
+				return (1);
 		tokens = tokens->next;
 	}
+	return (0);
 }

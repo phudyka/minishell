@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:32:23 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/02 16:29:19 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/03 08:18:06 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	set_redir_file(t_token *prev, t_token *curr, t_token *next)
 	next->type = STR;
 }
 
-void	parse_redir(t_data *data, t_token *tokens)
+int	parse_redir(t_data *data, t_token *tokens)
 {
 	t_token	*prev;
 	t_token	*next;
@@ -49,7 +49,7 @@ void	parse_redir(t_data *data, t_token *tokens)
 			{
 				handle_error(data, !is_str_type(prev));
 				printf("syntax error near unexpected token `newline'\n");
-				return ;
+				return (1);
 			}
 			else if (prev != NULL)
 				set_redir_file(prev, tokens, next);
@@ -57,4 +57,5 @@ void	parse_redir(t_data *data, t_token *tokens)
 		prev = tokens;
 		tokens = tokens->next;
 	}
+	return (0);
 }
