@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 15:37:14 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/04 01:06:36 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-static void	ft_sigquit(int sig)
+/*static void	ft_sigquit(int sig)
 {
 	(void)sig;
 	if (g_signal > 0)
@@ -26,7 +26,7 @@ static void	ft_sigquit(int sig)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-}
+}*/
 
 void	restore_termios(t_data *data)
 {
@@ -81,5 +81,5 @@ void	ft_signals(t_data *data)
 	}
 	signal(SIGINT, ft_sigint);
 	signal(SIGTERM, ft_sigterm);
-	signal(SIGQUIT, ft_sigquit);
+	signal(SIGQUIT, SIG_IGN);
 }

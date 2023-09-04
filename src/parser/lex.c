@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:37:44 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/03 09:49:11 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/04 00:52:40 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_token	*create_token(char *cmd)
 	if (cmd[0] == '\'' || cmd[0] == '\"')
 		new_token_instance = new_token(QOT, cmd);
 	else if ((ft_strcmp(cmd, ">") == 0) || (ft_strcmp(cmd, "<") == 0)
-		|| (ft_strcmp(cmd, ">>") == 0))
+		|| (ft_strcmp(cmd, ">>") == 0) || (ft_strcmp(cmd, "<<") == 0))
 		new_token_instance = new_token(RDR, cmd);
 	else if (ft_strcmp(cmd, "|") == 0)
 		new_token_instance = new_token(PIP, "|");

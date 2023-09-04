@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:22:34 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/02 16:01:24 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/04 00:54:41 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,18 +97,19 @@ void	remove_redirection(char **cmd, int start)
 	cmd[i] = NULL;
 }
 
-void	redirect_here_doc(char **cmd, int i)
+int	redirect_here_doc(char **cmd, int i)
 {
 	char	*delimiter;
 
 	if (!cmd[i + 1])
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
-		return ;
+		return (0);
 	}
 	delimiter = cmd[i + 1];
 	create_tmp_file(delimiter);
 	set_tmp_file_as_stdin();
+	return (1);
 }
 
 void	redirections(t_data *data, char **cmd)

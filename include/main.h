@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/03 08:25:05 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/04 00:45:44 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ void	check_and_apply_redirection(t_data *data, char **cmd, int *i);
 void	remove_redirection(char **cmd, int start);
 int		redirect_output(t_data *data, char **cmd, int i, int append);
 int		redirect_input(t_data *data, char **cmd, int i);
-void	redirect_here_doc(char **cmd, int i);
+int		redirect_here_doc(char **cmd, int i);
 void	init_error(t_error *error);
 int		is_exit_command(char *cmd_part);
 void	update_values(char *output, size_t *j, char *value);
