@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/03 10:25:48 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/05 11:28:35 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ static void	exec_pipe_child(t_pipe *pipe_data)
 	if (pipe_data->data->fd_in != 0)
 		close(pipe_data->data->fd_in);
 	if (is_builtin(pipe_data->data) == 0)
+	{
 		execute_builtin_with_redirection(pipe_data->data, pipe_data->env);
+		exit(EXIT_SUCCESS);
+	}
 	else
 	{
 		process_command(pipe_data->data, pipe_data->env);
@@ -51,6 +54,17 @@ static void	handle_parent_process(t_data *data)
 		close(data->fd_in);
 	close(data->fd[1]);
 	data->fd_in = data->fd[0];
+}
+
+char	*read_line(void)
+{
+	char	*line;
+	size_t	len;
+
+	line = NULL;
+	len = 0;
+	getline(&line, &len, stdin);
+	return (line);
 }
 
 static void	handle_pipe_execution(t_data *data, t_env *env, int i)
@@ -78,14 +92,62 @@ static void	handle_pipe_execution(t_data *data, t_env *env, int i)
 	free(pipe_data);
 }
 
-void	execute_pipeline(t_data *data, t_env *env)
+static int	count_cmd_parts(char **cmd_parts)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_parts && cmd_parts[i])
+		i++;
+	return (i);
+}
+
+char	**add_command_to_cmd_parts(char **cmd_parts, char *new_command)
 {
 	int		i;
-	int		status;
-	pid_t	pid;
+	char	**new_cmd_parts;
 
-	data->fd_in = 0;
-	data->cmd_parts = group_by_pipes(data->cmd);
+	i = count_cmd_parts(cmd_parts);
+	new_cmd_parts = (char **)malloc(sizeof(char *) * (i + 2));
+	if (!new_cmd_parts)
+		return (NULL);
+	i = 0;
+	while (cmd_parts && cmd_parts[i])
+	{
+		new_cmd_parts[i] = cmd_parts[i];
+		i++;
+	}
+	new_cmd_parts[i] = ft_strdup(new_command);
+	new_cmd_parts[i + 1] = NULL;
+	free(cmd_parts);
+	return (new_cmd_parts);
+}
+
+static void	read_next_command(t_data *data)
+{
+	char	*next_command;
+	size_t	len;
+	ssize_t	nread;
+
+	next_command = NULL;
+	len = 0;
+	printf("> ");
+	nread = getline(&next_command, &len, stdin);
+	if (nread > 0)
+	{
+		if (next_command[nread - 1] == '\n')
+			next_command[nread - 1] = '\0';
+		data->cmd_parts = add_command_to_cmd_parts(data->cmd_parts, next_command);
+	}
+	free(next_command);
+}
+
+static void	execute_commands(t_data *data, t_env *env)
+{
+	int		i;
+	pid_t	pid;
+	int		status;
+
 	i = 0;
 	while (data->cmd_parts[i])
 	{
@@ -101,5 +163,15 @@ void	execute_pipeline(t_data *data, t_env *env)
 	pid = waitpid(-1, &status, 0);
 	while (pid > 0)
 		pid = waitpid(-1, &status, 0);
+}
+
+void	execute_pipeline(t_data *data, t_env *env)
+{
+	signal(SIGPIPE, SIG_IGN);
+	data->fd_in = 0;
+	data->cmd_parts = group_by_pipes(data->cmd);
+	if (data->cmd_parts[0] && !data->cmd_parts[1])
+		read_next_command(data);
+	execute_commands(data, env);
 	free_data(data);
 }
