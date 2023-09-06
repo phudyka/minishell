@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/04 00:45:44 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/06 14:19:56 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,12 @@ char	*ft_access(char **path, char **cmd);
 void	exec_cmd(t_data *data, char **envp);
 void	process_command(t_data *data, t_env *env);
 int		find_pipes(t_data *data);
+void	handle_pipe_execution(t_data *data, t_env *env, int i);
+void	read_next_command(t_data *data);
+void	handle_parent_process(t_data *data);
+void	exec_pipe_child(t_pipe *pipe_data);
+t_pipe	*init_pipe_data(t_data *data, t_env *env, int i);
+char	*read_line(void);
 void	print_arguments(t_data *data, int start_index);
 void	free_array(char **tab);
 int		ft_pipex(char **cmd, char *path);
