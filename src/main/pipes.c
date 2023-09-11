@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/06 14:19:08 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/11 11:13:31 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,6 @@ static void	execute_commands(t_data *data, t_env *env)
 	i = 0;
 	while (data->cmd_parts[i])
 	{
-		if (is_exit_command(data->cmd_parts[i]))
-		{
-			data->error->exit = TRUE;
-			free_data(data);
-			return ;
-		}
 		handle_pipe_execution(data, env, i);
 		i++;
 	}

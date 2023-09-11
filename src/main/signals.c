@@ -3,30 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/04 01:06:36 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/11 11:39:52 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-/*static void	ft_sigquit(int sig)
-{
-	(void)sig;
-	if (g_signal > 0)
-	{
-		kill(g_signal, SIGQUIT);
-		ft_putstr_fd("^\\Quit (core dumped)\n", 2);
-	}
-	else
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-}*/
+// static void	ft_sigquit(int sig)
+// {
+// 	if (g_signal > 0)
+// 	{
+// 		kill(g_signal, SIGQUIT);
+// 		ft_putstr_fd("^\\Quit (core dumped)\n", 2);
+// 	}
+// 	else
+// 		signal(sig, SIG_IGN);
+// }
 
 void	restore_termios(t_data *data)
 {

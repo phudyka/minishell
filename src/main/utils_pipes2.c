@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 14:16:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/06 14:52:58 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/11 11:41:48 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	count_cmd_parts(char **cmd_parts)
 	return (i);
 }
 
-static char	**cmd_parts(char **cmd_parts, char *new_command)
+char	**cmd_parts(char **cmd_parts, char *new_command)
 {
 	int		i;
 	char	**new_cmd_parts;
@@ -88,13 +88,17 @@ void	read_next_command(t_data *data)
 
 	next_command = NULL;
 	len = 0;
-	printf("> ");
-	nread = getline(&next_command, &len, stdin);
-	if (nread > 0)
+	nread = 0;
+	while (nread != -1 && (nread <= 1 || is_only_spaces_or_tabs(next_command)))
 	{
-		if (next_command[nread - 1] == '\n')
-			next_command[nread - 1] = '\0';
-		data->cmd_parts = cmd_parts(data->cmd_parts, next_command);
+		if (next_command)
+		{
+			free(next_command);
+			next_command = NULL;
+			len = 0;
+		}
+		printf("> ");
+		nread = getline(&next_command, &len, stdin);
 	}
-	free(next_command);
+	handle_that_shit(next_command, data);
 }

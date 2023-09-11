@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/06 14:19:56 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/11 11:40:24 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,9 @@ void	handle_parent_process(t_data *data);
 void	exec_pipe_child(t_pipe *pipe_data);
 t_pipe	*init_pipe_data(t_data *data, t_env *env, int i);
 char	*read_line(void);
+int		is_only_spaces_or_tabs(char *str);
+void	handle_that_shit(char *next_command, t_data *data);
+char	**cmd_parts(char **cmd_parts, char *new_command);
 void	print_arguments(t_data *data, int start_index);
 void	free_array(char **tab);
 int		ft_pipex(char **cmd, char *path);

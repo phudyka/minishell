@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 21:32:23 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/03 08:18:06 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/11 11:40:11 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
+
+int	is_only_spaces_or_tabs(char *str)
+{
+	while (*str)
+	{
+		if (*str != ' ' && *str != '\t' && *str != '\n')
+			return (0);
+		str++;
+	}
+	return (1);
+}
 
 static int	is_str_type(t_token *token)
 {

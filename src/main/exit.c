@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:10:27 by phudyka           #+#    #+#             */
-/*   Updated: 2023/08/22 11:58:08 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/11 11:38:22 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,21 @@ void	free_data(t_data *data)
 	{
 		free_array(data->path);
 		data->path = NULL;
+	}
+}
+
+void	handle_that_shit(char *next_command, t_data *data)
+{
+	ssize_t	nread;
+
+	nread = ft_strlen(next_command);
+	if (next_command[nread - 1] == '\n')
+		next_command[nread - 1] = '\0';
+	data->cmd_parts = cmd_parts(data->cmd_parts, next_command);
+	if (next_command)
+	{
+		free(next_command);
+		next_command = NULL;
 	}
 }
 
