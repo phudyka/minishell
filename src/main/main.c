@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/08/31 01:59:23 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/11 17:14:09 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	init_data(t_data *data, char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
+	int		ret;
 	t_data	*data;
 
 	(void)argc;
@@ -93,9 +94,9 @@ int	main(int argc, char **argv, char **envp)
 	ft_signals(data);
 	ft_prompt(data);
 	restore_termios(data);
+	ret = exit_status(data->buffer);
 	free_env(data->env);
 	free(data->error);
 	free(data);
-	ft_putstr_fd("exit\n", 1);
-	return (0);
+	return (ret);
 }

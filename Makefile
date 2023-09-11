@@ -6,7 +6,7 @@
 #    By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/20 13:59:50 by phudyka           #+#    #+#              #
-#    Updated: 2023/09/06 14:16:00 by phudyka          ###   ########.fr        #
+#    Updated: 2023/09/11 15:36:28 by phudyka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS		=	src/main/main.c src/main/prompt.c src/main/builtin.c	\
 				src/main/utils_redir.c 									\
 				src/main/print.c src/main/utils.c		 				\
 				src/main/redir.c src/parser/lex.c src/parser/redir.c	\
-				src/parser/parse.c					                    \
+				src/parser/parse.c	src/main/exit_status.c              \
 				src/parser/parse_utils.c src/parser/token.c	 			\
 				src/parser/split.c src/parser/split_utils.c 			\
 				src/expander/utils_dollar.c src/expander/expand.c 		\

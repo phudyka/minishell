@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/11 11:40:24 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/11 15:05:31 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,6 @@ void	handle_segment(char **input, char **result, int *i, int *j);
 void	add_result(char **result, char *temp, int *j);
 char	*concat_strings(char *s1, char *s2);
 char	**group_by_pipes(char **input);
+int		exit_status(char *cmd);
 
 #endif

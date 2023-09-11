@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/11 11:10:08 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/11 16:52:40 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,13 @@ void	ft_prompt(t_data *data)
 		data->buffer = readline(GREEN "$ > " RESET);
 		if (!data->buffer)
 			break ;
-		add_history(data->buffer);
-		if (is_only_space(data->buffer))
+		if (is_only_spaces_or_tabs(data->buffer))
 		{
 			free(data->buffer);
 			data->buffer = NULL;
 			continue ;
 		}
+		add_history(data->buffer);
 		master_commander(data);
 	}
 	clear_history();
