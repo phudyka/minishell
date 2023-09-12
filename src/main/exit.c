@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 12:10:27 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/11 15:35:06 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/12 16:50:17 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,4 @@ void	handle_that_shit(char *next_command, t_data *data)
 		free(next_command);
 		next_command = NULL;
 	}
-}
-
-void	builtin_exit(t_data *data)
-{
-	data->error->exit = TRUE;
 }

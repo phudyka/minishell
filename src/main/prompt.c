@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/11 16:52:40 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/12 14:21:01 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	master_commander(t_data *data)
 void	ft_prompt(t_data *data)
 {
 	g_signal = 0;
-	while (!data->error->exit)
+	while (data->error->exit != TRUE)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);
 		if (!data->buffer)

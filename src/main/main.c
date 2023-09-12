@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/09/11 17:14:09 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/12 09:40:01 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 	ft_signals(data);
 	ft_prompt(data);
 	restore_termios(data);
-	ret = exit_status(data->buffer);
+	ret = data->error->status;
 	free_env(data->env);
 	free(data->error);
 	free(data);
