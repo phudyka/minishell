@@ -6,57 +6,43 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:22:05 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/12 17:10:48 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/13 11:41:21 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 
-static int	ft_nbr(char *nbr)
+static int	ft_ischar(char *str)
 {
-	size_t	i;
-	size_t	j;
+	int i;
 
 	i = 0;
-	j = 0;
-	if (nbr[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
 	{
-		if (!ft_isdigit(nbr[i + 1]))
-			return (0);
+		if (!ft_isdigit(str[i]))
+			return (1);
 		i++;
 	}
-	while (nbr[i])
-	{
-		if (ft_isdigit(nbr[i]))
-			j++;
-		i++;
-	}
-	if (i == j)
-		return (1);
 	return (0);
 }
 
-static void	exit_arg(t_data *data, char **split, int i)
+static void	no_exit(char **split, t_data *data)
 {
-	if (split[i + 1] && ft_nbr(split[i + 1]))
-	{
-		printf("exit\nbash: exit: trop d'arguments\n");
-		free_array(split);
-		data->error->status = 1;
-		data->error->exit = FALSE;
-		return ;
-	}
-	else 
-	{
-		data->error->status = ft_atoi(split[i]);
-		printf("exit\n");
-		return ;
-	}
+	printf("exit\nbash: exit: too many arguments\n");
+	free_array(split);
+	split = NULL;
+	data->error->status = 1;
+	data->error->exit = FALSE;
+	return ;
 }
 
-static void	exit_num(t_data *data, char **split, int i)
+static void	exit_char(char **split, t_data *data)
 {
-	printf("exit\nbash: exit: %s: numeric argument required\n", split[i]);
+	printf("exit\nbash: exit: %s: numeric argument required\n", split[1]);
+	free_array(split);
+	split = NULL;
 	data->error->status = 2; 
 	data->error->exit = TRUE;
 	return ;
@@ -64,34 +50,30 @@ static void	exit_num(t_data *data, char **split, int i)
 
 static void	exit_normal(char **split, t_data *data)
 {
+	printf("exit\n");
 	free_array(split);
 	split = NULL;
 	data->error->exit = TRUE;
+	return ;
 }
 
 void	builtin_exit(t_data *data)
 {
-	int		i;
 	char	**split;
 
-	i = 0;
 	split = ft_split(data->buffer, ' ');
 	if (!split[1])
-	{
 		exit_normal(split, data);
-		return ;
-	}
-	while (split[++i] && data->error->status == 0)
+	else if (ft_ischar(split[1]))
+		exit_char(split, data);
+	else if (!ft_ischar(split[1]))
 	{
-		if (ft_nbr(split[i]) && (ft_atoi(split[i]) >= INT_MIN
-				&& ft_atoi(split[i]) <= INT_MAX))
-			exit_arg(data, split, i);
+		if (!split[2])
+		{
+			data->error->status = ft_atoi(split[1]);
+			exit_normal(split, data);
+		}
 		else
-			exit_num(data, split, i);
+			no_exit(split, data);
 	}
-	free_array(split);
-	split = NULL;
-	if (data->error->status == 0)
-		printf("exit\n");
-	data->error->exit = TRUE;
 }
