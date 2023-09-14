@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_status.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:22:05 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/14 10:50:49 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 10:17:19 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	exit_char(char **split, t_data *data)
 	printf("bash: exit: %s: numeric argument required\n", split[1]);
 	free_array(split);
 	split = NULL;
-	data->error->status = 2; 
+	data->error->status = 2;
 	data->error->exit = TRUE;
 	return ;
 }
