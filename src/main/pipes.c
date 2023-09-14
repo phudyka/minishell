@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/14 14:39:56 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 16:41:43 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	execute_pipeline(t_data *data, t_env *env)
 		printf("bash: syntax error near unexpected token `%s'\n", data->cmd[0]);
 		data->error->status = 2;
 		free_data(data);
+		data->buffer = NULL;
 		return ;
 	}
 	data->fd_in = 0;
