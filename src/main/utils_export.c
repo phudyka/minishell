@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:51:04 by kali              #+#    #+#             */
-/*   Updated: 2023/09/14 14:27:37 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 11:35:55 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@ static void	add_new_variable(t_data *data, t_env **env, char *cmd_arg)
 
 char	**get_variable(char *cmd_arg)
 {
+	int	i;
+
+	i = 0;
+	while (cmd_arg[i])
+	{
+		if (cmd_arg[i] == '=' && cmd_arg[i + 1] == '=')
+		{
+			printf("bash: export: `%s': not a valid identifier\n", cmd_arg);
+			return (NULL);
+		}
+		i++;
+	}
 	if (!ft_equal(cmd_arg))
 		return (NULL);
 	return (ft_split(cmd_arg, '='));
@@ -36,7 +48,7 @@ static int	update_var(t_data *data, t_env *env, char **variable, char *cmd_arg)
 	{
 		printf("bash: export: `%s': not a valid identifier\n", data->cmd[1]);
 		data->error->status = 1;
-		return (0);
+		return (1);
 	}
 	while (current)
 	{
@@ -62,6 +74,4 @@ void	handle_variable(t_data *data, t_env **env)
 			add_new_variable(data, env, data->cmd[1]);
 		free_array(variable);
 	}
-	else
-		add_new_variable(data, env, data->cmd[1]);
 }
