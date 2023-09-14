@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 13:44:16 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/11 17:19:05 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 10:43:22 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ft_sigquit(int sig)
 	{
 		kill(g_signal, SIGQUIT);
 		ft_putstr_fd("^\\Quit (core dumped)\n", 2);
+		g_signal = 131;
 	}
 	else
 		signal(sig, SIG_IGN);
@@ -47,14 +48,6 @@ static void	ft_sigint(int sig)
 	}
 }
 
-static void	ft_sigterm(int sig)
-{
-	(void)sig;
-	if (g_signal > 0)
-		kill(g_signal, SIGTERM);
-	exit(EXIT_SUCCESS);
-}
-
 void	ft_signals(t_data *data)
 {
 	struct termios	new_termios;
@@ -74,9 +67,6 @@ void	ft_signals(t_data *data)
 		data->error->status = 2;
 		exit(EXIT_FAILURE);
 	}
-	if (signal(SIGINT, ft_sigint))
-		data->error->status = 130;
-	signal(SIGTERM, ft_sigterm);
-	if (signal(SIGQUIT, ft_sigquit))
-		data->error->status = 131;
+	signal(SIGINT, ft_sigint);
+	signal(SIGQUIT, ft_sigquit);
 }

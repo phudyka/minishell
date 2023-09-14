@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 03:03:06 by kali              #+#    #+#             */
-/*   Updated: 2023/09/12 09:40:01 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 10:38:36 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ int	main(int argc, char **argv, char **envp)
 	free_env(data->env);
 	free(data->error);
 	free(data);
+	printf("exit\n");
 	return (ret);
 }

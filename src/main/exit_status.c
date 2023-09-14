@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 16:22:05 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/13 11:41:21 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 10:50:49 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	ft_ischar(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')
@@ -40,7 +40,7 @@ static void	no_exit(char **split, t_data *data)
 
 static void	exit_char(char **split, t_data *data)
 {
-	printf("exit\nbash: exit: %s: numeric argument required\n", split[1]);
+	printf("bash: exit: %s: numeric argument required\n", split[1]);
 	free_array(split);
 	split = NULL;
 	data->error->status = 2; 
@@ -50,7 +50,6 @@ static void	exit_char(char **split, t_data *data)
 
 static void	exit_normal(char **split, t_data *data)
 {
-	printf("exit\n");
 	free_array(split);
 	split = NULL;
 	data->error->exit = TRUE;
