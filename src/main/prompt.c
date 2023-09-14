@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 14:26:28 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/12 14:21:01 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 08:05:53 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ void	exec_cmd(t_data *data, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
+	{
+		if (handle_multi_redirections(data) == -1)
+			exit(EXIT_FAILURE);
 		child_process(data, envp);
+	}
 	else
 		parent_process(data, pid);
 }
@@ -44,7 +48,7 @@ static void	execute_command(t_data *data, char **envp)
 	}
 	else
 		data->buffer = ft_access(data->path, data->cmd);
-	if (!data->buffer)
+	if (!data->buffer && !is_redirection_token(data->cmd[0]))
 	{
 		if (data->error->status != 1)
 		{
@@ -60,22 +64,19 @@ void	process_command(t_data *data, t_env *env)
 {
 	char	**envp;
 
-	envp = list_to_array(env);
-	free_array(data->path);
-	data->path = get_path(envp);
 	if (!data->cmd || !data->cmd[0])
 	{
-		free_array(envp);
 		free_buff(data);
 		return ;
 	}
 	if (is_builtin(data) == 0)
 	{
-		execute_builtin_with_redirection(data, env);
-		free_array(envp);
-		free_data(data);
+		handle_builtin_command(data, env);
 		return ;
 	}
+	envp = list_to_array(env);
+	free_array(data->path);
+	data->path = get_path(envp);
 	execute_command(data, envp);
 	free_array(envp);
 	free_data(data);
@@ -103,7 +104,7 @@ static void	master_commander(t_data *data)
 void	ft_prompt(t_data *data)
 {
 	g_signal = 0;
-	while (data->error->exit != TRUE)
+	while (!data->error->exit)
 	{
 		data->buffer = readline(GREEN "$ > " RESET);
 		if (!data->buffer)

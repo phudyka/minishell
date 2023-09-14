@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:19:38 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/13 16:24:43 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/22 11:24:13 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ char	*get_from_env(char *variable, t_env *env)
 			free_array(tmp);
 			return (str);
 		}
-		else
-			return (NULL);
 		current = current->next;
 	}
 	return (NULL);

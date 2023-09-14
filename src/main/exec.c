@@ -6,7 +6,7 @@
 /*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 17:18:07 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/01 01:23:10 by kali             ###   ########.fr       */
+/*   Updated: 2023/09/13 03:00:51 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	handle_builtin(t_data *data, t_env *env)
 	pid = fork();
 	if (pid == 0)
 	{
-		redirections(data, data->cmd);
+		handle_multi_redirections(data);
 		exec_builtin(data, env);
 		exit(EXIT_SUCCESS);
 	}

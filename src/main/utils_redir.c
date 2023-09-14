@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:32:21 by kali              #+#    #+#             */
-/*   Updated: 2023/09/02 15:56:58 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 08:13:09 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,77 +19,73 @@ void	exit_error(char *msg)
 	exit(EXIT_FAILURE);
 }
 
-void	create_tmp_file(char *delimiter)
+int	is_redirection_token(char *cmd)
 {
-	char	*line;
-	size_t	len;
-	ssize_t	read;
-	int		fd;
-
-	fd = open("/tmp/minishell_heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		exit_error("Error [open]\n");
-	len = 0;
-	line = NULL;
-	read = getline(&line, &len, stdin);
-	while (read != -1)
-	{
-		if (heredoc_line(line, read, fd, delimiter))
-			break ;
-		read = getline(&line, &len, stdin);
-	}
-	close(fd);
-	free(line);
+	if (!cmd)
+		return (0);
+	return (ft_strcmp(cmd, ">") == 0 || ft_strcmp(cmd, ">>") == 0
+		|| ft_strcmp(cmd, "<") == 0 || ft_strcmp(cmd, "<<") == 0);
 }
 
-int	heredoc_line(char *line, ssize_t read, int fd, char *delimiter)
+int	is_next_token_invalid(t_data *data, int i)
 {
-	if (read > 0 && line[read - 1] == '\n')
+	if (!data->cmd[i + 1] || is_redirection_token(data->cmd[i + 1]))
 	{
-		line[read - 1] = '\0';
-		read--;
-	}
-	if (ft_strcmp(line, delimiter) == 0)
+		ft_putstr_fd("bash: syntax error near unexpected token `newline'\n", 2);
+		data->error->status = 2;
 		return (1);
-	line[read] = '\n';
-	write(fd, line, read + 1);
+	}
 	return (0);
 }
 
-void	set_tmp_file_as_stdin(void)
+int	handle_output_redirection(t_data *data, int *i)
 {
 	int	fd;
 
-	fd = open("/tmp/minishell_heredoc", O_RDONLY);
+	if (is_next_token_invalid(data, *i))
+		return (-1);
+	fd = open(data->cmd[*i + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		exit_error("Error! [open]\n");
-	if (dup2(fd, STDIN_FILENO) < 0)
-		exit_error("Error[dup2]\n");
+	{
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(data->cmd[*i + 1], 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		data->error->status = 1;
+		free_data(data);
+		return (-1);
+	}
+	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	free(data->cmd[*i]);
+	free(data->cmd[*i + 1]);
+	data->cmd[*i] = NULL;
+	data->cmd[*i + 1] = NULL;
+	(*i) += 2;
+	return (1);
 }
 
-void	check_and_apply_redirection(t_data *data, char **cmd, int *i)
+int	handle_input_redirection(t_data *data, int *i)
 {
-	if (ft_strcmp(cmd[*i], "<") == 0)
+	int	fd;
+
+	if (is_next_token_invalid(data, *i))
+		return (-1);
+	fd = open(data->cmd[*i + 1], O_RDONLY);
+	if (fd < 0)
 	{
-		redirect_input(data, cmd, *i);
-		remove_redirection(cmd, *i);
+		ft_putstr_fd("bash: ", 2);
+		ft_putstr_fd(data->cmd[*i + 1], 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		data->error->status = 1;
+		free_data(data);
+		return (-1);
 	}
-	else if (ft_strcmp(cmd[*i], ">") == 0)
-	{
-		redirect_output(data, cmd, *i, 0);
-		remove_redirection(cmd, *i);
-	}
-	else if (ft_strcmp(cmd[*i], ">>") == 0)
-	{
-		redirect_output(data, cmd, *i, 1);
-		remove_redirection(cmd, *i);
-	}
-	else if (ft_strcmp(cmd[*i], "<<") == 0)
-	{
-		redirect_here_doc(cmd, *i);
-		remove_redirection(cmd, *i);
-	}
-	else
-		(*i)++;
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	free(data->cmd[*i]);
+	free(data->cmd[*i + 1]);
+	data->cmd[*i] = NULL;
+	data->cmd[*i + 1] = NULL;
+	(*i) += 2;
+	return (1);
 }

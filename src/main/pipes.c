@@ -6,25 +6,12 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 09:43:46 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/11 11:13:31 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:39:56 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
-
-t_pipe	*init_pipe_data(t_data *data, t_env *env, int i)
-{
-	t_pipe	*pipe_data;
-
-	pipe_data = malloc(sizeof(t_pipe));
-	if (!pipe_data)
-		return (NULL);
-	pipe_data->data = data;
-	pipe_data->env = env;
-	pipe_data->i = i;
-	return (pipe_data);
-}
 
 void	exec_pipe_child(t_pipe *pipe_data)
 {
@@ -38,7 +25,8 @@ void	exec_pipe_child(t_pipe *pipe_data)
 		close(pipe_data->data->fd_in);
 	if (is_builtin(pipe_data->data) == 0)
 	{
-		execute_builtin_with_redirection(pipe_data->data, pipe_data->env);
+		handle_multi_redirections(pipe_data->data);
+		exec_builtin(pipe_data->data, pipe_data->env);
 		exit(EXIT_SUCCESS);
 	}
 	else
@@ -56,6 +44,21 @@ void	handle_parent_process(t_data *data)
 	data->fd_in = data->fd[0];
 }
 
+static void	run_redirection_cmd(t_data *data, t_env *env, int i)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		handle_multi_redirections(data);
+		handle_pipe_execution(data, env, i);
+		exit(EXIT_SUCCESS);
+	}
+	else
+		waitpid(pid, NULL, 0);
+}
+
 static void	execute_commands(t_data *data, t_env *env)
 {
 	int		i;
@@ -65,7 +68,10 @@ static void	execute_commands(t_data *data, t_env *env)
 	i = 0;
 	while (data->cmd_parts[i])
 	{
-		handle_pipe_execution(data, env, i);
+		if (is_redirection_command(data->cmd_parts[i]))
+			run_redirection_cmd(data, env, i);
+		else
+			handle_pipe_execution(data, env, i);
 		i++;
 	}
 	pid = waitpid(-1, &status, 0);
@@ -75,7 +81,13 @@ static void	execute_commands(t_data *data, t_env *env)
 
 void	execute_pipeline(t_data *data, t_env *env)
 {
-	signal(SIGPIPE, SIG_IGN);
+	if (*data->cmd[0] == '|' || ft_strcmp(data->cmd[0], "||") == 0)
+	{
+		printf("bash: syntax error near unexpected token `%s'\n", data->cmd[0]);
+		data->error->status = 2;
+		free_data(data);
+		return ;
+	}
 	data->fd_in = 0;
 	data->cmd_parts = group_by_pipes(data->cmd);
 	if (data->cmd_parts[0] && !data->cmd_parts[1])

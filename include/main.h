@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/14 11:03:37 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:28:00 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,18 +168,13 @@ void	check_path_and_set_status(char *path, char **cmd);
 char	**make_env(char **env, t_env *current);
 char	*ft_access(char **path, char **cmd);
 void	handle_variable(t_data *data, t_env **env);
-int		update_var(t_data *data, t_env *env, char **variable, char *cmd_arg);
 char	**get_variable(char *cmd_arg);
 void	create_tmp_file(char *delimiter);
 int		heredoc_line(char *line, ssize_t read, int fd, char *delimiter);
 void	set_tmp_file_as_stdin(void);
 void	exit_error(char *msg);
 void	ft_error(t_error *error, int token, int code);
-void	check_and_apply_redirection(t_data *data, char **cmd, int *i);
-void	remove_redirection(char **cmd, int start);
-int		redirect_output(t_data *data, char **cmd, int i, int append);
-int		redirect_input(t_data *data, char **cmd, int i);
-int		redirect_here_doc(char **cmd, int i);
+int		handle_multi_redirections(t_data *data);
 void	init_error(t_error *error);
 int		is_exit_command(char *cmd_part);
 void	update_values(char *output, size_t *j, char *value);
@@ -191,5 +186,15 @@ void	add_result(char **result, char *temp, int *j);
 char	*concat_strings(char *s1, char *s2);
 char	**group_by_pipes(char **input);
 int		exit_status(char *cmd);
+int		is_redirection_token(char *cmd);
+void	handle_builtin_command(t_data *data, t_env *env);
+int		is_next_token_invalid(t_data *data, int i);
+int		handle_output_redirection(t_data *data, int *i);
+int		handle_input_redirection(t_data *data, int *i);
+int		handle_append_redirection(t_data *data, int *i);
+void	process_input(int *fd, char *delimiter);
+int		handle_heredoc_redirection(t_data *data, int *i);
+int		execute_redirection(t_data *data, int *i, char *token);
+int		is_redirection_command(char *cmd_part);
 
 #endif

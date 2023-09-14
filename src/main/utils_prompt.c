@@ -3,15 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   utils_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kali <kali@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 11:35:27 by kali              #+#    #+#             */
-/*   Updated: 2023/09/11 11:09:19 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 08:06:09 by kali             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/main.h"
 #include "../../include/parser.h"
+
+void	handle_builtin_command(t_data *data, t_env *env)
+{
+	char	**envp;
+	int		original_stdout;
+
+	envp = list_to_array(env);
+	original_stdout = dup(STDOUT_FILENO);
+	if (handle_multi_redirections(data) == -1)
+	{
+		dup2(original_stdout, STDOUT_FILENO);
+		close(original_stdout);
+		free_array(envp);
+		free_data(data);
+		return ;
+	}
+	exec_builtin(data, env);
+	dup2(original_stdout, STDOUT_FILENO);
+	close(original_stdout);
+	free_array(envp);
+	free_data(data);
+}
 
 int	is_only_space(char *cmd)
 {
@@ -27,36 +49,10 @@ int	is_only_space(char *cmd)
 	return (1);
 }
 
-void	execute_builtin_with_redirection(t_data *data, t_env *env)
-{
-	int	saved_stdin;
-	int	saved_stdout;
-
-	saved_stdin = dup(STDIN_FILENO);
-	saved_stdout = dup(STDOUT_FILENO);
-	if (saved_stdin == -1 || saved_stdout == -1)
-	{
-		ft_putstr_fd("Error! [dup]\n", 2);
-		data->error->status = 1;
-		return ;
-	}
-	redirections(data, data->cmd);
-	exec_builtin(data, env);
-	if (dup2(saved_stdin, STDIN_FILENO) == -1
-		|| dup2(saved_stdout, STDOUT_FILENO) == -1)
-	{
-		ft_putstr_fd("Error! [dup2]\n", 2);
-		data->error->status = 1;
-		return ;
-	}
-	close(saved_stdin);
-	close(saved_stdout);
-}
-
 void	child_process(t_data *data, char **envp)
 {
 	signal(SIGINT, SIG_DFL);
-	redirections(data, data->cmd);
+	handle_multi_redirections(data);
 	if (execve(data->buffer, data->cmd, envp) == -1)
 	{
 		printf("%s : Command not found\n", data->cmd[0]);

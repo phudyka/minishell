@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 04:29:21 by kali              #+#    #+#             */
-/*   Updated: 2023/09/13 16:23:20 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/08/31 15:25:35 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	builtin_cd(t_data *data, t_env *env)
 		home = get_from_env("HOME", env);
 		if (!home)
 		{
-			ft_putstr_fd("cd:  HOME not set\n", 2);
+			ft_putstr_fd("cd: $HOME not set\n", 2);
 			data->error->status = 1;
 			return ;
 		}
