@@ -6,7 +6,7 @@
 /*   By: phudyka <phudyka@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 15:10:32 by phudyka           #+#    #+#             */
-/*   Updated: 2023/09/13 10:47:01 by phudyka          ###   ########.fr       */
+/*   Updated: 2023/09/14 11:03:37 by phudyka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void	check_path_and_set_status(char *path, char **cmd);
 char	**make_env(char **env, t_env *current);
 char	*ft_access(char **path, char **cmd);
 void	handle_variable(t_data *data, t_env **env);
-int		update_var(t_env *env, char **variable, char *cmd_arg);
+int		update_var(t_data *data, t_env *env, char **variable, char *cmd_arg);
 char	**get_variable(char *cmd_arg);
 void	create_tmp_file(char *delimiter);
 int		heredoc_line(char *line, ssize_t read, int fd, char *delimiter);
