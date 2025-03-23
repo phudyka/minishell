@@ -69,6 +69,5 @@ make
 
 - [dtassel](https://github.com/Freiko789)
 - [phudyka](https://github.com/phudyka)
-- 
 ---
 *Projet réalisé dans le cadre du cursus Unix à l'école 42*
